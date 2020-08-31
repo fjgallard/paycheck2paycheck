@@ -12,8 +12,17 @@
     <i class="slide__icon fas fa-money-bill-wave"></i> 
     <div class="bottom-box">
       <h1>How much do you earn in a month?</h1>
-      <p>Let's get things set up and ready to go</p>
+      <ion-input type="number" placeholder="1000" [(ngModel)]="income"></ion-input>
       <ion-button (click)="next()">Next</ion-button>
+    </div>
+  </ion-slide>
+
+  <ion-slide class="slide slide-4 flex-col">
+    <i class="slide__icon fas fa-money-bill-wave"></i> 
+    <div class="bottom-box">
+      <h1>Let's begin!</h1>
+      <p>All set up and ready to go</p>
+      <ion-button (click)="finish()">Finish</ion-button>
     </div>
   </ion-slide>
 </ion-slides>
