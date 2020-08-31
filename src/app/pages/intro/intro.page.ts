@@ -36,7 +36,7 @@ export class IntroPage implements OnInit {
       this.storage.set('income', this.income),
       this.storage.set('tutorialSeen', true)
     ]);
-    this.router.navigateByUrl('/intro');
+    this.router.navigateByUrl('/dashboard');
   }
 
 }
