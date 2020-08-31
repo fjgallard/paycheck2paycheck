@@ -1,0 +1,23 @@
+.slide {
+  height: 100%;
+
+  .slide__icon {
+    font-size: 5rem;
+
+    &.slide__icon--green {
+      color: white;
+    }
+  }
+}
+
+.slide-1 {
+  background: var(--ion-color-primary);
+}
+
+.slide-2 {
+  background: var(--ion-color-success);
+}
+
+ion-slides {
+  height: 100%;
+}
