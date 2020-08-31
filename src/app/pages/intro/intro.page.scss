@@ -1,23 +1,27 @@
 .slide {
+  width: 100vw;
   height: 100%;
 
   .slide__icon {
     font-size: 5rem;
-
-    &.slide__icon--green {
-      color: white;
-    }
   }
 }
 
 .slide-1 {
   background: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
 }
 
 .slide-2 {
   background: var(--ion-color-success);
+  color: var(--ion-color-success-contrast);
+}
+
+.bottom-box {
+  width: 100%;
 }
 
 ion-slides {
   height: 100%;
+  width: 100vw;
 }
