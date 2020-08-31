@@ -2,6 +2,21 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@components/*": [ "src/app/components/*" ],
+      "@guards/*": [ "src/app/guards/*" ],
+      "@interceptors/*": [ "src/app/interceptors/*" ],
+      "@modals/*": [ "src/app/modals/*" ],
+      "@models/*": [ "src/app/models/*" ],
+      "@pages/*": [ "src/app/pages/*" ],
+      "@pipes/*": [ "src/app/pipes/*" ],
+      "@providers/*": [ "src/app/providers/*" ],
+      "@services/*": [ "src/app/services/*" ],
+      "@assets/*": ["src/assets/*"],
+      "@environments/*": ["src/environments/*"],
+      "@theme/*": ["src/theme/*"],
+      "@directives/*": ["src/app/directives/*"]
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
