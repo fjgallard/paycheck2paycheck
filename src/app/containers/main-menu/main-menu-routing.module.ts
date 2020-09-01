@@ -10,7 +10,7 @@ const routes: Routes = [
     component: MainMenuPage,
     children: [
       {
-        path: 'dashboard',
+        path: '',
         loadChildren: () => import('../../pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
       }
     ]
