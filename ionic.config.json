@@ -1,5 +1,7 @@
 {
   "name": "paycheck2paycheck",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
