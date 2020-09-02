@@ -1,7 +1,10 @@
 <ion-menu class="sidenav" side="start" menuId="mainMenu" contentId="mainMenu">
   <ion-content>
-    <ion-list>
-      <ion-item>
+    <ion-list class="ion-padding">
+      <ion-item [routerLink]="['/']" >
+        Home
+      </ion-item>
+      <ion-item [routerLink]="['/settings']" >
         Settings
       </ion-item>
     </ion-list>

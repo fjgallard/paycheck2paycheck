@@ -4,6 +4,10 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
 
+  <ion-label>Set Monthly Income</ion-label>
+  <ion-input type="number" placeholder="0" [(ngModel)]="monthlyIncome"></ion-input>
+
+  <ion-button (click)="submit()">Submit</ion-button>
 </ion-content>

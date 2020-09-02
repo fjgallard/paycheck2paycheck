@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-settings',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsPage implements OnInit {
 
-  constructor() { }
+  monthlyIncome: number;
 
-  ngOnInit() {
+  constructor(private storage: Storage) { }
+
+  async ngOnInit() {
+    this.monthlyIncome = await this.storage.get('monthlyIncome');
+  }
+
+  submit() {
+    if (this.monthlyIncome) {
+      this.storage.set('monthlyIncome', this.monthlyIncome);
+    }
+
   }
 
 }

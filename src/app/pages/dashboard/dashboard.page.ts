@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Storage } from '@ionic/storage';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardPage implements OnInit {
 
-  constructor() { }
+  monthlyIncome: number;
+  constructor(private storage: Storage) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.monthlyIncome = await this.storage.get('monthlyIncome');
   }
 
 }
