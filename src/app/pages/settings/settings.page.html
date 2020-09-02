@@ -8,6 +8,13 @@
 
   <ion-label>Set Monthly Income</ion-label>
   <ion-input type="number" placeholder="0" [(ngModel)]="monthlyIncome"></ion-input>
+  <ion-button (click)="updateMonthlyIncome()">Update Monthly Income</ion-button>
 
-  <ion-button (click)="submit()">Submit</ion-button>
+  <br>
+
+  <ion-label>Set Custom Monthly Income</ion-label>
+  <ion-input type="number" placeholder="0" [(ngModel)]="customIncome"></ion-input>
+  <ion-button (click)="updateCustomIncome()">Update Custom Income</ion-button>
+
+  
 </ion-content>
