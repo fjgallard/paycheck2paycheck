@@ -19,6 +19,11 @@ export class SettingsPage implements OnInit {
   submit() {
     if (this.monthlyIncome) {
       this.storage.set('monthlyIncome', this.monthlyIncome);
+      // set current income to this income
+      const date = new Date();
+      const incomeForTheMonth = (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
+
+      this.storage.set(`${incomeForTheMonth}-income`, this.monthlyIncome);
     }
 
   }

@@ -11,7 +11,9 @@ export class DashboardPage implements OnInit {
   constructor(private storage: Storage) { }
 
   async ngOnInit() {
-    this.monthlyIncome = await this.storage.get('monthlyIncome');
+    const date = new Date();
+    const incomeForTheMonth = (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
+    this.monthlyIncome = await this.storage.get(`${incomeForTheMonth}-income`);
   }
 
 }
