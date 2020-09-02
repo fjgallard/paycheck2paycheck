@@ -12,6 +12,7 @@ const routes: Routes = [
     loadChildren: () => import('./containers/main-menu/main-menu.module').then( m => m.MainMenuPageModule),
     canActivate: [IntroGuard]
   }
+
 ];
 
 @NgModule({
