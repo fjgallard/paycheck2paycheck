@@ -1,1 +1,2 @@
-export const DEFAULY_MONTHLY_BUDGET_ID = 'mb';
+export const DEFAULT_MONTHLY_BUDGET_ID = 'dmb';
+export const MONTHLY_BUDGET_PREFIX = 'mb';

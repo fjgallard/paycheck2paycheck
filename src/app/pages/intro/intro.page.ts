@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
+import { BudgetService } from '@services/storage/budget.service';
 
 @Component({
   selector: 'app-intro',
@@ -16,10 +17,9 @@ export class IntroPage implements OnInit {
 
   income: number;
 
-  constructor(private storage: Storage, private router: Router) { }
+  constructor(private storage: Storage, private router: Router, private budgetService: BudgetService) { }
 
   async ngOnInit() {
-    console.log(await this.storage.get('income'));
     console.log(await this.storage.get('tutorialSeen'));
   }
 
@@ -33,6 +33,7 @@ export class IntroPage implements OnInit {
     }
 
     await Promise.all([
+      this.budgetService.setDefaultMonthBudget(this.income),
       this.storage.set('tutorialSeen', true)
     ]);
     this.router.navigateByUrl('/');

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Storage }    from '@ionic/storage';
 
-import { DEFAULY_MONTHLY_BUDGET_ID } from '@helper/constants';
+import { DEFAULT_MONTHLY_BUDGET_ID, MONTHLY_BUDGET_PREFIX } from '@helper/constants';
 import { getCurrentMonthId }         from '@helper/functions';
 
 @Injectable({
@@ -15,22 +15,22 @@ export class BudgetService {
 
   // Monthly Budget functions
   getCurrentMonthBudget(): Promise<number> {
-    return this.storage.get(DEFAULY_MONTHLY_BUDGET_ID + '-' + getCurrentMonthId());
+    return this.storage.get(MONTHLY_BUDGET_PREFIX + '-' + getCurrentMonthId());
   }
 
   setCurrentMonthBudget(amount: number) {
-    return this.storage.set(DEFAULY_MONTHLY_BUDGET_ID + '-' + getCurrentMonthId(), amount);
+    return this.storage.set(MONTHLY_BUDGET_PREFIX + '-' + getCurrentMonthId(), amount);
   }
 
   getCustomMonthBudget(mmyyyy: string) {
-    return this.storage.get(`${DEFAULY_MONTHLY_BUDGET_ID}-${mmyyyy}`);
+    return this.storage.get(`${MONTHLY_BUDGET_PREFIX}-${mmyyyy}`);
   }
 
   getDefaultMonthBudget(): Promise<number> {
-    return this.storage.get(DEFAULY_MONTHLY_BUDGET_ID);
+    return this.storage.get(DEFAULT_MONTHLY_BUDGET_ID);
   }
 
   setDefaultMonthBudget(amount: number) {
-    return this.storage.set(DEFAULY_MONTHLY_BUDGET_ID, amount);
+    return this.storage.set(DEFAULT_MONTHLY_BUDGET_ID, amount);
   }
 }
