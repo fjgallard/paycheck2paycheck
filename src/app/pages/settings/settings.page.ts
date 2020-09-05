@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { IncomeService } from '@services/storage/income.service';
 
 @Component({
   selector: 'app-settings',
@@ -11,32 +12,22 @@ export class SettingsPage implements OnInit {
   monthlyIncome: number;
   customIncome: number;
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage, private incomeService: IncomeService) { }
 
   async ngOnInit() {
-    const date = new Date();
-    const incomeForTheMonth = (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
-    this.monthlyIncome = await this.storage.get('monthlyIncome');
-    this.customIncome = await this.storage.get(`${incomeForTheMonth}-income`);
+    this.monthlyIncome = await this.incomeService.getDefaultMonthIncome();
+    this.customIncome = await this.incomeService.getCurrentMonthIncome();
   }
 
-  updateCustomIncome() {
+  async updateCustomIncome() {
     if (this.customIncome) {
-      const date = new Date();
-      const incomeForTheMonth = (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
-
-      this.storage.set(`${incomeForTheMonth}-income`, this.customIncome);
+      await this.incomeService.setCurrentMonthIncome(this.customIncome);
     }
   }
 
-  updateMonthlyIncome() {
+  async updateMonthlyIncome() {
     if (this.monthlyIncome) {
-      this.storage.set('monthlyIncome', this.monthlyIncome);
-      // set current income to this income
-      const date = new Date();
-      const incomeForTheMonth = (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
-
-      this.storage.set(`${incomeForTheMonth}-income`, this.monthlyIncome);
+      await this.incomeService.setDefaultMonthIncome(this.monthlyIncome);
     }
 
   }
