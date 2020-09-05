@@ -9,6 +9,47 @@
 
 <ion-content class="ion-padding">
 
+  <ion-list>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <i class="fas fa-user"></i>
+      </ion-avatar>
+      <ion-label>
+        <h2>Membership Settings</h2>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-icon name="mail-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>Contact us</h2>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-icon name="wallet-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>Default Max Budget</h2>
+        <p>Value: {{ monthlyBudget || 0 }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>Sign Out</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!--
   <ion-label>Set Monthly Income</ion-label>
   <ion-input type="number" placeholder="0" [(ngModel)]="monthlyBudget"></ion-input>
   <ion-button (click)="updateMonthlyBudget()">Update Monthly Income</ion-button>
@@ -19,5 +60,5 @@
   <ion-input type="number" placeholder="0" [(ngModel)]="customBudget"></ion-input>
   <ion-button (click)="updateCustomBudget()">Update Custom Income</ion-button>
 
-  
+   -->
 </ion-content>
