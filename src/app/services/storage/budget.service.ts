@@ -13,23 +13,24 @@ export class BudgetService {
   constructor(private storage: Storage) {
   }
 
+  // Monthly Budget functions
   getCurrentMonthBudget(): Promise<number> {
     return this.storage.get(getCurrentMonthId());
   }
 
-  setCurrentMonthIncome(amount: number) {
+  setCurrentMonthBudget(amount: number) {
     return this.storage.set(getCurrentMonthId(), amount);
   }
 
-  getCustomMonthIncome(mmyyyy: string) {
+  getCustomMonthBudget(mmyyyy: string) {
     return this.storage.get(`i-${mmyyyy}`);
   }
 
-  getDefaultMonthIncome(): Promise<number> {
+  getDefaultMonthBudget(): Promise<number> {
     return this.storage.get(DEFAULY_MONTHLY_BUDGET_ID);
   }
 
-  setDefaultMonthIncome(amount: number) {
+  setDefaultMonthBudget(amount: number) {
     return this.storage.set(DEFAULY_MONTHLY_BUDGET_ID, amount);
   }
 }
