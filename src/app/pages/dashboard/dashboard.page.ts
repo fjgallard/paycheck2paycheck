@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { IncomeService } from '@services/storage/income.service';
+import { Storage }           from '@ionic/storage';
+import { IncomeService }     from '@services/storage/income.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -10,7 +10,7 @@ export class DashboardPage implements OnInit {
 
   monthlyIncome: number;
 
-  constructor(private storage: Storage, private incomeService: IncomeService) { }
+  constructor(private incomeService: IncomeService) { }
 
   async ngOnInit() {
     this.monthlyIncome = await this.incomeService.getCurrentMonthIncome();

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { IncomeService } from '@services/storage/income.service';
+import { IncomeService }     from '@services/storage/income.service';
 
 @Component({
   selector: 'app-settings',
@@ -12,7 +11,7 @@ export class SettingsPage implements OnInit {
   monthlyIncome: number;
   customIncome: number;
 
-  constructor(private storage: Storage, private incomeService: IncomeService) { }
+  constructor(private incomeService: IncomeService) { }
 
   async ngOnInit() {
     this.monthlyIncome = await this.incomeService.getDefaultMonthIncome();
