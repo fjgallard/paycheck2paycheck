@@ -15,15 +15,15 @@ export class BudgetService {
 
   // Monthly Budget functions
   getCurrentMonthBudget(): Promise<number> {
-    return this.storage.get(getCurrentMonthId());
+    return this.storage.get(DEFAULY_MONTHLY_BUDGET_ID + '-' + getCurrentMonthId());
   }
 
   setCurrentMonthBudget(amount: number) {
-    return this.storage.set(getCurrentMonthId(), amount);
+    return this.storage.set(DEFAULY_MONTHLY_BUDGET_ID + '-' + getCurrentMonthId(), amount);
   }
 
   getCustomMonthBudget(mmyyyy: string) {
-    return this.storage.get(`i-${mmyyyy}`);
+    return this.storage.get(`${DEFAULY_MONTHLY_BUDGET_ID}-${mmyyyy}`);
   }
 
   getDefaultMonthBudget(): Promise<number> {
