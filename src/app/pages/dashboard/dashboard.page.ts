@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { IncomeService } from '@services/storage/income.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -8,16 +9,15 @@ import { Storage } from '@ionic/storage';
 export class DashboardPage implements OnInit {
 
   monthlyIncome: number;
-  constructor(private storage: Storage) { }
+
+  constructor(private storage: Storage, private incomeService: IncomeService) { }
 
   async ngOnInit() {
-    const date = new Date();
-    const incomeForTheMonth = (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
-    this.monthlyIncome = await this.storage.get(`${incomeForTheMonth}-income`);
+    this.monthlyIncome = await this.incomeService.getCurrentMonthIncome();
 
     if (!this.monthlyIncome) {
-      this.monthlyIncome = await this.storage.get('monthlyIncome');
-      this.storage.set(`${incomeForTheMonth}-income`, this.monthlyIncome);
+      this.monthlyIncome = await this.incomeService.getDefaultMonthIncome();
+      this.incomeService.setCurrentMonthIncome(this.monthlyIncome);
     }
   }
 
