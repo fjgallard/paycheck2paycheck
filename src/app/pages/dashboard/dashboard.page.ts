@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { BudgetService } from '@services/storage/budget.service';
+import { MenuController } from '@ionic/angular';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -10,7 +11,10 @@ export class DashboardPage implements OnInit {
 
   monthlyBudget: number;
 
-  constructor(private budgetService: BudgetService) { }
+  constructor(
+    private menu: MenuController,
+    private budgetService: BudgetService
+  ) { }
 
   async ngOnInit() {
     this.monthlyBudget = await this.getCurrentMonthBudget();
@@ -19,6 +23,10 @@ export class DashboardPage implements OnInit {
       this.monthlyBudget = await this.getDefaultMonthBudget();
       this.setCurrentMonthBudget(this.monthlyBudget);
     }
+  }
+
+  openMenu() {
+    this.menu.open();
   }
 
   private getCurrentMonthBudget() {

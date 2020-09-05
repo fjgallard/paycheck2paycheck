@@ -11,7 +11,9 @@ export class SettingsPage implements OnInit {
   monthlyBudget: number;
   customBudget: number;
 
-  constructor(private budgetService: BudgetService) { }
+  constructor(
+    private budgetService: BudgetService
+  ) { }
 
   async ngOnInit() {
     this.monthlyBudget = await this.getDefaultMonthBudget();

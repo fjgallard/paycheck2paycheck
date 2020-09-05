@@ -25,6 +25,17 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+// Default ion-header styling
+ion-header {
+
+  ion-title {
+    font-weight: 700;
+    padding: 0;
+  }
+}
+
+
+
 // General commonly used CSS for containers
 .flex {
   display: flex;
