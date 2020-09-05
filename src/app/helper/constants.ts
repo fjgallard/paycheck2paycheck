@@ -1,0 +1,1 @@
+export const DEFAULY_MONTHLY_BUDGET_ID = 'mb';

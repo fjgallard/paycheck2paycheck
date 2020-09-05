@@ -5,6 +5,7 @@
     "paths": {
       "@components/*": [ "src/app/components/*" ],
       "@guards/*": [ "src/app/guards/*" ],
+      "@helper/*": [ "src/app/helper/*" ],
       "@interceptors/*": [ "src/app/interceptors/*" ],
       "@modals/*": [ "src/app/modals/*" ],
       "@models/*": [ "src/app/models/*" ],
