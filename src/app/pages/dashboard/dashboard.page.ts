@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Storage }           from '@ionic/storage';
-import { IncomeService }     from '@services/storage/income.service';
+
+import { BudgetService } from '@services/storage/budget.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -8,17 +8,29 @@ import { IncomeService }     from '@services/storage/income.service';
 })
 export class DashboardPage implements OnInit {
 
-  monthlyIncome: number;
+  monthlyBudget: number;
 
-  constructor(private incomeService: IncomeService) { }
+  constructor(private budgetService: BudgetService) { }
 
   async ngOnInit() {
-    this.monthlyIncome = await this.incomeService.getCurrentMonthIncome();
+    this.monthlyBudget = await this.getCurrentMonthBudget();
 
-    if (!this.monthlyIncome) {
-      this.monthlyIncome = await this.incomeService.getDefaultMonthIncome();
-      this.incomeService.setCurrentMonthIncome(this.monthlyIncome);
+    if (!this.monthlyBudget) {
+      this.monthlyBudget = await this.getDefaultMonthBudget();
+      this.setCurrentMonthBudget(this.monthlyBudget);
     }
+  }
+
+  private getCurrentMonthBudget() {
+    return this.budgetService.getCurrentMonthBudget();
+  }
+
+  private getDefaultMonthBudget() {
+    return this.budgetService.getDefaultMonthBudget();
+  }
+
+  private setCurrentMonthBudget(budget: number) {
+    return this.budgetService.setCurrentMonthBudget(budget);
   }
 
 }

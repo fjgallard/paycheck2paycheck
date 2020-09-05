@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IncomeService }     from '@services/storage/income.service';
+import { BudgetService } from '@services/storage/budget.service';
 
 @Component({
   selector: 'app-settings',
@@ -8,27 +8,39 @@ import { IncomeService }     from '@services/storage/income.service';
 })
 export class SettingsPage implements OnInit {
 
-  monthlyIncome: number;
-  customIncome: number;
+  monthlyBudget: number;
+  customBudget: number;
 
-  constructor(private incomeService: IncomeService) { }
+  constructor(private budgetService: BudgetService) { }
 
   async ngOnInit() {
-    this.monthlyIncome = await this.incomeService.getDefaultMonthIncome();
-    this.customIncome = await this.incomeService.getCurrentMonthIncome();
+    this.monthlyBudget = await this.getDefaultMonthBudget();
+    this.customBudget = await this.getCurrentMonthBudget();
   }
 
-  async updateCustomIncome() {
-    if (this.customIncome) {
-      await this.incomeService.setCurrentMonthIncome(this.customIncome);
+  async updateCustomBudget() {
+    if (this.customBudget) {
+      this.setCurrentMonthBudget(this.customBudget);
     }
   }
 
-  async updateMonthlyIncome() {
-    if (this.monthlyIncome) {
-      await this.incomeService.setDefaultMonthIncome(this.monthlyIncome);
+  async updateMonthlyBudget() {
+    if (this.monthlyBudget) {
+      await this.budgetService.setDefaultMonthBudget(this.monthlyBudget);
     }
 
+  }
+
+  private getCurrentMonthBudget() {
+    return this.budgetService.getCurrentMonthBudget();
+  }
+
+  private getDefaultMonthBudget() {
+    return this.budgetService.getDefaultMonthBudget();
+  }
+
+  private setCurrentMonthBudget(budget: number) {
+    return this.budgetService.setCurrentMonthBudget(budget);
   }
 
 }
