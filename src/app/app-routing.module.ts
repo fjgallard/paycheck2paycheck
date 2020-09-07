@@ -11,7 +11,13 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./containers/main-menu/main-menu.module').then( m => m.MainMenuPageModule),
     canActivate: [IntroGuard]
+  },
+  {
+    path: 'main-tab',
+    loadChildren: () => import('./containers/main-tab/main-tab.module').then( m => m.MainTabPageModule),
+    canActivate: [IntroGuard]
   }
+
 
 ];
 
