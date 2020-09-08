@@ -19,6 +19,14 @@ const routes: Routes = [
       {
         path: 'budgets',
         loadChildren: () => import('@pages/budgets/budgets.module').then( m => m.BudgetsPageModule)
+      },
+      {
+        path: 'category/:id',
+        loadChildren: () => import('@pages/category/category.module').then( m => m.CategoryPageModule)
+      },
+      {
+        path: 'category/new',
+        loadChildren: () => import('@pages/category/category.module').then( m => m.CategoryPageModule)
       }
     ]
   }
