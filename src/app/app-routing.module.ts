@@ -8,12 +8,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/intro/intro.module').then( m => m.IntroPageModule)
   },
   {
-    path: '',
+    path: 'sidenav',
     loadChildren: () => import('./containers/main-menu/main-menu.module').then( m => m.MainMenuPageModule),
     canActivate: [IntroGuard]
   },
   {
-    path: 'main-tab',
+    path: '',
     loadChildren: () => import('./containers/main-tab/main-tab.module').then( m => m.MainTabPageModule),
     canActivate: [IntroGuard]
   }
