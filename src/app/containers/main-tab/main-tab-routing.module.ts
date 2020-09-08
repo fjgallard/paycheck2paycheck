@@ -6,7 +6,21 @@ import { MainTabPage } from './main-tab.page';
 const routes: Routes = [
   {
     path: '',
-    component: MainTabPage
+    component: MainTabPage,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('@pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+      },
+      {
+        path: 'settings',
+        loadChildren: () => import('@pages/settings/settings.module').then( m => m.SettingsPageModule)
+      },
+      {
+        path: 'budgets',
+        loadChildren: () => import('@pages/budgets/budgets.module').then( m => m.BudgetsPageModule)
+      }
+    ]
   }
 ];
 
