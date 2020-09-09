@@ -9,7 +9,7 @@ const routes: Routes = [
     component: MainTabPage,
     children: [
       {
-        path: '',
+        path: 'dashboard',
         loadChildren: () => import('@pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
       },
       {
