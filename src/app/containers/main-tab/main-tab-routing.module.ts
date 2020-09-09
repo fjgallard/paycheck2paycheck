@@ -27,6 +27,10 @@ const routes: Routes = [
       {
         path: 'category/new',
         loadChildren: () => import('@pages/category/category.module').then( m => m.CategoryPageModule)
+      },
+      {
+        path: 'categories',
+        loadChildren: () => import('@pages/categories/categories.module').then( m => m.CategoriesPageModule)
       }
     ]
   }
