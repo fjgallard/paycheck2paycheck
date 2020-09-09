@@ -4,8 +4,9 @@ import { Storage }    from '@ionic/storage';
 import { CATEGORY_PREFIX } from '@helper/constants';
 
 export interface Category {
+  id          : string,
   name        : string,
-  icon        : string,
+  icon?       : string,
   description?: string,
   type?       : CategoryTypes | number
 };
@@ -25,11 +26,16 @@ export class CategoryService {
   async addCategory(category: Category) {
     let categories = await this.storage.get(CATEGORY_PREFIX);
     if (!categories) {
-      categories = [];
+      categories = {};
     }
 
-    categories.push(category);
+    categories[category.id] = category;
     return this.storage.set(CATEGORY_PREFIX, categories);
+  }
+
+  async getCategory(id: string) {
+    const categories = await this.storage.get(CATEGORY_PREFIX);
+    return categories[id];
   }
 
   getCategories() {

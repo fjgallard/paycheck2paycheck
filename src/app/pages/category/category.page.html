@@ -6,4 +6,21 @@
 
 <ion-content>
 
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <ion-input formControlName="name" placeholder="name"></ion-input>
+    <ion-input formControlName="icon" placeholder="icon"></ion-input>
+    <ion-input formControlName="description" placeholder="description"></ion-input>
+    
+    <ion-item>
+      <ion-label>Type</ion-label>
+      <ion-select formControlName="type" interface="popover">
+        <ion-select-option value="0">Expense</ion-select-option>
+        <ion-select-option value="1">Income</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button type="submit">Submit</ion-button>
+    
+  </form>
+
 </ion-content>
