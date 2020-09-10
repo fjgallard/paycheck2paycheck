@@ -20,6 +20,7 @@ export class CategoryPage implements OnInit {
   ) {
     this.categoryForm = this.fb.group({
       name       : [ '', [ Validators.required ] ],
+      limit      : [ '', [ Validators.required ] ],
       icon       : [ '' ],
       description: [ '' ],
       type       : [ '' ]
@@ -54,11 +55,12 @@ export class CategoryPage implements OnInit {
     }
 
     const newCategory = {
-      id: id.toString(),
-      name: this.categoryForm.get('name').value,
-      icon: this.categoryForm.get('icon').value,
+      id        : id.toString(),
+      name      : this.categoryForm.get('name').value,
+      limit     : this.categoryForm.get('limit').value,
+      icon      : this.categoryForm.get('icon').value,
       desciption: this.categoryForm.get('description').value,
-      type: this.categoryForm.get('type').value
+      type      : this.categoryForm.get('type').value
     }
 
     this.categoriesService.addCategory(newCategory);

@@ -9,6 +9,7 @@ import { CategoryService, Category } from '@services/storage/category.service';
 export class CategoriesPage implements OnInit {
 
   categories: Category[];
+
   constructor(private categoriesService: CategoryService) {
     this.categories = [];
   }

@@ -6,6 +6,7 @@ import { CATEGORY_PREFIX } from '@helper/constants';
 export interface Category {
   id          : string,
   name        : string,
+  limit?      : number,
   icon?       : string,
   description?: string,
   type?       : CategoryTypes | number
