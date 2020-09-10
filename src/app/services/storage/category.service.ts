@@ -24,7 +24,7 @@ export class CategoryService {
 
   constructor(private storage: Storage) { }
 
-  async addCategory(category: Category) {
+  async setCategory(category: Category) {
     let categories = await this.storage.get(CATEGORY_PREFIX);
     if (!categories) {
       categories = {};
@@ -41,5 +41,9 @@ export class CategoryService {
 
   getCategories() {
     return this.storage.get(CATEGORY_PREFIX);
+  }
+
+  deleteCategory(id: string) {
+    return this.storage.remove(id);
   }
 }

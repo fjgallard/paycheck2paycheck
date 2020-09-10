@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CategoryPage implements OnInit {
 
+  id          : string;
   category    : Category;
   categoryForm: FormGroup;
 
@@ -26,36 +27,32 @@ export class CategoryPage implements OnInit {
       type       : [ '' ]
     });
 
-    this.route.queryParams.subscribe(async result => {
-      if (result.id) {
-        this.category = await this.categoriesService.getCategory(result.id);
-      }
-
-      if (this.category) {
-        this.categoryForm = this.fb.group({
-          name       : [ this.category.name, [ Validators.required ] ],
-          icon       : [ this.category.icon ],
-          description: [ this.category.description ],
-          type       : [ this.category.type ]
-        });
-      }
-
-    });
-
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id) {
+      this.category = await this.categoriesService.getCategory(this.id);
+    }
+
+    if (this.category) {
+      this.categoryForm.get('name').setValue(this.category.name);
+      this.categoryForm.get('limit').setValue(this.category.limit);
+      this.categoryForm.get('icon').setValue(this.category.icon);
+      this.categoryForm.get('description').setValue(this.category.description);
+      this.categoryForm.get('type').setValue(this.category.type);
+    }
   }
 
   async onSubmit() {
     const categories = await this.categoriesService.getCategories();
-    let id = 0;
-    if (categories) {
-      id = Object.keys(categories).length;
+
+    if (categories && !this.id) {
+      this.id = Object.keys(categories).length.toString();
     }
 
     const newCategory = {
-      id        : id.toString(),
+      id        : this.id,
       name      : this.categoryForm.get('name').value,
       limit     : this.categoryForm.get('limit').value,
       icon      : this.categoryForm.get('icon').value,
@@ -63,7 +60,7 @@ export class CategoryPage implements OnInit {
       type      : this.categoryForm.get('type').value
     }
 
-    this.categoriesService.addCategory(newCategory);
+    this.categoriesService.setCategory(newCategory);
   }
 
 }
