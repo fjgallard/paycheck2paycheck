@@ -4,7 +4,7 @@
 
     <div class="budget flex-col justify-center align-center">
       <ion-text class="budget__title" color="light">
-        Budget
+        Budget <ion-icon name="create-outline"></ion-icon>
       </ion-text>
       <ion-text class="budget__balance">
         {{ 24000 | currency: 'PHP' }}
@@ -26,7 +26,12 @@
       </div>
 
       <ion-card class="categories-card ion-no-padding">
-        <ion-text class="categories-card__title">Categories</ion-text>
+        <div class="categories-header flex justify-between align-center">
+          <ion-text class="categories-card__title">Categories</ion-text>
+          <ion-text class="categories-card__add">Add Category</ion-text>
+        </div>
+        
+        
         <div class="categories">
           <ion-list class="categories-list">
             <ion-item class="category">

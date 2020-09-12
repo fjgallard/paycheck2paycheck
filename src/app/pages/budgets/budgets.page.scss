@@ -39,13 +39,23 @@
   margin: 0;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   height: 100%;
   padding-top: 1rem;
+}
+
+.categories-header {
+  margin: 0 1rem;
 
   .categories-card__title {
     font-size: 1rem;
-    margin: 1rem;
     color: var(--ion-color-light-contrast);
+  }
+
+  .categories-card__add {
+    font-size: 0.75rem;
+    color: var(--ion-color-primary);
   }
 }
 
