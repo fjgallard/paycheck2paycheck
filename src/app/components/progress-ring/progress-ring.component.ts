@@ -10,12 +10,15 @@ export class ProgressRingComponent implements OnInit, AfterViewInit {
   @ViewChild('circle') circle: ElementRef<any>;
 
   @Input() radius     : number;
+  @Input() strokeColor: string;
   @Input() strokeWidth: number;
   @Input() svgHeight  : number;
   @Input() svgWidth   : number;
   @Input() progress   : number;
 
-  constructor() {}
+  constructor() {
+    this.strokeColor = this.strokeColor || 'blue';
+  }
 
   ngOnInit() {
   }
@@ -23,6 +26,7 @@ export class ProgressRingComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     const circleStyle = this.circle.nativeElement.style;
 
+    circleStyle.stroke = this.strokeColor;
     circleStyle.r = this.radius;
     circleStyle.cx = this.radius + this.strokeWidth;
     circleStyle.cy = this.radius + this.strokeWidth;

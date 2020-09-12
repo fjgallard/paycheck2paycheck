@@ -1,9 +1,40 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>budgets</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+
+  <div class="budget">
+    <ion-text>
+      Budget left
+    </ion-text>
+    <ion-text>
+      {{ 1492 | currency: 'PHP' }}
+    </ion-text>
+  </div>
+
+  <div class="categories">
+    <ion-list class="categories-list">
+      <ion-item class="category">
+        <ion-avatar slot="start">
+          <div class="progress-ring">
+            <app-progress-ring
+            [radius]="19"
+            [strokeWidth]="1"
+            [progress]="0.27">
+            </app-progress-ring>
+          </div>
+          <ion-icon name="fast-food-sharp"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <div class="label">
+            <div class="label-left">
+              <h2>Food</h2>
+              <p class="subtitle">27%</p>
+            </div>
+            <div class="label-right">
+              P5000
+            </div>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
 
 </ion-content>
