@@ -1,20 +1,10 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="openMenu()"><ion-icon name="menu-outline"></ion-icon></ion-button>
-    </ion-buttons>
-    <ion-title>Dashboard</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
-  <ion-list>
-    <ion-item>
-      <ion-label>
-        <p>Budget</p>
-        <h2>{{ monthlyBudget || 'Unset' }}</h2>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  <div class="budget flex-col justify-center align-center">
+    <ion-text class="budget__title" color="light">
+      Budget left
+    </ion-text>
+    <ion-text class="budget__balance">
+      {{ 1492 | currency: 'PHP' }}
+    </ion-text>
+  </div>
 </ion-content>

@@ -1,52 +1,61 @@
 <ion-content color="primary">
 
   <div class="content">
+
     <div class="budget flex-col justify-center align-center">
       <ion-text class="budget__title" color="light">
-        Budget left
+        Budget
       </ion-text>
       <ion-text class="budget__balance">
-        {{ 1492 | currency: 'PHP' }}
+        {{ 24000 | currency: 'PHP' }}
       </ion-text>
     </div>
 
     <div class="details">
       <div class="monthly-budget">
         <div class="monthly-header flex justify-between">
-          <div class="title">Month budget <span class="amount">P9120</span></div>
+          <div class="title">Month budget</div>
           <div class="percentage">50%</div>
         </div>
         
-        <ion-progress-bar value="0.5"></ion-progress-bar>
+        <ion-progress-bar color="primary" value="0.5"></ion-progress-bar>
+
+        <div class="monthly-subtitle">
+          {{ 12000 }}/{{ 24000 }}
+        </div>
       </div>
 
-      <div class="categories">
-        <ion-list class="categories-list">
-          <ion-item class="category">
-            <ion-avatar slot="start">
-              <div class="progress-ring">
-                <app-progress-ring
-                [radius]="19"
-                [strokeWidth]="1"
-                [progress]="0.27">
-                </app-progress-ring>
-              </div>
-              <ion-icon name="fast-food-sharp"></ion-icon>
-            </ion-avatar>
-            <ion-label>
-              <div class="label">
-                <div class="label-left">
-                  <h2>Food</h2>
-                  <p class="subtitle">27%</p>
+      <ion-card class="categories-card ion-no-padding">
+        <ion-text class="categories-card__title">Categories</ion-text>
+        <div class="categories">
+          <ion-list class="categories-list">
+            <ion-item class="category">
+              <ion-avatar slot="start">
+                <div class="progress-ring">
+                  <app-progress-ring
+                  [radius]="18"
+                  [strokeWidth]="1"
+                  [progress]="0.27">
+                  </app-progress-ring>
                 </div>
-                <div class="label-right">
-                  P5000
+                <ion-icon name="fast-food-sharp"></ion-icon>
+              </ion-avatar>
+              <ion-label>
+                <div class="label flex justify-between align-center">
+                  <div class="label-left flex-col">
+                    <ion-text class="label-left__title">Food</ion-text>  
+                    <ion-text class="label-left__subtitle">27%</ion-text>
+                  </div>
+                  <div class="label-right">
+                    P5000
+                  </div>
                 </div>
-              </div>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </div>
+              </ion-label>
+            </ion-item>
+
+          </ion-list>
+        </div>
+      </ion-card>
     </div>
   </div>
 
