@@ -21,11 +21,11 @@ const routes: Routes = [
         loadChildren: () => import('@pages/budgets/budgets.module').then( m => m.BudgetsPageModule)
       },
       {
-        path: 'category/:id',
+        path: 'category/new',
         loadChildren: () => import('@pages/category/category.module').then( m => m.CategoryPageModule)
       },
       {
-        path: 'category/new',
+        path: 'category/:id',
         loadChildren: () => import('@pages/category/category.module').then( m => m.CategoryPageModule)
       },
       {

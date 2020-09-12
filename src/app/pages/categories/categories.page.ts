@@ -21,6 +21,11 @@ export class CategoriesPage implements OnInit {
   async ionViewDidEnter() {
     this.categories = [];
     const categories = await this.categoriesService.getCategories();
+
+    if (!categories) {
+      return;
+    }
+
     const keys = Object.keys(categories);
     keys.forEach(key => {
       this.categories.push(categories[key])

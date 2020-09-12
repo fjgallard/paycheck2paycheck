@@ -45,7 +45,20 @@ export class CategoryService {
 
   async deleteCategory(id: string) {
     const categories = await this.storage.get(CATEGORY_PREFIX);
+    const idNum = Number(id);
+    const categoriesLength = Object.keys(categories).length;
     delete categories[id];
+
+    for (let index = idNum + 1; index < categoriesLength; index++) {
+      const decrementedId = Number(categories[index].id) - 1;
+      categories[index].id = decrementedId.toString();
+      categories[index-1] = categories[index];
+
+      if (index === categoriesLength - 1) {
+        delete categories[index];
+      }
+    }
+
     return this.storage.set(CATEGORY_PREFIX, categories);
   }
 }

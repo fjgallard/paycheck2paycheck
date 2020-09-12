@@ -12,6 +12,7 @@ export class CategoryPage implements OnInit {
 
   id          : string;
   category    : Category;
+  categories  : Category[];
   categoryForm: FormGroup;
 
   constructor(
@@ -31,8 +32,14 @@ export class CategoryPage implements OnInit {
 
   async ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.categories = await this.categoriesService.getCategories();
+
     if (this.id) {
       this.category = await this.categoriesService.getCategory(this.id);
+    } else if (this.categories) {
+      this.id = Object.keys(this.categories).length.toString();
+    } else if (!this.categories) {
+      this.id = '0';
     }
 
     if (this.category) {
@@ -45,12 +52,6 @@ export class CategoryPage implements OnInit {
   }
 
   async onSubmit() {
-    const categories = await this.categoriesService.getCategories();
-
-    if (categories && !this.id) {
-      this.id = Object.keys(categories).length.toString();
-    }
-
     const newCategory = {
       id        : this.id,
       name      : this.categoryForm.get('name').value,
