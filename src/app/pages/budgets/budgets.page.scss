@@ -1,0 +1,19 @@
+.content {
+  display: grid;
+  grid-template-rows: 40% 60%;
+  // margin-top: var(--nav-height);
+  height: 100%;
+}
+
+.budget {
+
+  .budget__title {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    font-weight: 300;
+  }
+
+  .budget__balance {
+    font-size: 2.5rem;
+  }
+}
