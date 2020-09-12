@@ -1,3 +1,5 @@
+import { MONTHLY_BUDGET_PREFIX } from './constants';
+
 export function getCurrentMonthPrefix() {
   const date = new Date();
   const prefix = (date.getMonth() + 1)  + '-' + date.getFullYear();
@@ -5,11 +7,12 @@ export function getCurrentMonthPrefix() {
   return prefix;
 }
 
-export function getCurrentMonthId() {
-  const date = new Date();
-  const incomeForTheMonth = (date.getMonth() + 1)  + '-' + date.getFullYear();
+export function getCurrentMonthBudgetId() {
+  return MONTHLY_BUDGET_PREFIX + '-' + getCurrentMonthPrefix()
+}
 
-  return incomeForTheMonth;
+export function getCustomMonthBudgetId(mmyyyy: string) {
+  return `${MONTHLY_BUDGET_PREFIX}-${mmyyyy}`;
 }
 
 // Categories
