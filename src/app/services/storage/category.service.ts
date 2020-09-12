@@ -43,7 +43,9 @@ export class CategoryService {
     return this.storage.get(CATEGORY_PREFIX);
   }
 
-  deleteCategory(id: string) {
-    return this.storage.remove(id);
+  async deleteCategory(id: string) {
+    const categories = await this.storage.get(CATEGORY_PREFIX);
+    delete categories[id];
+    return this.storage.set(CATEGORY_PREFIX, categories);
   }
 }
