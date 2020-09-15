@@ -9,14 +9,27 @@ import { BudgetService } from '@services/storage/budget.service';
 export class BudgetsPage implements OnInit {
 
   budget: number;
+  customBudget: number;
 
   constructor(private budgetService: BudgetService) {
-    this.budgetService.getCurrentMonthBudget().then(budget => {
-      this.budget = budget;
-    });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.budget = await this.budgetService.getCurrentMonthBudget();
+    this.budget = this.budget || 0;
+  }
+
+  async updateCustomBudget() {
+    if (this.customBudget) {
+      this.budgetService.setCurrentMonthBudget(this.customBudget);
+    }
+  }
+
+  async updateMonthlyBudget() {
+    if (this.budget) {
+      await this.budgetService.setDefaultMonthBudget(this.budget);
+    }
+
   }
 
 }
