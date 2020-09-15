@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BudgetService } from '@services/storage/budget.service';
+import { IonInput } from '@ionic/angular';
 
 @Component({
   selector: 'app-budgets',
@@ -8,10 +9,15 @@ import { BudgetService } from '@services/storage/budget.service';
 })
 export class BudgetsPage implements OnInit {
 
+  @ViewChild('budgetEditor') budgetEditor: IonInput;
+
   budget: number;
   customBudget: number;
 
+  budgetEditorActive: boolean;
+
   constructor(private budgetService: BudgetService) {
+    this.budgetEditorActive = false;
   }
 
   async ngOnInit() {
@@ -29,7 +35,25 @@ export class BudgetsPage implements OnInit {
     if (this.budget) {
       await this.budgetService.setDefaultMonthBudget(this.budget);
     }
-
   }
+
+  openBudgetEditor() {
+    this.budgetEditorActive = true;
+    this.budgetEditor.setFocus();
+  }
+
+  closeBudgetEditor() {
+    if (this.budgetEditorActive) {
+      this.budgetEditorActive = false;
+      this.budgetService.setCurrentMonthBudget(this.budget);
+    }
+  }
+
+  toggleBudgetEditor() {
+    this.budgetEditorActive = !this.budgetEditorActive;
+    this.budgetEditor.setFocus();
+  }
+
+
 
 }

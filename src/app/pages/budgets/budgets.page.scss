@@ -12,10 +12,16 @@
     margin: 0.5rem 0;
     font-weight: 300;
   }
+}
 
-  .budget__balance {
+.budget-balance {
+
+  .budget-balance__text {
     font-size: 2rem;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif !important;
   }
+  
 }
 
 .details {
@@ -93,4 +99,11 @@
     font-size: 0.75rem;
     color: var(--ion-color-medium);
   }
+}
+
+.editor-overlay {
+  position: absolute;
+  top     : 0;
+  width   : 100vw;
+  height  : 100vh;
 }

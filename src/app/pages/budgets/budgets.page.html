@@ -4,11 +4,24 @@
 
     <div class="budget flex-col justify-center align-center">
       <ion-text class="budget__title" color="light">
-        Budget <ion-icon name="create-outline"></ion-icon>
+        Budget <ion-icon name="create-outline" (click)="openBudgetEditor()"></ion-icon>
       </ion-text>
-      <ion-text class="budget__balance">
-        {{ budget | currency: 'PHP' }}
-      </ion-text>
+      <div class="budget-balance">
+        <ion-text class="budget-balance__text" *ngIf="!budgetEditorActive" (click)="openBudgetEditor()">
+          {{ budget | currency: 'PHP' }}
+        </ion-text>
+
+        <ion-input 
+        type="number" 
+        class="budget-balance__text ion-no-padding"
+        placeholder="0"
+        [(ngModel)]="budget"
+        [ngClass]="{hidden: !budgetEditorActive}"
+        #budgetEditor>
+
+        </ion-input>
+      </div>
+      
     </div>
 
     <div class="details">
@@ -65,3 +78,4 @@
   </div>
 
 </ion-content>
+<div *ngIf="budgetEditorActive" class="editor-overlay" (click)="closeBudgetEditor()"></div>
