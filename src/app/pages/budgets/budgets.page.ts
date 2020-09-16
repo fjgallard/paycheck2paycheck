@@ -71,6 +71,8 @@ export class BudgetsPage implements OnInit {
     this.budgetEditor.setFocus();
   }
 
-
+  navigateToCategory(category: Category) {
+    this.router.navigateByUrl(`category/${category.id}`);
+  }
 
 }
