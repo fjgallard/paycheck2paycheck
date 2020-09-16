@@ -1,16 +1,32 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title>Add Category</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen>
 
   <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-    <ion-input formControlName="name" placeholder="name"></ion-input>
-    <ion-input formControlName="icon" placeholder="icon"></ion-input>
-    <ion-input formControlName="description" placeholder="description"></ion-input>
-    <ion-input formControlName="limit" placeholder="limit" type="number"></ion-input>
+    <ion-item class="form-item">
+      <ion-label class="form-label" position="stacked">Name</ion-label>
+      <ion-input class="form-input" formControlName="name" ></ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label class="form-label" position="stacked">Icon</ion-label>
+      <ion-input class="form-input" formControlName="icon"></ion-input>
+    </ion-item>
+    
+    <ion-item class="form-item">
+      <ion-label class="form-label" position="stacked">Description</ion-label>
+      <ion-input class="form-input" formControlName="description"></ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-label class="form-label" position="stacked">Limit</ion-label>
+      <ion-input class="form-input" formControlName="limit" type="number"></ion-input>
+    </ion-item>
+    
     <ion-item>
       <ion-label>Type</ion-label>
       <ion-select formControlName="type" interface="popover">
