@@ -8,6 +8,11 @@ import { BudgetsPageRoutingModule } from './budgets-routing.module';
 
 import { BudgetsPage } from './budgets.page';
 import { ComponentsModule } from '@components/components.module';
+import { BudgetCategoryComponent } from './budget-category/budget-category.component';
+
+const components = [
+  BudgetCategoryComponent
+];
 
 @NgModule({
   imports: [
@@ -16,8 +21,8 @@ import { ComponentsModule } from '@components/components.module';
     IonicModule,
     BudgetsPageRoutingModule,
 
-    ComponentsModule
+    ComponentsModule,
   ],
-  declarations: [BudgetsPage]
+  declarations: [BudgetsPage, ...components]
 })
 export class BudgetsPageModule {}

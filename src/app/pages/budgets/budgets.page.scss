@@ -69,25 +69,6 @@
   }
 }
 
-.categories-list {
-
-  .progress-ring {
-    position: absolute;
-  }
-
-  ion-avatar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px var(--ion-color-light-shade) solid;
-  }
-
-  ion-icon {
-    z-index: 2;
-    color: var(--ion-color-danger-shade);
-  }
-}
-
 .category {
   padding: 0.5rem 0;
 }

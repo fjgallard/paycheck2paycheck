@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable }      from '@angular/core';
 
-import { Storage }    from '@ionic/storage';
+import { Storage }         from '@ionic/storage';
+
 import { CATEGORY_PREFIX } from '@helper/constants';
 
 export interface Category {
   id          : string,
   name        : string,
+  value?      : number,
   limit?      : number,
   icon?       : string,
   description?: string,
