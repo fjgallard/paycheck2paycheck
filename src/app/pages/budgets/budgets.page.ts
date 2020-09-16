@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BudgetService } from '@services/storage/budget.service';
 import { IonInput } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-budgets',
@@ -16,7 +17,7 @@ export class BudgetsPage implements OnInit {
 
   budgetEditorActive: boolean;
 
-  constructor(private budgetService: BudgetService) {
+  constructor(private budgetService: BudgetService, private router: Router) {
     this.budgetEditorActive = false;
   }
 
@@ -35,6 +36,10 @@ export class BudgetsPage implements OnInit {
     if (this.budget) {
       await this.budgetService.setDefaultMonthBudget(this.budget);
     }
+  }
+
+  addCategory() {
+    this.router.navigateByUrl('category/new');
   }
 
   openBudgetEditor() {

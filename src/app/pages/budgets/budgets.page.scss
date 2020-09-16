@@ -62,6 +62,10 @@
   .categories-card__add {
     font-size: 0.75rem;
     color: var(--ion-color-primary);
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
