@@ -1,20 +1,23 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
     <ion-title>Add Category</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
 
-  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+  <form class="category-form" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
     <ion-item class="form-item">
       <ion-label class="form-label" position="stacked">Name</ion-label>
       <ion-input class="form-input" formControlName="name" ></ion-input>
     </ion-item>
 
     <ion-item class="form-item">
-      <ion-label class="form-label" position="stacked">Icon</ion-label>
-      <ion-input class="form-input" formControlName="icon"></ion-input>
+      <ion-label class="form-label" position="stacked">Limit</ion-label>
+      <ion-input class="form-input" formControlName="limit" type="number"></ion-input>
     </ion-item>
     
     <ion-item class="form-item">
@@ -23,11 +26,17 @@
     </ion-item>
 
     <ion-item class="form-item">
-      <ion-label class="form-label" position="stacked">Limit</ion-label>
-      <ion-input class="form-input" formControlName="limit" type="number"></ion-input>
+      <ion-label class="form-label" position="stacked">Icon</ion-label>
+      <ion-row class="icon-row">
+        <ion-col size="4" *ngFor="let ico of iconList" >
+          <ion-button (click)="setIcon(ico)" expand="block" fill="clear">
+            <ion-icon slot="icon-only" [name]="ico"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </ion-item>
     
-    <ion-item>
+    <ion-item class="hidden">
       <ion-label>Type</ion-label>
       <ion-select formControlName="type" interface="popover">
         <ion-select-option value="0">Expense</ion-select-option>
@@ -35,7 +44,11 @@
       </ion-select>
     </ion-item>
 
-    <ion-button type="submit">Submit</ion-button>
+    <div class="action-btns">
+      <ion-button type="submit">Submit</ion-button>
+      <ion-button>Cancel</ion-button>
+    </div>
+    
     
   </form>
 

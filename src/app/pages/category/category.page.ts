@@ -15,6 +15,10 @@ export class CategoryPage implements OnInit {
   categories  : Category[];
   categoryForm: FormGroup;
 
+  iconList = [
+    'airplane', 'pizza', 'card', 'home', 'basket', 'bus', 'bulb', 'call'
+  ]
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -62,6 +66,10 @@ export class CategoryPage implements OnInit {
     }
 
     this.categoriesService.setCategory(newCategory);
+  }
+
+  setIcon(icon: string) {
+    this.categoryForm.get('icon').setValue(icon);
   }
 
 }

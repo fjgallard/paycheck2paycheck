@@ -4,8 +4,14 @@
 }
 
 ion-toolbar {
-  padding: 1rem;
   padding-top: 0;
+}
+
+.category-form {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .form-label {
@@ -14,4 +20,18 @@ ion-toolbar {
 
 .form-input {
   margin-top: 0.5rem;
+}
+
+.icon-row {
+  padding: 1rem 0;
+}
+
+.action-btns {
+  display: flex;
+  padding: 1rem;
+  // text-align: end;
+
+  ion-button {
+    width: 100%;
+  }
 }
