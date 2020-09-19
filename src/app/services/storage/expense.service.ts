@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EXPENSE_PREFIX } from '@helper/constants';
+import { getCurrentMonthPrefix } from '@helper/functions';
 
 import { Storage }    from '@ionic/storage';
 
@@ -22,10 +23,15 @@ export class ExpenseService {
     return expenses[id];
   }
 
-  async setExpense(expense: Expense) {
-    let expenses = await this.storage.get(EXPENSE_PREFIX);
+  async setExpense(expense: Expense | Partial<Expense>) {
+    const expensesId = EXPENSE_PREFIX + getCurrentMonthPrefix();
+    let expenses = await this.storage.get(expensesId);
     if (!expenses) {
       expenses = {};
+    }
+
+    if(!expense.id) {
+      expense.id = Object.keys(expenses).length.toString();
     }
 
     expenses[expense.id] = expense;
@@ -35,6 +41,6 @@ export class ExpenseService {
   deleteExpense() {}
 
   async getExpenses() {
-    return await this.storage.get(EXPENSE_PREFIX);
+    return await this.storage.get(EXPENSE_PREFIX + getCurrentMonthPrefix());
   }
 }
