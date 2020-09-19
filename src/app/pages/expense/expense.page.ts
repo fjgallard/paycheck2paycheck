@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExpensePage implements OnInit {
 
-  constructor() { }
+  expenseIcon: string;
+
+  constructor() {
+    this.expenseIcon = 'wallet';
+  }
 
   ngOnInit() {
+  }
+
+  get category() {
+    return 'Uncategorized';
   }
 
 }

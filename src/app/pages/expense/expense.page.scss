@@ -1,0 +1,97 @@
+* {
+  font-family: 'Montserrat' !important;
+}
+
+.header-section {
+  background: #ffffff;
+  padding: 1rem;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.value {
+
+  ion-icon {
+    font-size: 2rem;
+  }
+
+  ion-button {
+    margin: 0;
+  }
+
+  h3 {
+    margin: 0;
+  }
+
+}
+
+.expense-input {
+  margin-top: 1rem;
+
+  ion-input {
+    font-size: 22px;
+    max-width: 50%;
+    width: 100%;
+    background: transparent;
+    border: none;
+  }
+}
+
+.budget-left {
+
+  ion-text {
+    font-size: small;
+  }
+}
+
+.body-section {
+  background: var(--ion-color-light);
+  border-top-left-radius: 2rem;
+  height: 100%;
+}
+
+.section-item {
+  background: var(--ion-color-light);
+  border-top-left-radius: 2rem;
+
+  .subtitle {
+    color: var(--ion-color-medium);
+  }
+
+  input {
+    background: var(--ion-color-light);
+    border: none;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  ion-input {
+    // font-size: 1.5rem;
+
+    &.name {
+      height: 1.5rem;
+      font-size: 1rem;
+    }
+  }
+
+  ion-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+      border: 1px solid var(--ion-color-medium);
+      border-radius: 1000px;
+      padding: 0.5rem;
+      color: var(--ion-color-primary);
+    }
+  }
+}
+
+#delete-btn {
+  margin: 1rem;
+  float: right;
+}
