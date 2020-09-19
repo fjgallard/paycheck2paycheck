@@ -9,6 +9,8 @@ export class ExpensePage implements OnInit {
 
   expenseIcon: string;
 
+  id         : string;
+
   constructor() {
     this.expenseIcon = 'wallet';
   }
