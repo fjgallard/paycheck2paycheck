@@ -35,6 +35,14 @@ const routes: Routes = [
       {
         path: 'expenses',
         loadChildren: () => import('@pages/expenses/expenses.module').then( m => m.ExpensesPageModule)
+      },
+      {
+        path: 'expense/new',
+        loadChildren: () => import('@pages/expense/expense.module').then( m => m.ExpensePageModule)
+      },
+      {
+        path: 'expense/:id',
+        loadChildren: () => import('@pages/expense/expense.module').then( m => m.ExpensePageModule)
       }
     ]
   }

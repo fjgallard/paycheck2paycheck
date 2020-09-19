@@ -18,7 +18,6 @@ const routes: Routes = [
     loadChildren: () => import('./containers/main-tab/main-tab.module').then( m => m.MainTabPageModule),
     canActivate: [IntroGuard]
   }
-
 ];
 
 @NgModule({
