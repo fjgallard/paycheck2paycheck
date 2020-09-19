@@ -15,15 +15,25 @@ export class CategoryPage implements OnInit {
   categories  : Category[];
   categoryForm: FormGroup;
 
-  iconList = [
-    'airplane', 'pizza', 'card', 'home', 'basket', 'bus', 'bulb', 'call'
-  ]
+  iconListKeys = [];
+
+  iconList = {
+    airplane: false,
+    home: false,
+    pizza: false,
+    card: false,
+    bus: false,
+    basket: false,
+    bulb: false,
+    call: false
+  };
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private categoriesService: CategoryService
   ) {
+    this.iconListKeys = Object.keys(this.iconList);
     this.categoryForm = this.fb.group({
       name       : [ '', [ Validators.required ] ],
       limit      : [ '', [ Validators.required ] ],
@@ -52,6 +62,7 @@ export class CategoryPage implements OnInit {
       this.categoryForm.get('icon').setValue(this.category.icon);
       this.categoryForm.get('description').setValue(this.category.description);
       this.categoryForm.get('type').setValue(this.category.type);
+      this.iconList[this.category.icon] = true;
     }
   }
 
@@ -70,6 +81,14 @@ export class CategoryPage implements OnInit {
 
   setIcon(icon: string) {
     this.categoryForm.get('icon').setValue(icon);
+    this.deselectIcons();
+    this.iconList[icon] = true;
+  }
+
+  private deselectIcons() {
+    this.iconListKeys.forEach(key => {
+      this.iconList[key] = false;
+    });
   }
 
 }

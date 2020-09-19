@@ -28,8 +28,11 @@
     <ion-item class="form-item">
       <ion-label class="form-label" position="stacked">Icon</ion-label>
       <ion-row class="icon-row">
-        <ion-col size="4" *ngFor="let ico of iconList" >
-          <ion-button (click)="setIcon(ico)" expand="block" fill="clear">
+        <ion-col size="4" *ngFor="let ico of iconListKeys" >
+          <ion-button *ngIf="!iconList[ico]" (click)="setIcon(ico)" color="medium" expand="block" fill="clear">
+            <ion-icon slot="icon-only" [name]="ico"></ion-icon>
+          </ion-button>
+          <ion-button *ngIf="iconList[ico]" (click)="setIcon(ico)" color="primary" expand="block" fill="clear">
             <ion-icon slot="icon-only" [name]="ico"></ion-icon>
           </ion-button>
         </ion-col>
