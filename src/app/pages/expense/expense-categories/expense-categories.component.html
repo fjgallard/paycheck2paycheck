@@ -1,3 +1,11 @@
-<p>
-  expense-categories works!
-</p>
+<ion-card class="categories-card ion-no-padding">
+  
+  <div class="categories">
+    <ion-list class="categories-list">
+      Categories
+      <ion-item (click)="selectCategory(category)" *ngFor="let category of categories">
+        {{ category.name }}
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-card>

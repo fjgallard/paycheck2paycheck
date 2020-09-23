@@ -35,7 +35,7 @@
       <div class="body-section flex-col justify-between">
     
         <div class="section-items">
-          <ion-list class="section-item">
+          <ion-list class="section-item" (click)="openCategoriesModal()">
             <ion-item color="light">
               <ion-avatar slot="start">
                 <ion-icon name="wallet"></ion-icon>
@@ -78,7 +78,7 @@
         </div>
   
         <div class="action-btns">
-          <ion-button type="submit">Submit</ion-button>
+          <ion-button type="submit" (click)="onSubmit()">Submit</ion-button>
           <ion-button>Cancel</ion-button>
         </div>
       
