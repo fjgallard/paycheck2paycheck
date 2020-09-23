@@ -25,7 +25,7 @@ export class ExpensePage implements OnInit {
   ) {
     this.expenseIcon = 'wallet';
     this.expenseForm = this.fb.group({
-      value    : [ , Validators.required ],
+      value    : [ '' , Validators.required ],
       createdAt: [ '', Validators.required ],
       category : [ '' ]
     });
