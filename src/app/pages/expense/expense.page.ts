@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Category } from '@services/storage/category.service';
 import { Expense, ExpenseService } from '@services/storage/expense.service';
@@ -23,13 +23,14 @@ export class ExpensePage implements OnInit {
     private expenseService: ExpenseService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private modalController: ModalController
   ) {
     this.expense = { id: '', value: 0, createdAt: new Date() }
     this.expenseIcon = 'wallet';
     this.expenseForm = this.fb.group({
       value    : [ '' , Validators.required ],
-      createdAt: [ '', Validators.required ],
+      createdAt: [ this.expense.createdAt.toISOString(), Validators.required ],
       category : [ '' ]
     });
 
@@ -54,14 +55,17 @@ export class ExpensePage implements OnInit {
   }
 
   onSubmit() {
-    const expense = {
+    const createdAt = new Date(this.expenseForm.get('createdAt').value);
+
+    const expense: Partial<Expense> = {
       value: this.expenseForm.get('value').value,
-      createdAt: this.expenseForm.get('createdAt').value,
+      createdAt,
       category: this.expense.category
     }
 
-    console.log(expense);
-    // this.expenseService.setExpense(expense);
+    this.expenseService.setExpense(expense, createdAt).then(() => {
+      this.router.navigateByUrl('/expenses');
+    });
   }
 
   get category() {
