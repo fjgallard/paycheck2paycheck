@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EXPENSE_PREFIX } from '@helper/constants';
-import { getCurrentMonthPrefix } from '@helper/functions';
+import { convertToPrefixFormat, getCurrentMonthPrefix } from '@helper/functions';
 
 import { Storage }    from '@ionic/storage';
 
@@ -26,12 +26,11 @@ export class ExpenseService {
   async setExpense(expense: Expense | Partial<Expense>, date: Date) {
     const expensesId = EXPENSE_PREFIX;
 
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const id = `e-${month.toString()}-${year.toString()}`;
+    const id = `${EXPENSE_PREFIX}-${convertToPrefixFormat(date)}`;
     const day = date.getDate();
 
     let expenses = await this.storage.get(expensesId);
+
     if (!expenses) {
       expenses = {};
     }
@@ -55,6 +54,28 @@ export class ExpenseService {
   deleteExpense() {}
 
   async getExpenses() {
-    return await this.storage.get(EXPENSE_PREFIX + getCurrentMonthPrefix());
+    return await this.storage.get(EXPENSE_PREFIX);
+  }
+
+  async getExpensesForTheMonth(date: Date) {
+    const expenses = await this.getExpenses();
+    const prefix = convertToPrefixFormat(date);
+
+    return expenses[prefix];
+  }
+
+  async getExpensesForTheDay(date: Date) {
+    const allExpenses = await this.getExpenses();
+    const prefix = EXPENSE_PREFIX + '-' + convertToPrefixFormat(date);
+    const day = date.getDate();
+
+    const expensesObj = allExpenses[prefix][day];
+    const keys = Object.keys(expensesObj);
+
+    const expenses = keys.map(key => {
+      return expensesObj[key] as Expense;
+    });
+
+    return expenses;
   }
 }

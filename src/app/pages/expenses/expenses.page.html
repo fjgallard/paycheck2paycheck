@@ -6,4 +6,9 @@
 
 <ion-content>
 
+  <ul>
+    <li *ngFor="let expense of expenses">
+      {{ expense.category + '-' + expense.value }}
+    </li>
+  </ul>
 </ion-content>
