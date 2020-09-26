@@ -1,14 +1,20 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>expenses</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
 
-  <ul>
-    <li *ngFor="let expense of expenses">
-      {{ expense.category + '-' + expense.value }}
-    </li>
-  </ul>
+  <div class="expense-head">
+    <div class="amount-section">
+      <ion-text class="balance-text">
+        {{ 5000 | currency: 'PHP' }}
+      </ion-text>
+      <ion-select value="today">
+        <ion-select-option value="today">Today</ion-select-option>
+        <ion-select-option value="week">This Week</ion-select-option>
+        <ion-select-option value="dog">Month</ion-select-option>
+      </ion-select>
+      
+    </div>
+    <div class="chart-section"></div>
+    <div class="day-picker-section"></div>
+  </div>
+
+  <div class="expense-body"></div>
 </ion-content>

@@ -7,7 +7,7 @@
         Budget <ion-icon name="create-outline" (click)="openBudgetEditor()"></ion-icon>
       </ion-text>
       <div class="budget-balance">
-        <ion-text class="budget-balance__text" *ngIf="!budgetEditorActive" (click)="openBudgetEditor()">
+        <ion-text class="balance-text budget-balance__text" *ngIf="!budgetEditorActive" (click)="openBudgetEditor()">
           {{ budget | currency: 'PHP' }}
         </ion-text>
 
