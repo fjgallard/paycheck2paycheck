@@ -1,20 +1,81 @@
-<ion-content>
+<ion-content color="light">
 
-  <div class="expense-head">
-    <div class="amount-section">
-      <ion-text class="balance-text">
-        {{ 5000 | currency: 'PHP' }}
-      </ion-text>
-      <ion-select value="today">
-        <ion-select-option value="today">Today</ion-select-option>
-        <ion-select-option value="week">This Week</ion-select-option>
-        <ion-select-option value="dog">Month</ion-select-option>
-      </ion-select>
+  <div class="expenses full-height flex-col">
+    <div class="expense-head">
+      <div class="amount-section">
+        <ion-text class="balance-header">
+          Total Expenses
+        </ion-text>
+        <ion-text class="balance-text">
+          {{ 5000 | currency: 'PHP' }}
+        </ion-text>
+        <ion-select value="today">
+          <ion-select-option value="today">Today</ion-select-option>
+          <ion-select-option value="week">This Week</ion-select-option>
+          <ion-select-option value="dog">Month</ion-select-option>
+        </ion-select>
+        
+      </div>
+      <div class="chart-section"></div>
+      <!--<div class="day-picker-section">
+        <div class="flex justify-around">
+            <ion-text class="date-select">
+              01-20
+            </ion-text>
+            <ion-text class="date-select">
+              02-20
+            </ion-text>
+            <ion-text class="date-select">
+              03-20
+            </ion-text>
+            <ion-text class="date-select">
+              04-20
+            </ion-text>
+            <ion-text class="date-select">
+              05-20
+            </ion-text>
+            <ion-text class="date-select">
+              06-20
+            </ion-text>
+            <ion-text class="date-select">
+              07-20
+            </ion-text>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="expense-body full-height">
+      <ion-card class="expenses-card ion-no-padding">
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <h2 class="expense-category">Food</h2>
+              <ion-text color="medium">
+                <p class="expense-date">10 October 2019</p>
+              </ion-text>
+            </ion-label>
+            <ion-text>1500</ion-text>
+          </ion-item>
+    
+          <ion-item>
+            <ion-label>
+              <h2 class="expense-category">Gas</h2>
+              <ion-text color="medium">
+                <p class="expense-date">10 October 2019</p>
+              </ion-text>
+              
+            </ion-label>
+            <ion-text>700</ion-text>
+          </ion-item>
+        </ion-list>
+      </ion-card>
       
     </div>
-    <div class="chart-section"></div>
-    <div class="day-picker-section"></div>
   </div>
 
-  <div class="expense-body"></div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

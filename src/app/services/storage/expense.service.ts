@@ -1,14 +1,17 @@
-import { Injectable } from '@angular/core';
-import { EXPENSE_PREFIX } from '@helper/constants';
-import { convertToPrefixFormat, getCurrentMonthPrefix } from '@helper/functions';
+import { Injectable }            from '@angular/core';
+
+import { EXPENSE_PREFIX }        from '@helper/constants';
+import { convertToPrefixFormat } from '@helper/functions';
 
 import { Storage }    from '@ionic/storage';
+import { Category } from './category.service';
 
 export interface Expense {
   id?      : string;
   value    : number;
   createdAt: Date;
   category?: string;
+  categoryOb?: Category;
 };
 
 @Injectable({
@@ -66,16 +69,16 @@ export class ExpenseService {
 
   async getExpensesForTheDay(date: Date) {
     const allExpenses = await this.getExpenses();
-    const prefix = EXPENSE_PREFIX + '-' + convertToPrefixFormat(date);
-    const day = date.getDate();
+    const prefix      = EXPENSE_PREFIX + '-' + convertToPrefixFormat(date);
+    const day         = date.getDate();
 
     const expensesObj = allExpenses[prefix][day];
-    const keys = Object.keys(expensesObj);
 
-    const expenses = keys.map(key => {
-      return expensesObj[key] as Expense;
-    });
-
-    return expenses;
+    if (expensesObj) {
+      const keys = Object.keys(expensesObj)
+      return keys.map(key => expensesObj[key] as Expense);
+    } else {
+      return [];
+    }
   }
 }
