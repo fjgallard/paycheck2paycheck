@@ -50,13 +50,13 @@ export class ExpensePage implements OnInit {
     const result = await modal.onWillDismiss();
     const category = result.data.selectedCategory as Category;
 
-    this.expense.category = category.id;
+    this.expense.category = category;
     this.expenseForm.get('category').setValue(category.name)
   }
 
   onSubmit() {
     const createdAt = new Date(this.expenseForm.get('createdAt').value);
-
+    console.log(this.expense.category);
     const expense: Partial<Expense> = {
       value: this.expenseForm.get('value').value,
       createdAt,

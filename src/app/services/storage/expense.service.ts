@@ -10,8 +10,7 @@ export interface Expense {
   id?      : string;
   value    : number;
   createdAt: Date;
-  category?: string;
-  categoryOb?: Category;
+  category?: Category;
 };
 
 @Injectable({
@@ -75,7 +74,7 @@ export class ExpenseService {
     const expensesObj = allExpenses[prefix][day];
 
     if (expensesObj) {
-      const keys = Object.keys(expensesObj)
+      const keys = Object.keys(expensesObj);
       return keys.map(key => expensesObj[key] as Expense);
     } else {
       return [];

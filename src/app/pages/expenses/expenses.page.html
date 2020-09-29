@@ -47,25 +47,16 @@
     <div class="expense-body full-height">
       <ion-card class="expenses-card ion-no-padding">
         <ion-list>
-          <ion-item>
+
+          <ion-item *ngFor="let expense of expenses">
             <ion-label>
-              <h2 class="expense-category">Food</h2>
+              <h2 class="expense-category">{{ expense.category.name }}</h2>
               <ion-text color="medium">
-                <p class="expense-date">10 October 2019</p>
-              </ion-text>
-            </ion-label>
-            <ion-text>1500</ion-text>
-          </ion-item>
-    
-          <ion-item>
-            <ion-label>
-              <h2 class="expense-category">Gas</h2>
-              <ion-text color="medium">
-                <p class="expense-date">10 October 2019</p>
+                <p class="expense-date">{{ expense.createdAt | date:'dd MMMM yyyy' }} </p>
               </ion-text>
               
             </ion-label>
-            <ion-text>700</ion-text>
+            <ion-text>{{ expense.value || 0 }}</ion-text>
           </ion-item>
         </ion-list>
       </ion-card>
