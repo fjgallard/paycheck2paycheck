@@ -67,6 +67,10 @@ export class ExpensePage implements OnInit {
     });
   }
 
+  onCancel() {
+    this.router.navigateByUrl('/expenses');
+  }
+
   get category() {
     return 'Uncategorized';
   }

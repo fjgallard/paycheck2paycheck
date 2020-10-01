@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Category, CategoryService } from '@services/storage/category.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-category',
@@ -31,6 +31,7 @@ export class CategoryPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private categoriesService: CategoryService
   ) {
     this.iconListKeys = Object.keys(this.iconList);
@@ -76,7 +77,12 @@ export class CategoryPage implements OnInit {
       type      : this.categoryForm.get('type').value
     }
 
-    this.categoriesService.setCategory(newCategory);
+    await this.categoriesService.setCategory(newCategory);
+    this.router.navigateByUrl('/budgets');
+  }
+
+  onCancel() {
+    this.router.navigateByUrl('/budgets');
   }
 
   setIcon(icon: string) {
