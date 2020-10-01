@@ -56,7 +56,6 @@ export class ExpensePage implements OnInit {
 
   onSubmit() {
     const createdAt = new Date(this.expenseForm.get('createdAt').value);
-    console.log(this.expense.category);
     const expense: Partial<Expense> = {
       value: this.expenseForm.get('value').value,
       createdAt,

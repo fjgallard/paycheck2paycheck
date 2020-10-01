@@ -59,11 +59,41 @@ export class ExpenseService {
     return await this.storage.get(EXPENSE_PREFIX);
   }
 
-  async getExpensesForTheMonth(date: Date) {
-    const expenses = await this.getExpenses();
-    const prefix = convertToPrefixFormat(date);
+  async getExpensesForTheMonth(date: Date): Promise<Expense[]> {
+    const allExpenses = await this.getExpenses();
+    const prefix   = EXPENSE_PREFIX + '-' + convertToPrefixFormat(date);
+    const expensesObj = allExpenses[prefix];
 
-    return expenses[prefix];
+    if (expensesObj) {
+      const monthExpenses: Expense[] = [];
+      const keys = Object.keys(expensesObj);
+      keys.forEach(key => {
+        const dayExpenses     = expensesObj[key];
+        const dayExpensesKeys = Object.keys(dayExpenses);
+
+        return dayExpensesKeys.forEach(dayKey => monthExpenses.push(dayExpenses[dayKey] as Expense));
+      });
+
+      return monthExpenses;
+    } else {
+      return [];
+    }
+  }
+
+  async getExpensesForTheWeek(date: Date) {
+    const allExpenses = await this.getExpenses();
+    let weekExpenses: Expense[] = [];
+
+    const todayExpenses = await this.getExpensesForTheDay(date);
+    weekExpenses = weekExpenses.concat(todayExpenses);
+    for(let count = 6; count > 0; count--) {
+      const previousDate = date.getDate() - 1;
+      const dayExpenses = await this.getExpensesForTheDay(new Date(date.setDate(previousDate)));
+
+      weekExpenses = weekExpenses.concat(dayExpenses);
+    }
+
+    return weekExpenses;
   }
 
   async getExpensesForTheDay(date: Date) {

@@ -9,6 +9,7 @@ import { Expense, ExpenseService } from '@services/storage/expense.service';
 })
 export class ExpensesPage implements OnInit {
 
+  timePeriod = 'month';
   expenses: Expense[];
 
   constructor(private expensesService: ExpenseService) {
@@ -18,8 +19,32 @@ export class ExpensesPage implements OnInit {
   async ngOnInit() {
     const date = new Date();
     // const date = new Date(2020, 8, 24);
-    this.expenses = await this.expensesService.getExpensesForTheDay(date);
-    this.expenses = this.expenses.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+    this.setTimePeriod();
+  }
+
+  private async showDayExpenses() {
+    this.expenses = await this.expensesService.getExpensesForTheDay(new Date());
+    this.expenses = this.expenses.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  private async showMonthExpenses() {
+    this.expenses = await this.expensesService.getExpensesForTheMonth(new Date());
+    this.expenses = this.expenses.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  private async showWeekExpenses() {
+    this.expenses = await this.expensesService.getExpensesForTheWeek(new Date());
+    this.expenses = this.expenses.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  setTimePeriod() {
+    if (this.timePeriod === 'today') {
+      this.showDayExpenses();
+    } else if (this.timePeriod === 'month') {
+      this.showMonthExpenses();
+    } else if (this.timePeriod === 'week') {
+      this.showWeekExpenses();
+    }
   }
 
 }
