@@ -85,6 +85,12 @@ export class CategoryPage implements OnInit {
     this.router.navigateByUrl('/budgets');
   }
 
+  onDelete() {
+    this.categoriesService.deleteCategory(this.id).then(() => {
+      this.router.navigateByUrl('/budgets');
+    });
+  }
+
   setIcon(icon: string) {
     this.categoryForm.get('icon').setValue(icon);
     this.deselectIcons();
