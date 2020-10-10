@@ -1,7 +1,4 @@
 .content {
-  display: grid;
-  grid-template-rows: 20% 80%;
-  margin-top: var(--nav-height);
   height: 100%;
 }
 
@@ -92,3 +89,35 @@
   width   : 100vw;
   height  : 100vh;
 }
+
+/* Avatar */
+.budget-status {
+  color: var(--ion-color-medium);
+  font-size: small;
+  margin-top: 0.25rem;
+}
+
+.budget-remaining {
+  margin-left: 1rem;
+}
+
+ion-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // border: 1px var(--ion-color-light-shade) solid;
+
+  &.primary-border {
+    border: 1px var(--ion-color-primary-shade) solid;
+  }
+
+  &.danger-border {
+    border: 1px var(--ion-color-danger-shade) solid;
+  }
+
+  &.danger {
+    color: var(--ion-color-danger-contrast);
+    background: var(--ion-color-danger);
+  }
+}
+

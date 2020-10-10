@@ -1,62 +1,69 @@
-<ion-content color="primary">
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Budgets</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
 
   <div class="content">
+    <ion-list>
 
-    <div class="budget flex-col justify-center align-center">
-      <ion-text class="budget__title" color="light">
-        Budget <ion-icon name="create-outline" (click)="openBudgetEditor()"></ion-icon>
-      </ion-text>
-      <div class="budget-balance">
-        <ion-text class="balance-text budget-balance__text" *ngIf="!budgetEditorActive" (click)="openBudgetEditor()">
-          {{ budget | currency: 'PHP' }}
-        </ion-text>
-
-        <ion-input 
-        type="number" 
-        class="budget-balance__text ion-no-padding"
-        placeholder="0"
-        [(ngModel)]="budget"
-        [ngClass]="{hidden: !budgetEditorActive}"
-        #budgetEditor>
-
-        </ion-input>
-      </div>
-      
-    </div>
-
-    <div class="details">
-      <div class="monthly-budget">
-        <div class="monthly-header flex justify-between">
-          <div class="title">Month budget</div>
-          <div class="percentage">50%</div>
-        </div>
+      <!-- Multi-line sliding item with icon options on both sides -->
+      <ion-item-sliding id="item100">
         
-        <ion-progress-bar color="primary" value="0.5"></ion-progress-bar>
+        <ion-item href="#">
+          <ion-avatar class="danger" slot="start">
+            <ion-icon name="fast-food-sharp"></ion-icon>
+          </ion-avatar>
+          <ion-label>
+            <h2>Food</h2>
+            <ion-progress-bar color="danger" value="0.5"></ion-progress-bar>
+          </ion-label>
+          <ion-text class="budget-remaining">
+            {{ 20000 | currency: 'PHP'}}
+          </ion-text>
+        </ion-item>
 
-        <div class="monthly-subtitle">
-          {{ 12000 }}/{{ 24000 }}
-        </div>
-      </div>
+        <ion-item-options side="end">
+          <ion-item-option>
+            <ion-icon slot="icon-only" name="settings"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="danger">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
 
-      <ion-card class="categories-card ion-no-padding">
-        <div class="categories-header flex justify-between align-center">
-          <ion-text class="categories-card__title">Categories</ion-text>
-          <ion-text class="categories-card__add" (click)="addCategory()">Add Category</ion-text>
-        </div>
-        
-        <div class="categories">
-          <ion-list class="categories-list">
-            <budgets-budget-category 
-            *ngFor="let category of categories"
-            (click)="navigateToCategory(category)"
-            [category]="category">
-            </budgets-budget-category>
+      <ion-item-sliding>
+        <ion-item href="#">
+          <ion-avatar class="primary-border" slot="start">
+            <ion-icon color="primary" name="car"></ion-icon>
+          </ion-avatar>
+          <ion-label>
+            <h2>Transportation</h2>
+            <p>A new message in your network</p>
+          </ion-label>
+          <ion-note slot="end">
+            10:45 AM
+          </ion-note>
+        </ion-item>
 
-          </ion-list>
-        </div>
-      </ion-card>
-    </div>
+        <ion-item-options side="end">
+          <ion-item-option>
+            <ion-icon slot="icon-only" name="settings"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="danger">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+
+    </ion-list>
+    
   </div>
 
 </ion-content>
-<div *ngIf="budgetEditorActive" class="editor-overlay" (click)="closeBudgetEditor()"></div>
