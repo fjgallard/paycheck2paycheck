@@ -9,9 +9,11 @@ import { BudgetsPageRoutingModule } from './budgets-routing.module';
 import { BudgetsPage } from './budgets.page';
 import { ComponentsModule } from '@components/components.module';
 import { BudgetCategoryComponent } from './budget-category/budget-category.component';
+import { BudgetComponent } from './budget/budget.component';
 
 const components = [
-  BudgetCategoryComponent
+  BudgetCategoryComponent,
+  BudgetComponent
 ];
 
 @NgModule({
