@@ -41,6 +41,13 @@ export class BudgetService {
     return this.storage.get(this.BUDGET_STORAGE_ID);
   }
 
+  async deleteBudget(id: string) {
+    const budgets = await this.storage.get(this.BUDGET_STORAGE_ID);
+    delete budgets[id];
+
+    return this.storage.set(this.BUDGET_STORAGE_ID, budgets);
+  }
+
 
   // Archive
   // Monthly Budget functions

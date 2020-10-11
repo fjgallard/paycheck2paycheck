@@ -40,6 +40,11 @@ export class BudgetsPage implements OnInit {
     }
   }
 
+  async deleteBudget(id: string) {
+    await this.budgetService.deleteBudget(id);
+    this.reloadBudgets();
+  }
+
   private async reloadBudgets() {
     this.budgets = [];
     const budgetsObj = await this.budgetService.getBudgets();
