@@ -52,9 +52,34 @@ export class BudgetsPage implements OnInit {
       const budgetKeys = Object.keys(budgetsObj);
 
       budgetKeys.forEach(key => {
-        this.budgets.push({ id: key, ...budgetsObj[key] });
+        const budget = budgetsObj[key];
+        this.budgets.push({
+          id: key,
+          cssClass: this.getCssClass(budget),
+          percentage: this.getPercentage(budget),
+          ...budget
+        });
       })
     }
+  }
+
+  private getCssClass(budget: Budget) {
+    const percentage = this.getPercentage(budget);
+    if (percentage <= 0.5) {
+      return 'success';
+    } else if (percentage <= 0.8) {
+      return 'warning';
+    } else {
+      return 'danger';
+    }
+  }
+
+  private getPercentage(budget: Budget) {
+    if (!budget.limit) {
+      return 0;
+    }
+
+    return budget.consumed / budget.limit;
   }
 
 }

@@ -17,14 +17,14 @@
       <ion-item-sliding *ngFor="let budget of budgets">
         
         <ion-item class="budget-item">
-          <ion-avatar class="success" slot="start">
+          <ion-avatar [class]="budget.cssClass" slot="start">
             <ion-icon [name]="budget.icon"></ion-icon>
           </ion-avatar>
 
           <div class="budget-info flex justify-between">
             <ion-label class="budget-label">
               <h2>{{ budget.id }}</h2>
-              <ion-progress-bar color="success" [value]="budget.consumed / budget.limit"></ion-progress-bar>
+              <ion-progress-bar [color]="budget.cssClass" [value]="budget.percentage"></ion-progress-bar>
             </ion-label>
   
             <ion-text class="budget-remaining">
