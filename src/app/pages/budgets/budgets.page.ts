@@ -12,17 +12,23 @@ import { BudgetComponent } from './budget/budget.component';
 })
 export class BudgetsPage implements OnInit {
 
+  budgets = [];
+
   constructor(
     private budgetService    : BudgetService,
-    private categoriesService: CategoryService,
     private router           : Router,
     private modalCtrl        : ModalController
   ) {
-
+    this.budgets = [];
   }
 
   async ngOnInit() {
+    const budgetsObj = await this.budgetService.getBudgets();
+    const budgetKeys = Object.keys(budgetsObj);
 
+    budgetKeys.forEach(key => {
+      this.budgets.push({ id: key, ...budgetsObj[key] });
+    })
   }
 
   async openBudgetModal(budget?: Budget) {
@@ -32,10 +38,10 @@ export class BudgetsPage implements OnInit {
 
     await modal.present();
     const { data } = await modal.onDidDismiss();
-    console.log(data.id);
-    console.log(data.budget);
 
-    this.budgetService.setBudget(data.id, data.budget);
+    if (data.id && data.budget) {
+      this.budgetService.setBudget(data.id, data.budget);
+    }
   }
 
 }

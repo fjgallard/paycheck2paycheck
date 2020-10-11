@@ -31,8 +31,15 @@ export class BudgetService {
       budgets = {};
     }
 
+    budget.consumed = budget.consumed || 0;
+    budget.limit = budget.limit || 0;
+
     budgets[id] = budget;
     return this.storage.set(this.BUDGET_STORAGE_ID, budgets);
+  }
+
+  getBudgets() {
+    return this.storage.get(this.BUDGET_STORAGE_ID);
   }
 
 
