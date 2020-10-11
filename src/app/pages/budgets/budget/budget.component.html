@@ -6,7 +6,7 @@
 
 <ion-content>
   <div class="flex-col full-height">
-    <form class="budget-form">
+    <div class="budget-form">
       <div class="body-section flex-col justify-between">
         <ion-list>
           <ion-item>
@@ -16,7 +16,8 @@
                   <h2>Name</h2>
                   <ion-input 
                   type="text"
-                  class="ion-no-padding">
+                  class="ion-no-padding"
+                  [(ngModel)]="name">
                   </ion-input>
                 </div>
               </div>
@@ -30,7 +31,8 @@
                   <h2>Amount</h2>
                   <ion-input 
                   type="number"
-                  class="ion-no-padding">
+                  class="ion-no-padding"
+                  [(ngModel)]="limit">
                   </ion-input>
                 </div>
               </div>
@@ -46,7 +48,7 @@
               </div>
             </ion-label>
 
-            <ion-select interface="popover">
+            <ion-select interface="popover" [(ngModel)]="duration">
               <ion-select-option value="monthly">Monthly</ion-select-option>
               <ion-select-option value="weekly">Weekly</ion-select-option>
               <ion-select-option value="annual">Annual</ion-select-option>
@@ -72,11 +74,11 @@
       </div>
   
       <div class="action-btns">
-        <ion-button type="submit">Submit</ion-button>
+        <ion-button (click)="save()" type="submit">Submit</ion-button>
         <ion-button (click)="closeModal()">Cancel</ion-button>
       </div>
 
-    </form>
+    </div>
   </div>
   
 </ion-content>

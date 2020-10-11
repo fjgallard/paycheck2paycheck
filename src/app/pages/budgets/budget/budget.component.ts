@@ -10,7 +10,10 @@ import { Budget } from '@services/storage/budget.service';
 export class BudgetComponent implements OnInit {
 
   id: string;
-  budget: Budget;
+  name: string;
+  limit: number;
+  duration: string;
+  icon: string;
 
   iconList = {
     airplane: false,
@@ -27,21 +30,39 @@ export class BudgetComponent implements OnInit {
 
   constructor(private modalCtrl: ModalController) {
     this.iconListKeys = Object.keys(this.iconList);
+    this.duration = 'monthly';
+    this.icon = 'airplane';
+    this.iconList[this.icon] = true;
   }
 
   ngOnInit() {}
 
-  closeModal() {
-    this.modalCtrl.dismiss({
-      id: this.id,
-      budget: this.budget
+  async save() {
+    await this.modalCtrl.dismiss({
+      id: this.name,
+      budget: {
+        name: this.name,
+        limit: this.limit,
+        icon: this.icon,
+        duration: this.duration
+      }
     });
   }
 
+  async closeModal() {
+    await this.modalCtrl.dismiss();
+  }
+
   setIcon(icon: string) {
-    // this.categoryForm.get('icon').setValue(icon);
-    // this.deselectIcons();
+    this.icon = icon;
+    this.deselectIcons();
     this.iconList[icon] = true;
+  }
+
+  private deselectIcons() {
+    this.iconListKeys.forEach(key => {
+      this.iconList[key] = false;
+    });
   }
 
 }

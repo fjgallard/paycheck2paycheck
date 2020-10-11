@@ -29,7 +29,10 @@ export class BudgetsPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: BudgetComponent
     });
-    return await modal.present();
+
+    await modal.present();
+    const data = await modal.onDidDismiss();
+    console.log(data);
   }
 
 }
