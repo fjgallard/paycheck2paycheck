@@ -84,6 +84,16 @@ ion-header {
   }
 }
 
+ion-header {
+  ion-buttons {
+    position: absolute;
+  }
+
+  ion-title {
+    text-align: center;
+  }
+}
+
 // Common component styling 
 .action-btns {
   display: flex;

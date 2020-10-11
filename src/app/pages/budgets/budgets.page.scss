@@ -1,105 +1,26 @@
+
+
 .content {
   height: 100%;
 }
 
-.budget {
+.budget-item {
 
-  .budget__title {
-    font-size: 1rem;
-    margin: 0.5rem 0;
-    font-weight: 300;
+  .budget-info {
+    width: 100%;
   }
-}
 
-.budget-balance {
-
-  .budget-balance__text {
-    font-size: 2rem;
-    text-align: center;
-    font-family: 'Montserrat', sans-serif !important;
+  .budget-label {
+    max-width: 60%;
+    width: 100%;
   }
   
-}
-
-.details {
-  background: var(--ion-color-light);
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-  color: var(--ion-color-light-contrast);
-}
-
-.monthly-budget {
-  padding: 1rem;
-}
-
-.monthly-subtitle {
-  color: var(--ion-color-medium);
-  font-size: 0.75rem;
-  margin-top: 0.25rem;
-}
-
-.categories-card {
-  margin: 0;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  height: 100%;
-  padding-top: 1rem;
-}
-
-.categories-header {
-  margin: 0 1rem;
-
-  .categories-card__title {
-    font-size: 1rem;
-    color: var(--ion-color-light-contrast);
-  }
-
-  .categories-card__add {
-    font-size: 0.75rem;
-    color: var(--ion-color-primary);
-
-    &:hover {
-      cursor: pointer;
-    }
+  .budget-remaining {
+    margin-left: 1rem;
+    max-width: 30%;
   }
 }
 
-.category {
-  padding: 0.5rem 0;
-}
-
-.label-left {
-
-  .label-left__title {
-    font-size: 1rem;
-    font-weight: 700;
-  }
-
-  .label-left__subtitle {
-    font-size: 0.75rem;
-    color: var(--ion-color-medium);
-  }
-}
-
-.editor-overlay {
-  position: absolute;
-  top     : 0;
-  width   : 100vw;
-  height  : 100vh;
-}
-
-/* Avatar */
-.budget-status {
-  color: var(--ion-color-medium);
-  font-size: small;
-  margin-top: 0.25rem;
-}
-
-.budget-remaining {
-  margin-left: 1rem;
-}
 
 ion-avatar {
   display: flex;
@@ -113,6 +34,11 @@ ion-avatar {
 
   &.danger-border {
     border: 1px var(--ion-color-danger-shade) solid;
+  }
+
+  &.success {
+    color: var(--ion-color-success-contrast);
+    background: var(--ion-color-success);
   }
 
   &.danger {
