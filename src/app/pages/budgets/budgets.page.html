@@ -16,7 +16,7 @@
 
       <ion-item-sliding *ngFor="let budget of budgets">
         
-        <ion-item class="budget-item" href="#">
+        <ion-item class="budget-item">
           <ion-avatar class="success" slot="start">
             <ion-icon [name]="budget.icon"></ion-icon>
           </ion-avatar>
@@ -36,7 +36,7 @@
 
         <ion-item-options side="end">
           <ion-item-option>
-            <ion-icon slot="icon-only" name="settings"></ion-icon>
+            <ion-icon slot="icon-only" name="settings" (click)="openBudgetModal(budget)"></ion-icon>
           </ion-item-option>
           <ion-item-option color="danger">
             <ion-icon slot="icon-only" name="trash"></ion-icon>

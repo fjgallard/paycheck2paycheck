@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Budget } from '@services/storage/budget.service';
 
@@ -9,11 +9,10 @@ import { Budget } from '@services/storage/budget.service';
 })
 export class BudgetComponent implements OnInit {
 
-  id: string;
-  name: string;
-  limit: number;
-  duration: string;
-  icon: string;
+  @Input() id: string;
+  @Input() limit: number;
+  @Input() duration: string;
+  @Input() icon: string;
 
   iconList = {
     airplane: false,
@@ -30,8 +29,8 @@ export class BudgetComponent implements OnInit {
 
   constructor(private modalCtrl: ModalController) {
     this.iconListKeys = Object.keys(this.iconList);
-    this.duration = 'monthly';
-    this.icon = 'airplane';
+    this.duration = this.duration || 'monthly';
+    this.icon = this.icon || 'airplane';
     this.iconList[this.icon] = true;
   }
 
@@ -39,9 +38,8 @@ export class BudgetComponent implements OnInit {
 
   async save() {
     await this.modalCtrl.dismiss({
-      id: this.name,
+      id: this.id,
       budget: {
-        name: this.name,
         limit: this.limit,
         icon: this.icon,
         duration: this.duration

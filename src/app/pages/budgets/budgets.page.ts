@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Budget, BudgetService } from '@services/storage/budget.service';
-import { IonInput, ModalController } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { Category, CategoryService } from '@services/storage/category.service';
+import { ModalController } from '@ionic/angular';
 import { BudgetComponent } from './budget/budget.component';
 
 @Component({
@@ -16,7 +14,6 @@ export class BudgetsPage implements OnInit {
 
   constructor(
     private budgetService    : BudgetService,
-    private router           : Router,
     private modalCtrl        : ModalController
   ) {
     this.budgets = [];
@@ -28,7 +25,10 @@ export class BudgetsPage implements OnInit {
 
   async openBudgetModal(budget?: Budget) {
     const modal = await this.modalCtrl.create({
-      component: BudgetComponent
+      component: BudgetComponent,
+      componentProps: {
+        ...budget
+      }
     });
 
     await modal.present();

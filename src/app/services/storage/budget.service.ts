@@ -6,7 +6,6 @@ import { DEFAULT_MONTHLY_BUDGET_ID, MONTHLY_BUDGET_PREFIX } from '@helper/consta
 import { convertToPrefixFormat, getCurrentMonthPrefix } from '@helper/functions';
 
 export interface Budget {
-  name     : string,
   consumed?: number,
   limit?   : number,
   icon?    : string,
@@ -25,7 +24,7 @@ export class BudgetService {
     this.currentMonthId = this.getCurrentMonthBudgetId();
   }
 
-  async setBudget(id:string, budget: Budget) {
+  async setBudget(id: string, budget: Budget) {
     let budgets = await this.storage.get(this.BUDGET_STORAGE_ID);
     if (!budgets) {
       budgets = {};
