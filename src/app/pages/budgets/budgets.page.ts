@@ -31,8 +31,11 @@ export class BudgetsPage implements OnInit {
     });
 
     await modal.present();
-    const data = await modal.onDidDismiss();
-    console.log(data);
+    const { data } = await modal.onDidDismiss();
+    console.log(data.id);
+    console.log(data.budget);
+
+    this.budgetService.setBudget(data.id, data.budget);
   }
 
 }
