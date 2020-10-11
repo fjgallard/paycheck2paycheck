@@ -23,12 +23,7 @@ export class BudgetsPage implements OnInit {
   }
 
   async ngOnInit() {
-    const budgetsObj = await this.budgetService.getBudgets();
-    const budgetKeys = Object.keys(budgetsObj);
-
-    budgetKeys.forEach(key => {
-      this.budgets.push({ id: key, ...budgetsObj[key] });
-    })
+    this.reloadBudgets();
   }
 
   async openBudgetModal(budget?: Budget) {
@@ -39,8 +34,21 @@ export class BudgetsPage implements OnInit {
     await modal.present();
     const { data } = await modal.onDidDismiss();
 
-    if (data.id && data.budget) {
-      this.budgetService.setBudget(data.id, data.budget);
+    if (data?.id && data?.budget) {
+      await this.budgetService.setBudget(data.id, data.budget);
+      this.reloadBudgets();
+    }
+  }
+
+  private async reloadBudgets() {
+    this.budgets = [];
+    const budgetsObj = await this.budgetService.getBudgets();
+    if (budgetsObj) {
+      const budgetKeys = Object.keys(budgetsObj);
+
+      budgetKeys.forEach(key => {
+        this.budgets.push({ id: key, ...budgetsObj[key] });
+      })
     }
   }
 

@@ -24,11 +24,11 @@
           <div class="budget-info flex justify-between">
             <ion-label class="budget-label">
               <h2>{{ budget.id }}</h2>
-              <ion-progress-bar color="success" value="0.15"></ion-progress-bar>
+              <ion-progress-bar color="success" [value]="budget.consumed / budget.limit"></ion-progress-bar>
             </ion-label>
   
             <ion-text class="budget-remaining">
-              {{ budget.limit - (budget.consumed || 0) | number }}
+              {{ budget.limit - budget.consumed | number }}
             </ion-text>
           </div>
           
