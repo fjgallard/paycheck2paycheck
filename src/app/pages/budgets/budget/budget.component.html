@@ -3,85 +3,67 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>New Expense</ion-title>
+    <ion-title>New Budget</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="flex-col full-height">
     <form>
-      <div class="header-section">
-        <div class="value">
-          <ion-icon *ngIf="false" name="car-outline"></ion-icon>
-          <ion-icon *ngIf="true" name="wallet-outline"></ion-icon>
-          <!-- <ion-text *ngIf="!budgetIcon">{{ budgetAltIcon | uppercase }}</ion-text> -->
-          <div class="expense-input flex justify-between align-center">
-            <!-- <h3 *ngIf="!editorMode">{{ budgetName }}</h3> -->
-            <ion-input 
-            class="value-input"
-            placeholder="Value"
-            type="number"
-            #budgetName>
-            </ion-input>
-          </div>
-        </div>
-        <div class="budget-left">
-          <ion-text color="medium">
-            Budget Left: {{ 5000 | currency: 'PHP' }}
-          </ion-text>
-        </div>
-      </div>
       <div class="body-section flex-col justify-between">
-    
-        <div class="section-items">
-          <ion-list class="section-item">
-            <ion-item color="light">
-              <ion-avatar slot="start">
-                <ion-icon name="wallet"></ion-icon>
-              </ion-avatar>
-              <ion-label>
-                <div class="flex justify-between align-center" id="wallet">
-                  <div class="section-input">
-                    <h2>Category</h2>
-                    <ion-input 
-                    type="text" 
-                    class="subtitle ion-no-padding" 
-                    #budgetAmount>
-                    </ion-input>
-                  </div>
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <div class="flex justify-between align-center" id="wallet">
+                <div class="section-input">
+                  <h2>Name</h2>
+                  <ion-input 
+                  type="text"
+                  class="ion-no-padding">
+                  </ion-input>
                 </div>
-              </ion-label>
-            </ion-item>
-          </ion-list>
-  
-          <ion-list class="section-item">
-            <ion-item color="light">
-              <ion-avatar slot="start">
-                <ion-icon name="calendar-outline"></ion-icon>
-              </ion-avatar>
-              <ion-label>
-                <div class="flex justify-between align-center" id="wallet">
-                  <div class="section-input">
-                    <h2>Date</h2>
-                    <ion-datetime 
-                    class="subtitle ion-no-padding" 
-                    placeholder="Select Date"></ion-datetime>
-                  </div>
-                </div>
-              </ion-label>
-            </ion-item>
-          </ion-list>
-        </div>
-  
-        <div class="action-btns">
-          <ion-button type="submit">Submit</ion-button>
-          <ion-button>Cancel</ion-button>
-        </div>
+              </div>
+            </ion-label>
+          </ion-item>
 
+          <ion-item>
+            <ion-label>
+              <div class="flex justify-between align-center" id="wallet">
+                <div class="section-input">
+                  <h2>Amount</h2>
+                  <ion-input 
+                  type="number"
+                  class="ion-no-padding">
+                  </ion-input>
+                </div>
+              </div>
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>
+              <div class="flex justify-between align-center" id="wallet">
+                <div class="input-field">
+                  <h2>Duration</h2>
+                </div>
+              </div>
+            </ion-label>
+
+            <ion-select interface="popover">
+              <ion-select-option value="monthly">Monthly</ion-select-option>
+              <ion-select-option value="weekly">Weekly</ion-select-option>
+              <ion-select-option value="annual">Annual</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
       </div>
-    </form>
-    
-  </div>
   
+      <div class="action-btns">
+        <ion-button type="submit">Submit</ion-button>
+        <ion-button>Cancel</ion-button>
+      </div>
+
+    </form>
+  </div>
   
 </ion-content>
