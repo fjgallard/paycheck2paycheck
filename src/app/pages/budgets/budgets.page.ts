@@ -3,6 +3,12 @@ import { Budget, BudgetService } from '@services/storage/budget.service';
 import { ModalController } from '@ionic/angular';
 import { BudgetComponent } from './budget/budget.component';
 
+import {
+  moveItemInArray,
+  CdkDragDrop,
+  transferArrayItem
+} from '@angular/cdk/drag-drop';
+
 @Component({
   selector: 'app-budgets',
   templateUrl: './budgets.page.html',
@@ -43,6 +49,24 @@ export class BudgetsPage implements OnInit {
   async deleteBudget(id: string) {
     await this.budgetService.deleteBudget(id);
     this.reloadBudgets();
+  }
+
+  // Drag n Drop
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
   }
 
   private async reloadBudgets() {

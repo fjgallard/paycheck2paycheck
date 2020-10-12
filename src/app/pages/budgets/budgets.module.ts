@@ -11,6 +11,8 @@ import { ComponentsModule } from '@components/components.module';
 import { BudgetCategoryComponent } from './budget-category/budget-category.component';
 import { BudgetComponent } from './budget/budget.component';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 const components = [
   BudgetCategoryComponent,
   BudgetComponent
@@ -24,6 +26,8 @@ const components = [
     BudgetsPageRoutingModule,
 
     ComponentsModule,
+
+    DragDropModule
   ],
   declarations: [BudgetsPage, ...components]
 })
