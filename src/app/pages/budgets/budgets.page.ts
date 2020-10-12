@@ -17,6 +17,9 @@ import {
 export class BudgetsPage implements OnInit {
 
   budgets = [];
+  monthylBudgets = [];
+  weeklyBudgets = [];
+  annualBudgets = [];
 
   constructor(
     private budgetService    : BudgetService,
@@ -70,19 +73,39 @@ export class BudgetsPage implements OnInit {
   }
 
   private async reloadBudgets() {
-    this.budgets = [];
+    this.monthylBudgets = [];
+    this.weeklyBudgets = [];
+    this.annualBudgets = [];
+
     const budgetsObj = await this.budgetService.getBudgets();
     if (budgetsObj) {
       const budgetKeys = Object.keys(budgetsObj);
 
       budgetKeys.forEach(key => {
         const budget = budgetsObj[key];
-        this.budgets.push({
-          id: key,
-          cssClass: this.getCssClass(budget),
-          percentage: this.getPercentage(budget),
-          ...budget
-        });
+
+        if (budget.duration === 'monthly') {
+          this.monthylBudgets.push({
+            id: key,
+            cssClass: this.getCssClass(budget),
+            percentage: this.getPercentage(budget),
+            ...budget
+          });
+        } else if (budget.duration === 'weekly') {
+          this.weeklyBudgets.push({
+            id: key,
+            cssClass: this.getCssClass(budget),
+            percentage: this.getPercentage(budget),
+            ...budget
+          });
+        } else if (budget.duration === 'annual') {
+          this.annualBudgets.push({
+            id: key,
+            cssClass: this.getCssClass(budget),
+            percentage: this.getPercentage(budget),
+            ...budget
+          });
+        }
       })
     }
   }

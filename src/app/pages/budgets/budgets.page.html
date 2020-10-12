@@ -13,8 +13,11 @@
 
   <div class="content">
     <ion-list>
+      <ion-list-header>
+        Monthly
+      </ion-list-header>
 
-      <ion-item-sliding *ngFor="let budget of budgets" >
+      <ion-item-sliding *ngFor="let budget of monthylBudgets" >
         
         <ion-item class="budget-item">
           <ion-avatar [class]="budget.cssClass" slot="start">
@@ -46,6 +49,79 @@
 
     </ion-list>
     
+    <ion-list>
+      <ion-list-header>
+        Weekly
+      </ion-list-header>
+
+      <ion-item-sliding *ngFor="let budget of weeklyBudgets" >
+        
+        <ion-item class="budget-item">
+          <ion-avatar [class]="budget.cssClass" slot="start">
+            <ion-icon [name]="budget.icon"></ion-icon>
+          </ion-avatar>
+
+          <div class="budget-info flex justify-between">
+            <ion-label class="budget-label">
+              <h2>{{ budget.id }}</h2>
+              <ion-progress-bar [color]="budget.cssClass" [value]="budget.percentage"></ion-progress-bar>
+            </ion-label>
+  
+            <ion-text class="budget-remaining">
+              {{ budget.limit - budget.consumed | number }}
+            </ion-text>
+          </div>
+          
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option>
+            <ion-icon slot="icon-only" name="settings" (click)="openBudgetModal(budget)"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="danger">
+            <ion-icon slot="icon-only" name="trash" (click)="deleteBudget(budget.id)"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+
+    </ion-list>
+
+    <ion-list>
+      <ion-list-header>
+        Annual
+      </ion-list-header>
+
+      <ion-item-sliding *ngFor="let budget of annualBudgets" >
+        
+        <ion-item class="budget-item">
+          <ion-avatar [class]="budget.cssClass" slot="start">
+            <ion-icon [name]="budget.icon"></ion-icon>
+          </ion-avatar>
+
+          <div class="budget-info flex justify-between">
+            <ion-label class="budget-label">
+              <h2>{{ budget.id }}</h2>
+              <ion-progress-bar [color]="budget.cssClass" [value]="budget.percentage"></ion-progress-bar>
+            </ion-label>
+  
+            <ion-text class="budget-remaining">
+              {{ budget.limit - budget.consumed | number }}
+            </ion-text>
+          </div>
+          
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option>
+            <ion-icon slot="icon-only" name="settings" (click)="openBudgetModal(budget)"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="danger">
+            <ion-icon slot="icon-only" name="trash" (click)="deleteBudget(budget.id)"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+
+    </ion-list>
   </div>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

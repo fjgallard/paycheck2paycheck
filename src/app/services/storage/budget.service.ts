@@ -9,6 +9,7 @@ export interface Budget {
   consumed?: number,
   limit?   : number,
   icon?    : string,
+  duration? :string
 };
 
 @Injectable({
