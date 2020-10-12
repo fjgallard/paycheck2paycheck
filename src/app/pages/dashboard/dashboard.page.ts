@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { BudgetService } from '@services/storage/budget.service';
 import { MenuController } from '@ionic/angular';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
