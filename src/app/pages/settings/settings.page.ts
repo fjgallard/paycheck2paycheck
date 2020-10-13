@@ -16,33 +16,5 @@ export class SettingsPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.monthlyBudget = await this.getDefaultMonthBudget();
-    this.customBudget = await this.getCurrentMonthBudget();
   }
-
-  async updateCustomBudget() {
-    if (this.customBudget) {
-      this.setCurrentMonthBudget(this.customBudget);
-    }
-  }
-
-  async updateMonthlyBudget() {
-    if (this.monthlyBudget) {
-      await this.budgetService.setDefaultMonthBudget(this.monthlyBudget);
-    }
-
-  }
-
-  private getCurrentMonthBudget() {
-    return this.budgetService.getCurrentMonthBudget();
-  }
-
-  private getDefaultMonthBudget() {
-    return this.budgetService.getDefaultMonthBudget();
-  }
-
-  private setCurrentMonthBudget(budget: number) {
-    return this.budgetService.setCurrentMonthBudget(budget);
-  }
-
 }

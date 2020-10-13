@@ -33,7 +33,7 @@ export class IntroPage implements OnInit {
     }
 
     await Promise.all([
-      this.budgetService.setDefaultMonthBudget(this.income),
+      // this.budgetService.setDefaultMonthBudget(this.income),
       this.storage.set('tutorialSeen', true)
     ]);
     this.router.navigateByUrl('/');

@@ -6,6 +6,7 @@ import { DEFAULT_MONTHLY_BUDGET_ID, MONTHLY_BUDGET_PREFIX } from '@helper/consta
 import { convertToPrefixFormat, getCurrentMonthPrefix } from '@helper/functions';
 
 export interface Budget {
+  id?: string,
   consumed?: number,
   limit?   : number,
   icon?    : string,
@@ -17,12 +18,12 @@ export interface Budget {
 })
 export class BudgetService {
 
+  budgets: Budget[] = [];
+
   private readonly BUDGET_STORAGE_ID = 'b';
 
-  private currentMonthId: string;
-
   constructor(private storage: Storage) {
-    this.currentMonthId = this.getCurrentMonthBudgetId();
+    this.reloadBudgets();
   }
 
   async setBudget(id: string, budget: Budget) {
@@ -35,48 +36,38 @@ export class BudgetService {
     budget.limit = budget.limit || 0;
 
     budgets[id] = budget;
-    return this.storage.set(this.BUDGET_STORAGE_ID, budgets);
+    await this.storage.set(this.BUDGET_STORAGE_ID, budgets);
+    this.reloadBudgets();
   }
 
   getBudgets() {
     return this.storage.get(this.BUDGET_STORAGE_ID);
   }
 
+  async getBudgetsArr() {
+    return this.budgets;
+  }
+
+  async reloadBudgets() {
+    this.budgets = [];
+    const budgetsObj = await this.getBudgets();
+    if (budgetsObj) {
+      const budgetKeys = Object.keys(budgetsObj);
+      budgetKeys.forEach(key => {
+        const budget = budgetsObj[key];
+        this.budgets.push({ id: key, ...budget });
+      });
+    }
+
+    return this.budgets;
+  }
+
   async deleteBudget(id: string) {
     const budgets = await this.storage.get(this.BUDGET_STORAGE_ID);
     delete budgets[id];
 
-    return this.storage.set(this.BUDGET_STORAGE_ID, budgets);
+    await this.storage.set(this.BUDGET_STORAGE_ID, budgets);
+    return this.reloadBudgets();
   }
 
-
-  // Archive
-  // Monthly Budget functions
-  getCurrentMonthBudget(): Promise<number> {
-    return this.storage.get(this.currentMonthId);
-  }
-
-  setCurrentMonthBudget(amount: number) {
-    return this.storage.set(this.currentMonthId, amount);
-  }
-
-  getCustomMonthBudget(date: Date) {
-    return this.storage.get(this.getCustomMonthBudgetId(date));
-  }
-
-  getDefaultMonthBudget(): Promise<number> {
-    return this.storage.get(DEFAULT_MONTHLY_BUDGET_ID);
-  }
-
-  setDefaultMonthBudget(amount: number) {
-    return this.storage.set(DEFAULT_MONTHLY_BUDGET_ID, amount);
-  }
-
-  private getCurrentMonthBudgetId() {
-    return MONTHLY_BUDGET_PREFIX + '-' + getCurrentMonthPrefix()
-  }
-
-  private getCustomMonthBudgetId(date: Date) {
-    return `${MONTHLY_BUDGET_PREFIX}-${convertToPrefixFormat(date)}`;
-  }
 }
