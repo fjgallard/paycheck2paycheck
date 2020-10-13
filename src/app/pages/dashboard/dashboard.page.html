@@ -2,8 +2,16 @@
   <ion-slides class="slides" pager>
     <ion-slide *ngFor="let budget of budgetService.budgets">
       <div class="slide">
-        <h2>{{ budget.id }}</h2>
-        <p>The <b>ionic conference app</b> is a practical preview of the ionic framework in action, and a demonstration of proper code use.</p>
+        <h3>{{ budget.id }}</h3>
+        <ion-text>
+          {{ budget.limit - budget.consumed | number }}
+        </ion-text>
+        <ion-text>
+          left this month
+        </ion-text>
+        <ion-text>
+          {{ budgetService.getRemainingDays(budget) }} days left
+        </ion-text>
       </div>
     </ion-slide>
   </ion-slides>

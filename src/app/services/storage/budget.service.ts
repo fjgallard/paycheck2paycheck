@@ -48,6 +48,19 @@ export class BudgetService {
     return this.budgets;
   }
 
+  getRemainingDays(budget: Budget) {
+    if (!budget) {
+      return;
+    }
+
+    if (budget.duration === 'monthly') {
+      const currentDate = new Date();
+      const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+      return lastDay.getDate() - currentDate.getDate();
+    }
+  }
+
   async reloadBudgets() {
     this.budgets = [];
     const budgetsObj = await this.getBudgets();
