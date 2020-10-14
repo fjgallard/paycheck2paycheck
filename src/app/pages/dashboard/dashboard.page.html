@@ -1,10 +1,10 @@
-<ion-content fullscreen class="ion-padding" scroll-y="false">
-  <ion-slides class="slides" pager>
+<ion-content fullscreen scroll-y="false">
+  <ion-slides class="slides ion-no-padding ion-no-margin"  color="success" pager>
     <ion-slide *ngFor="let budget of budgetService.budgets">
-      <div class="slide">
+      <div class="slide" [class]="budgetService.getCssClass(budget)">
         <h3>{{ budget.id }}</h3>
         <ion-text class="budget-limit">
-          {{ budget.limit - budget.consumed | number }}
+          {{ budget.limit - budget.consumed | currency }}
         </ion-text>
         <ion-text class="budget-limit-subtitle">
           left this month

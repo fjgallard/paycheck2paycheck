@@ -87,4 +87,23 @@ export class BudgetService {
     return this.reloadBudgets();
   }
 
+  getCssClass(budget: Budget) {
+    const percentage = this.getPercentage(budget);
+    if (percentage <= 0.5) {
+      return 'success';
+    } else if (percentage <= 0.8) {
+      return 'warning';
+    } else {
+      return 'danger';
+    }
+  }
+
+  private getPercentage(budget: Budget) {
+    if (!budget.limit) {
+      return 0;
+    }
+
+    return budget.consumed / budget.limit;
+  }
+
 }

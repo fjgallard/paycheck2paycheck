@@ -1,15 +1,42 @@
+ion-slides {
+  --bullet-background: var(--ion-color-dark);
+  --bullet-background-active: var(--ion-color-success-contrast);
+}
+
+ion-slide {
+  height: 100vh;
+}
+
 .slides {
   height: 100%;
 }
 
 .slide {
   height: 100%;
+  width: 100%;
   display: flex;
   flex-flow: column;
 
+  &.primary {
+    background: var(--ion-color-primary-super-tint);
+  }
+
+  &.success {
+    background: var(--ion-color-success-super-tint);
+  }
+
+  &.warning {
+    background: var(--ion-color-warning-super-tint);
+  }
+
+  &.danger {
+    background: var(--ion-color-danger-super-tint);
+  }
+
   .budget-limit {
-    font-size: 4rem;
+    font-size: 3rem;
     padding-top: 6rem;
+    font-weight: 700;
   }
 
   .budget-days-left {
