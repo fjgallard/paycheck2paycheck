@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { Storage }    from '@ionic/storage';
 
-import { DEFAULT_MONTHLY_BUDGET_ID, MONTHLY_BUDGET_PREFIX } from '@helper/constants';
-import { convertToPrefixFormat, getCurrentMonthPrefix } from '@helper/functions';
-
 export interface Budget {
   id?: string,
   consumed?: number,
@@ -58,6 +55,13 @@ export class BudgetService {
       const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
 
       return lastDay.getDate() - currentDate.getDate();
+    } else if (budget.duration === 'annual') {
+      const currentDate = new Date();
+      const lastDay = new Date(currentDate.getFullYear(), 12, 0);
+
+      return Math.floor((lastDay.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24));
+    } else if (budget.duration === 'weekly') {
+      return 7 - (new Date().getDay());
     }
   }
 
