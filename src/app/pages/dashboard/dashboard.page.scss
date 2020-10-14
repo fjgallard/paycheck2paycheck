@@ -23,6 +23,20 @@ ion-slide {
 
   &.success {
     background: var(--ion-color-success-super-tint);
+
+    .buttons {
+      margin-top: 3rem;
+
+      .add-expense {
+        font-size: 2rem;
+      }
+
+      ion-icon {
+        background: var(--ion-color-success-even-super-tint);
+        padding: 1rem;
+        border-radius: 50%;
+      }
+    }
   }
 
   &.warning {
@@ -40,18 +54,17 @@ ion-slide {
   }
 
   .budget-days-left {
-    margin-top: 5rem;
+    margin-top: 4rem;
 
     #days {
       color: var(--ion-color-primary);
     }
   }
 
-  .buttons {
-    margin-top: 4rem;
-  }
-}
+  
 
+  
+}
 
 .swiper-pagination  {
   top: 10% !important;
