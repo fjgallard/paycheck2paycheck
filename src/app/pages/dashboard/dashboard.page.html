@@ -3,14 +3,14 @@
     <ion-slide *ngFor="let budget of budgetService.budgets">
       <div class="slide">
         <h3>{{ budget.id }}</h3>
-        <ion-text>
+        <ion-text class="budget-limit">
           {{ budget.limit - budget.consumed | number }}
         </ion-text>
-        <ion-text>
+        <ion-text class="budget-limit-subtitle">
           left this month
         </ion-text>
-        <ion-text>
-          {{ budgetService.getRemainingDays(budget) }} days left
+        <ion-text class="budget-days-left">
+          <span id="days">{{ budgetService.getRemainingDays(budget) }}</span> days left
         </ion-text>
       </div>
     </ion-slide>

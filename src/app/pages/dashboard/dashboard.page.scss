@@ -2,6 +2,25 @@
   height: 100%;
 }
 
+.slide {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+
+  .budget-limit {
+    font-size: 4rem;
+    padding-top: 6rem;
+  }
+
+  .budget-days-left {
+    padding-top: 4rem;
+
+    #days {
+      color: var(--ion-color-primary);
+    }
+  }
+}
+
 
 .swiper-pagination  {
   top: 10% !important;
