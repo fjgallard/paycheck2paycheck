@@ -7,7 +7,7 @@
           {{ budget.limit - budget.consumed | currency }}
         </ion-text>
         <ion-text class="budget-limit-subtitle">
-          left this month
+          left this {{ getDuration(budget) }}
         </ion-text>
         <ion-text class="budget-days-left">
           <span id="days">{{ budgetService.getRemainingDays(budget) }}</span> days left

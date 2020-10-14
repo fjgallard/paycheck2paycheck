@@ -19,4 +19,16 @@ export class DashboardPage implements OnInit {
   async ngOnInit() {
   }
 
+  getDuration(budget: Budget) {
+    if (budget.duration === 'annual') {
+      return 'year';
+    } else if (budget.duration === 'weekly') {
+      return 'week';
+    } else if (budget.duration === 'monthly') {
+      return 'month';
+    } else {
+      return '';
+    }
+  }
+
 }
