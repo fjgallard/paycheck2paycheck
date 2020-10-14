@@ -31,7 +31,8 @@ export class ExpensePage implements OnInit {
     this.expenseForm = this.fb.group({
       value    : [ '' , Validators.required ],
       createdAt: [ this.expense.createdAt.toISOString(), Validators.required ],
-      category : [ '' ]
+      category : [ '' ],
+      name: ['']
     });
 
   }
