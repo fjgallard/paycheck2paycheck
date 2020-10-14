@@ -35,16 +35,20 @@ ion-slide {
 
   .budget-limit {
     font-size: 3rem;
-    padding-top: 6rem;
+    padding-top: 9rem;
     font-weight: 700;
   }
 
   .budget-days-left {
-    padding-top: 4rem;
+    margin-top: 5rem;
 
     #days {
       color: var(--ion-color-primary);
     }
+  }
+
+  .buttons {
+    margin-top: 4rem;
   }
 }
 

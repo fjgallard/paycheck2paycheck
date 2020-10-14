@@ -12,6 +12,18 @@
         <ion-text class="budget-days-left">
           <span id="days">{{ budgetService.getRemainingDays(budget) }}</span> days left
         </ion-text>
+
+        <div class="buttons flex full-width justify-around">
+          <div class="budgets">
+            <ion-icon name="wallet"></ion-icon>
+          </div>
+          <div class="add-expense">
+            <ion-icon name="add"></ion-icon>
+          </div>
+          <div class="expenses">
+            <ion-icon name="list"></ion-icon>
+          </div>
+        </div>
       </div>
     </ion-slide>
   </ion-slides>
