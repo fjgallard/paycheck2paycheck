@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
-import { Category } from '@services/storage/category.service';
+import { Budget } from '@services/storage/budget.service';
 import { Expense, ExpenseService } from '@services/storage/expense.service';
-import { ExpenseCategoriesComponent } from './expense-categories/expense-categories.component';
 
 @Component({
   selector: 'app-expense',
@@ -18,13 +16,13 @@ export class ExpensePage implements OnInit {
   id         : string;
   expense    : Expense;
   expenseForm: FormGroup
+  budget     : Budget;
 
   constructor(
     private expenseService: ExpenseService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
-    private modalController: ModalController
+    private router: Router
   ) {
     this.expense = { id: '', value: 0, createdAt: new Date() }
     this.expenseIcon = 'wallet';
@@ -35,45 +33,35 @@ export class ExpensePage implements OnInit {
       name: ['']
     });
 
+    this.route.queryParams.subscribe(params =>{
+      this.budget = JSON.parse(params.data);
+    });
   }
 
   async ngOnInit() {
-    console.log(await this.expenseService.getExpenses());
   }
 
-  async openCategoriesModal() {
-    const modal = await this.modalController.create({
-      component: ExpenseCategoriesComponent,
-      cssClass: 'my-custom-class'
-    });
-
-    await modal.present();
-    const result = await modal.onWillDismiss();
-    const category = result.data.selectedCategory as Category;
-
-    this.expense.category = category;
-    this.expenseForm.get('category').setValue(category.name)
-  }
 
   onSubmit() {
     const createdAt = new Date(this.expenseForm.get('createdAt').value);
-    const expense: Partial<Expense> = {
+    const expense: Expense = {
+      id: this.expenseForm.get('name').value,
       value: this.expenseForm.get('value').value,
-      createdAt,
-      category: this.expense.category
+      budgetId: this.budget.id,
+      createdAt
     }
 
     this.expenseService.setExpense(expense, createdAt).then(() => {
-      this.router.navigateByUrl('/expenses');
+      this.router.navigateByUrl('/dashboard');
     });
   }
 
   onCancel() {
-    this.router.navigateByUrl('/expenses');
+    this.router.navigateByUrl('/dashboard');
   }
 
-  get category() {
-    return 'Uncategorized';
-  }
 
+  get budgetLeft() {
+    return this.budget.limit - this.budget.consumed;
+  }
 }

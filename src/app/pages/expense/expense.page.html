@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="flex-col full-height">
+  <div class="flex-col full-height" *ngIf="budget">
     <form [formGroup]="expenseForm">
       <div class="header-section">
         <div class="value">
@@ -28,14 +28,14 @@
         </div>
         <div class="budget-left">
           <ion-text color="medium">
-            Budget Left: {{ 5000 | currency: 'PHP' }}
+            Budget Left: {{ budgetLeft | currency: 'PHP' }}
           </ion-text>
         </div>
       </div>
       <div class="body-section flex-col justify-between">
     
         <div class="section-items">
-          <ion-list class="section-item" (click)="openCategoriesModal()">
+          <ion-list class="section-item">
             <ion-item color="light">
               <ion-avatar slot="start">
                 <ion-icon name="wallet"></ion-icon>
@@ -43,12 +43,11 @@
               <ion-label>
                 <div class="flex justify-between align-center" id="wallet">
                   <div class="section-input">
-                    <h2>Category</h2>
+                    <h2>Name</h2>
                     <ion-input 
                     type="text" 
                     class="subtitle ion-no-padding" 
-                    formControlName="category"
-                    #budgetAmount>
+                    formControlName="name">
                     </ion-input>
                   </div>
                 </div>

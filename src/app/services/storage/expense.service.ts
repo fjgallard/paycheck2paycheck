@@ -10,7 +10,7 @@ export interface Expense {
   id?      : string;
   value    : number;
   createdAt: Date;
-  category?: Category;
+  budgetId?: string;
 };
 
 @Injectable({
@@ -43,10 +43,6 @@ export class ExpenseService {
 
     if (!expenses[id][day]) {
       expenses[id][day] = {};
-    }
-
-    if(!expense.id) {
-      expense.id = Object.keys(expenses[id][day]).length.toString();
     }
 
     expenses[id][day][expense.id] = expense;
