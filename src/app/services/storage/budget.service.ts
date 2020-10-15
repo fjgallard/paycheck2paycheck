@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { convertToPrefixFormat } from '@helper/functions';
 
 import { Storage }    from '@ionic/storage';
 
@@ -27,6 +28,13 @@ export class BudgetService {
     let budgets = await this.storage.get(this.BUDGET_STORAGE_ID);
     if (!budgets) {
       budgets = {};
+    }
+
+    if (budget.duration === 'monthly') {
+      const prefix = convertToPrefixFormat(new Date());
+      if (!budget[prefix]) {
+        budget[prefix].consumed = budget.consumed || 0;
+      }
     }
 
     budget.consumed = budget.consumed || 0;
