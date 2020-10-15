@@ -8,3 +8,8 @@ export function convertToPrefixFormat(date: Date) {
 
   return prefix;
 }
+
+export function getCurrentYearPrefix() {
+  const date = new Date();
+  return date.getFullYear();
+}

@@ -25,10 +25,10 @@ export class BudgetsPage implements OnInit {
     private budgetService    : BudgetService,
     private modalCtrl        : ModalController
   ) {
-    this.budgets = [];
   }
 
   async ngOnInit() {
+    await this.budgetService.reloadBudgets();
     this.reloadBudgets();
   }
 
@@ -72,11 +72,29 @@ export class BudgetsPage implements OnInit {
     }
   }
 
-  private async reloadBudgets() {
+  private reloadBudgets() {
     this.monthylBudgets = [];
-    this.weeklyBudgets = [];
     this.annualBudgets = [];
 
+    this.budgetService.yearlyBudgets.forEach(budget => {
+      this.annualBudgets.push({
+        id: budget.id,
+        cssClass: this.getCssClass(budget),
+        percentage: this.getPercentage(budget),
+        ...budget
+      });
+    });
+
+    this.budgetService.monthlyBudgets.forEach(budget => {
+      this.monthylBudgets.push({
+        id: budget.id,
+        cssClass: this.getCssClass(budget),
+        percentage: this.getPercentage(budget),
+        ...budget
+      });
+    })
+
+    /*
     const budgetsObj = await this.budgetService.getBudgets();
     if (budgetsObj) {
       const budgetKeys = Object.keys(budgetsObj);
@@ -108,6 +126,7 @@ export class BudgetsPage implements OnInit {
         }
       })
     }
+    */
   }
 
   private getCssClass(budget: Budget) {

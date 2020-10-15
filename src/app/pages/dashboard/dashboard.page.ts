@@ -19,6 +19,7 @@ export class DashboardPage implements OnInit {
   }
 
   async ngOnInit() {
+    console.log(await this.budgetService.getBudgets());
   }
 
   getDuration(budget: Budget) {

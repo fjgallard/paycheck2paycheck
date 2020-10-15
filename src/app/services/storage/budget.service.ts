@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { convertToPrefixFormat } from '@helper/functions';
+import { convertToPrefixFormat, getCurrentMonthPrefix, getCurrentYearPrefix } from '@helper/functions';
 
 import { Storage }    from '@ionic/storage';
 
@@ -17,6 +17,8 @@ export interface Budget {
 export class BudgetService {
 
   budgets: Budget[] = [];
+  monthlyBudgets: Budget[] = [];
+  yearlyBudgets: Budget[] = [];
 
   private readonly BUDGET_STORAGE_ID = 'b';
 
@@ -32,15 +34,36 @@ export class BudgetService {
 
     if (budget.duration === 'monthly') {
       const prefix = convertToPrefixFormat(new Date());
-      if (!budget[prefix]) {
-        budget[prefix].consumed = budget.consumed || 0;
+      if (!budgets[`m-${prefix}`]) {
+        budgets[`m-${prefix}`] = {};
       }
+
+      budget.consumed = budget.consumed || 0;
+      budget.limit = budget.limit || 0;
+
+      budgets[`m-${prefix}`][id] = budget;
+    } else if (budget.duration === 'weekly') {
+      const currentDate = new Date();
+      const remainingDays = 6 - currentDate.getDay();
+      const pastDays = currentDate.getDay();
+
+      const firstDayOfTheWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - pastDays);
+      const lastDayOfTheWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + remainingDays);
+
+      // discontinued
+    } else if (budget.duration === 'annual') {
+      const prefix = 'y-' + new Date().getFullYear();
+      if (!budgets[prefix]) {
+        budgets[prefix] = {};
+      }
+
+      budget.consumed = budget.consumed || 0;
+      budget.limit = budget.limit || 0;
+
+      budgets[prefix][id] = budget;
     }
 
-    budget.consumed = budget.consumed || 0;
-    budget.limit = budget.limit || 0;
 
-    budgets[id] = budget;
     await this.storage.set(this.BUDGET_STORAGE_ID, budgets);
     this.reloadBudgets();
   }
@@ -75,12 +98,33 @@ export class BudgetService {
 
   async reloadBudgets() {
     this.budgets = [];
+    this.yearlyBudgets = [];
+    this.monthlyBudgets = [];
+
     const budgetsObj = await this.getBudgets();
     if (budgetsObj) {
       const budgetKeys = Object.keys(budgetsObj);
       budgetKeys.forEach(key => {
-        const budget = budgetsObj[key];
-        this.budgets.push({ id: key, ...budget });
+
+        if (key === `m-${getCurrentMonthPrefix()}`) {
+          const monthlyBudgets = budgetsObj[key];
+          const monthlyBudgetKeys = Object.keys(monthlyBudgets);
+
+          monthlyBudgetKeys.forEach(monthlyKey => {
+            const budget = monthlyBudgets[monthlyKey];
+            this.budgets.push({ id: monthlyKey, ...budget });
+            this.monthlyBudgets.push({ id: monthlyKey, ...budget });
+          })
+        } else if (key === `y-${getCurrentYearPrefix()}`) {
+          const yearlyBudgets = budgetsObj[key];
+          const yearlyBudgetKeys = Object.keys(yearlyBudgets);
+
+          yearlyBudgetKeys.forEach(yearlyKey => {
+            const budget = yearlyBudgets[yearlyKey];
+            this.budgets.push({ id: yearlyKey, ...budget });
+            this.yearlyBudgets.push({ id: yearlyKey, ...budget });
+          })
+        }
       });
     }
 
