@@ -20,16 +20,18 @@ export class ExpensesPage implements OnInit {
     const date = new Date();
     // const date = new Date(2020, 8, 24);
     this.setTimePeriod();
+
+    console.log(await this.expensesService.getExpenses());
   }
 
   private async showDayExpenses() {
     this.expenses = await this.expensesService.getExpensesForTheDay(new Date());
-    this.expenses = this.expenses.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    this.expenses = this.expenses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   private async showMonthExpenses() {
     this.expenses = await this.expensesService.getExpensesForTheMonth(new Date());
-    this.expenses = this.expenses.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    this.expenses = this.expenses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   private async showWeekExpenses() {
@@ -43,7 +45,7 @@ export class ExpensesPage implements OnInit {
     } else if (this.timePeriod === 'month') {
       this.showMonthExpenses();
     } else if (this.timePeriod === 'week') {
-      this.showWeekExpenses();
+      // this.showWeekExpenses();
     }
   }
 

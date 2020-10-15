@@ -52,7 +52,7 @@ export class ExpensePage implements OnInit {
       createdAt
     }
 
-    this.expenseService.setExpense(expense, createdAt).then(() => {
+    this.expenseService.setExpense(expense, createdAt, this.budget).then(() => {
       this.router.navigateByUrl('/dashboard');
     });
   }

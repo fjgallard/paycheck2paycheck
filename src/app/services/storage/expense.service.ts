@@ -1,10 +1,10 @@
 import { Injectable }            from '@angular/core';
 
 import { EXPENSE_PREFIX }        from '@helper/constants';
-import { convertToPrefixFormat } from '@helper/functions';
+import { convertToPrefixFormat, getCurrentMonthPrefix } from '@helper/functions';
 
 import { Storage }    from '@ionic/storage';
-import { Category } from './category.service';
+import { Budget, BudgetService } from './budget.service';
 
 export interface Expense {
   id?      : string;
@@ -18,7 +18,7 @@ export interface Expense {
 })
 export class ExpenseService {
 
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage, private budgetService: BudgetService) {
   }
 
   async getExpense(id: string) {
@@ -26,10 +26,9 @@ export class ExpenseService {
     return expenses[id];
   }
 
-  async setExpense(expense: Expense | Partial<Expense>, date: Date) {
+  async setExpense(expense: Expense | Partial<Expense>, date: Date, budget: Budget) {
     const expensesId = EXPENSE_PREFIX;
 
-    const id = `${EXPENSE_PREFIX}-${convertToPrefixFormat(date)}`;
     const day = date.getDate();
 
     let expenses = await this.storage.get(expensesId);
@@ -38,15 +37,21 @@ export class ExpenseService {
       expenses = {};
     }
 
-    if (!expenses[id]) {
-      expenses[id] = {};
+    if (budget.duration === 'monthly') {
+      const prefix = `m-${getCurrentMonthPrefix()}`
+      if (!expenses[prefix]) {
+        expenses[prefix] = {};
+      }
+
+      if (!expenses[prefix][budget.id]) {
+        expenses[prefix][budget.id] = {};
+      }
+
+      expenses[prefix][budget.id][expense.id] = expense;
+
+      this.deductFromBudget(convertToPrefixFormat(date), expense.value, budget);
     }
 
-    if (!expenses[id][day]) {
-      expenses[id][day] = {};
-    }
-
-    expenses[id][day][expense.id] = expense;
     return this.storage.set(EXPENSE_PREFIX, expenses);
   }
 
@@ -116,5 +121,10 @@ export class ExpenseService {
     } else {
       return [];
     }
+  }
+
+  private async deductFromBudget(prefix: string, expenseVal: number, budget: Budget) {
+    budget.consumed += expenseVal;
+    this.budgetService.setBudget(budget.id, budget);
   }
 }
