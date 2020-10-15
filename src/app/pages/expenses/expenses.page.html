@@ -50,13 +50,18 @@
 
           <ion-item *ngFor="let expense of expenses">
             <ion-label>
-              <h2 class="expense-category">{{ expense.category.name }}</h2>
+              <h2 class="expense-category">{{ expense.value || 0 | currency }}</h2>
               <ion-text color="medium">
-                <p class="expense-date">{{ expense.createdAt | date:'dd MMMM yyyy' }} </p>
+                <p class="expense-name">{{ expense.id }} </p>
               </ion-text>
               
             </ion-label>
-            <ion-text>{{ expense.value || 0 }}</ion-text>
+            <div class="expense-details flex-col align-end">
+              <ion-note class="expense-date">
+                {{ expense.createdAt | date:'dd/MM/yyyy' }}
+              </ion-note>
+              <ion-note class="expense-value">{{ expense.budgetId}}</ion-note>
+            </div>
           </ion-item>
         </ion-list>
       </ion-card>

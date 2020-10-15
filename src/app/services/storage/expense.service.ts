@@ -18,7 +18,8 @@ export interface Expense {
 })
 export class ExpenseService {
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage) {
+  }
 
   async getExpense(id: string) {
     const expenses = await this.storage.get(EXPENSE_PREFIX);
@@ -57,6 +58,11 @@ export class ExpenseService {
 
   async getExpensesForTheMonth(date: Date): Promise<Expense[]> {
     const allExpenses = await this.getExpenses();
+
+    if (!allExpenses) {
+      return [];
+    }
+
     const prefix   = EXPENSE_PREFIX + '-' + convertToPrefixFormat(date);
     const expensesObj = allExpenses[prefix];
 
@@ -94,6 +100,11 @@ export class ExpenseService {
 
   async getExpensesForTheDay(date: Date) {
     const allExpenses = await this.getExpenses();
+
+    if (!allExpenses) {
+      return [];
+    }
+
     const prefix      = EXPENSE_PREFIX + '-' + convertToPrefixFormat(date);
     const day         = date.getDate();
 
