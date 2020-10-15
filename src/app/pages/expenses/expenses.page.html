@@ -3,9 +3,13 @@
   <div class="expenses full-height flex-col">
     <div class="expense-head">
       <div class="amount-section">
-        <ion-text class="balance-header">
-          Total Expenses
-        </ion-text>
+        <div class="balance-header flex align-center justify-between">
+          <ion-text>
+            Total Expenses
+          </ion-text>
+          <ion-back-button class="back-button" text="Back" defaultHref="/"></ion-back-button>
+        </div>
+        
         <ion-text class="balance-text">
           {{ 5000 | currency: 'PHP' }}
         </ion-text>
