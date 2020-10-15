@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Budget } from '@services/storage/budget.service';
+import { Budget, BudgetService } from '@services/storage/budget.service';
 import { Expense, ExpenseService } from '@services/storage/expense.service';
 
 @Component({
@@ -19,6 +19,7 @@ export class ExpensePage implements OnInit {
   budget     : Budget;
 
   constructor(
+    public budgetService: BudgetService,
     private expenseService: ExpenseService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -64,4 +65,5 @@ export class ExpensePage implements OnInit {
   get budgetLeft() {
     return this.budget.limit - this.budget.consumed;
   }
+
 }

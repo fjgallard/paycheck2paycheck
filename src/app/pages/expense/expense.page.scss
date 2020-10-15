@@ -2,6 +2,12 @@
   font-family: 'Montserrat' !important;
 }
 
+form {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
 .header-section {
   background: #ffffff;
   padding: 1rem;
@@ -27,7 +33,6 @@
 }
 
 .expense-input {
-  margin-top: 1rem;
 
   ion-input {
     font-size: 22px;
@@ -48,7 +53,7 @@
 .body-section {
   background: var(--ion-color-light);
   border-top-left-radius: 2rem;
-  height: 100%;
+  flex-grow: 2;
 }
 
 .section-item {
