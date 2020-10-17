@@ -96,11 +96,12 @@ export class BudgetService {
   }
 
   async reloadBudgets() {
+    const budgetsObj = await this.getBudgets();
+
     this.budgets = [];
     this.yearlyBudgets = [];
     this.monthlyBudgets = [];
 
-    const budgetsObj = await this.getBudgets();
     if (budgetsObj) {
       const budgetKeys = Object.keys(budgetsObj);
       budgetKeys.forEach(key => {

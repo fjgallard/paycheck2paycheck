@@ -1,7 +1,7 @@
 import { Injectable }            from '@angular/core';
 
 import { EXPENSE_PREFIX }        from '@helper/constants';
-import { convertToPrefixFormat, getCurrentMonthPrefix } from '@helper/functions';
+import { convertToPrefixFormat, getCurrentMonthPrefix, getCurrentYearPrefix } from '@helper/functions';
 
 import { Storage }    from '@ionic/storage';
 import { Budget, BudgetService } from './budget.service';
@@ -50,6 +50,19 @@ export class ExpenseService {
       expenses[prefix][budget.id][expense.id] = expense;
 
       this.deductFromBudget(convertToPrefixFormat(date), expense.value, budget);
+    } else if (budget.duration === 'annual') {
+      const prefix = `m-${getCurrentYearPrefix()}`;
+      if (!expenses[prefix]) {
+        expenses[prefix] = {};
+      }
+
+      if (!expenses[prefix][budget.id]) {
+        expenses[prefix][budget.id] = {};
+      }
+
+      expenses[prefix][budget.id][expense.id] = expense;
+
+      this.deductFromBudget(getCurrentYearPrefix().toString(), expense.value, budget);
     }
 
     return this.storage.set(EXPENSE_PREFIX, expenses);

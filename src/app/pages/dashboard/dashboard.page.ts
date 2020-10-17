@@ -16,7 +16,7 @@ export class DashboardPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    // this.budgetService.reloadBudgets();
+    this.budgetService.reloadBudgets();
   }
 
   getDuration(budget: Budget) {
