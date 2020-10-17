@@ -10,7 +10,7 @@ export class IntroGuard implements CanActivate {
   constructor(private storage: Storage, private router: Router) { }
 
   async canActivate(): Promise<boolean> {
-      const tutorialSeen = await this.storage.get('tutorialSeen');
+      let tutorialSeen = await this.storage.get('tutorialSeen');
 
       if (!tutorialSeen) {
         this.router.navigateByUrl('/intro');

@@ -13,8 +13,17 @@
 }
 
 .slide-2 {
-  background: var(--ion-color-success);
-  color: var(--ion-color-success-contrast);
+  
+  .select-label {
+    padding-bottom: 1.5rem;
+  }
+
+  .form-item {
+
+      .icon-row {
+        margin-top: 2rem;
+      }
+  }
 }
 
 .bottom-box {

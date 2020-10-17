@@ -11,13 +11,32 @@ import { BudgetService } from '@services/storage/budget.service';
 })
 export class IntroPage implements OnInit {
 
-  private readonly DEFAULT_INCOME = 1000;
-
   @ViewChild(IonSlides) slides: IonSlides;
 
-  income: number;
+  id: string;
+  limit: number;
+  duration: string;
+  icon: string;
 
-  constructor(private storage: Storage, private router: Router, private budgetService: BudgetService) { }
+  iconList = {
+    airplane: false,
+    home: false,
+    pizza: false,
+    card: false,
+    bus: false,
+    basket: false,
+    bulb: false,
+    call: false
+  };
+
+  iconListKeys = [];
+
+  constructor(private storage: Storage, private router: Router, private budgetService: BudgetService) {
+    this.iconListKeys = Object.keys(this.iconList);
+    this.duration = this.duration || 'monthly';
+    this.icon = this.icon || 'airplane';
+    this.iconList[this.icon] = true;
+  }
 
   async ngOnInit() {
     console.log(await this.storage.get('tutorialSeen'));
@@ -27,13 +46,25 @@ export class IntroPage implements OnInit {
     this.slides.slideNext();
   }
 
-  async finish() {
-    if (!this.income) {
-      this.income = this.DEFAULT_INCOME;
-    }
+  setIcon(icon: string) {
+    this.icon = icon;
+    this.deselectIcons();
+    this.iconList[icon] = true;
+  }
 
+  private deselectIcons() {
+    this.iconListKeys.forEach(key => {
+      this.iconList[key] = false;
+    });
+  }
+
+  async finish() {
     await Promise.all([
-      // this.budgetService.setDefaultMonthBudget(this.income),
+      this.budgetService.setBudget(this.id, {
+        limit: this.limit,
+        icon: this.icon,
+        duration: this.duration
+      }),
       this.storage.set('tutorialSeen', true)
     ]);
     this.router.navigateByUrl('/');

@@ -9,11 +9,75 @@
   </ion-slide>
 
   <ion-slide class="slide slide-2 flex-col">
-    <i class="slide__icon fas fa-money-bill-wave"></i> 
-    <div class="bottom-box">
-      <h1>How much do you earn in a month?</h1>
-      <ion-input type="number" placeholder="1000" [(ngModel)]="income"></ion-input>
-      <ion-button (click)="next()">Next</ion-button>
+    <!--<i class="slide__icon fas fa-money-bill-wave"></i>-->
+    <h1>Setup your first Budget</h1>
+    <div class="flex-col justify-between full-height">
+      <div class="body-section flex-col full-height">
+        <ion-item >
+          <ion-label>
+            <div class="flex justify-between align-center" id="wallet">
+              <div class="section-input">
+                <h2>Name</h2>
+                <ion-input 
+                type="text"
+                class="ion-no-padding"
+                [(ngModel)]="id">
+                </ion-input>
+              </div>
+            </div>
+          </ion-label>
+        </ion-item>
+
+        <ion-item >
+          <ion-label>
+            <div class="flex justify-between align-center" id="wallet">
+              <div class="section-input">
+                <h2>Amount</h2>
+                <ion-input 
+                type="number"
+                class="ion-no-padding"
+                [(ngModel)]="limit">
+                </ion-input>
+              </div>
+            </div>
+          </ion-label>
+        </ion-item>
+
+        <ion-item >
+          <ion-label class="select-label">
+            <div class="flex justify-between align-center" id="wallet">
+              <div class="input-field">
+                <h2>Duration</h2>
+              </div>
+            </div>
+          </ion-label>
+
+          <ion-select interface="popover" [(ngModel)]="duration">
+            <ion-select-option value="monthly">Monthly</ion-select-option>
+            <!-- <ion-select-option value="weekly">Weekly</ion-select-option> -->
+            <ion-select-option value="annual">Annual</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item  class="form-item">
+          <ion-label class="form-label" position="floating">
+            <h2>Icon</h2>
+          </ion-label>
+          <ion-row class="icon-row">
+            <ion-col size="4" *ngFor="let ico of iconListKeys" >
+              <ion-button *ngIf="!iconList[ico]" (click)="setIcon(ico)" color="medium" expand="block" fill="clear">
+                <ion-icon slot="icon-only" [name]="ico"></ion-icon>
+              </ion-button>
+              <ion-button *ngIf="iconList[ico]" (click)="setIcon(ico)" color="dark" expand="block" fill="clear">
+                <ion-icon slot="icon-only" [name]="ico"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+          
+      </div>
+
+      <ion-button class="next-btn" (click)="next()">Next</ion-button>
     </div>
   </ion-slide>
 
