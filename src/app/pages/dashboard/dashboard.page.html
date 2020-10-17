@@ -1,5 +1,8 @@
 <ion-content fullscreen scroll-y="false">
-  <ion-slides class="slides ion-no-padding ion-no-margin"  color="success" pager>
+  <div class="no-budgets" *ngIf="budgetService.budgets.length === 0">
+    No Budgets. Add one now!
+  </div>
+  <ion-slides *ngIf="budgetService.budgets" class="slides ion-no-padding ion-no-margin" color="success" pager>
     <ion-slide *ngFor="let budget of budgetService.budgets">
       <div class="slide" [class]="budgetService.getCssClass(budget)">
         <div class="header flex justify-around align-center">
