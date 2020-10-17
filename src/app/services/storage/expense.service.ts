@@ -68,7 +68,7 @@ export class ExpenseService {
       return [];
     }
 
-    const prefix   = EXPENSE_PREFIX + '-' + convertToPrefixFormat(date);
+    const prefix   = 'm' + '-' + convertToPrefixFormat(date);
     const expensesObj = allExpenses[prefix];
 
     if (expensesObj) {

@@ -28,8 +28,7 @@ export class BudgetsPage implements OnInit {
   }
 
   async ngOnInit() {
-    await this.budgetService.reloadBudgets();
-    this.reloadBudgets();
+    await this.reloadBudgets();
   }
 
   async openBudgetModal(budget?: Budget) {
@@ -72,7 +71,8 @@ export class BudgetsPage implements OnInit {
     }
   }
 
-  private reloadBudgets() {
+  private async reloadBudgets() {
+    await this.budgetService.reloadBudgets();
     this.monthylBudgets = [];
     this.annualBudgets = [];
 

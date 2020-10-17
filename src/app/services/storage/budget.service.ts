@@ -23,7 +23,6 @@ export class BudgetService {
   private readonly BUDGET_STORAGE_ID = 'b';
 
   constructor(private storage: Storage) {
-    this.reloadBudgets();
   }
 
   async setBudget(id: string, budget: Budget) {
