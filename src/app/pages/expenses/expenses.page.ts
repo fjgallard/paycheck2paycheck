@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { getCurrentMonthPrefix } from '@helper/functions';
+import { Component, OnInit }       from '@angular/core';
 import { Expense, ExpenseService } from '@services/storage/expense.service';
 
 @Component({

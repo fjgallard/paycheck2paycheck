@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router }                       from '@angular/router';
+
 import { IonSlides } from '@ionic/angular';
-import { Storage } from '@ionic/storage';
-import { Router } from '@angular/router';
+import { Storage }   from '@ionic/storage';
+
 import { BudgetService } from '@services/storage/budget.service';
 
 @Component({
@@ -39,7 +41,6 @@ export class IntroPage implements OnInit {
   }
 
   async ngOnInit() {
-    console.log(await this.storage.get('tutorialSeen'));
   }
 
   next() {
@@ -67,6 +68,7 @@ export class IntroPage implements OnInit {
       }),
       this.storage.set('tutorialSeen', true)
     ]);
+
     this.router.navigateByUrl('/');
   }
 

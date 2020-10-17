@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router }            from '@angular/router';
 
 import { Budget, BudgetService } from '@services/storage/budget.service';
-import { MenuController } from '@ionic/angular';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,16 +10,13 @@ import { Router } from '@angular/router';
 })
 export class DashboardPage implements OnInit {
 
-
   constructor(
     private router: Router,
     public budgetService: BudgetService
-  ) {
-  }
+  ) { }
 
   async ngOnInit() {
     this.budgetService.reloadBudgets();
-    console.log(this.budgetService.budgets);
   }
 
   getDuration(budget: Budget) {

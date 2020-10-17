@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { Injectable }          from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
+
 import { Storage } from '@ionic/storage';
 
 @Injectable({

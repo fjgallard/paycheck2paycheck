@@ -93,40 +93,6 @@ export class BudgetsPage implements OnInit {
         ...budget
       });
     })
-
-    /*
-    const budgetsObj = await this.budgetService.getBudgets();
-    if (budgetsObj) {
-      const budgetKeys = Object.keys(budgetsObj);
-
-      budgetKeys.forEach(key => {
-        const budget = budgetsObj[key];
-
-        if (budget.duration === 'monthly') {
-          this.monthylBudgets.push({
-            id: key,
-            cssClass: this.getCssClass(budget),
-            percentage: this.getPercentage(budget),
-            ...budget
-          });
-        } else if (budget.duration === 'weekly') {
-          this.weeklyBudgets.push({
-            id: key,
-            cssClass: this.getCssClass(budget),
-            percentage: this.getPercentage(budget),
-            ...budget
-          });
-        } else if (budget.duration === 'annual') {
-          this.annualBudgets.push({
-            id: key,
-            cssClass: this.getCssClass(budget),
-            percentage: this.getPercentage(budget),
-            ...budget
-          });
-        }
-      })
-    }
-    */
   }
 
   private getCssClass(budget: Budget) {

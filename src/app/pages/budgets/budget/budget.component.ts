@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Budget } from '@services/storage/budget.service';
 
 @Component({
   selector: 'app-budget',
