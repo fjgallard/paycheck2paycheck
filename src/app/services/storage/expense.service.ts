@@ -1,7 +1,7 @@
 import { Injectable }            from '@angular/core';
 
 import { EXPENSE_PREFIX }        from '@helper/constants';
-import { convertToPrefixFormat, getCurrentMonthPrefix, getCurrentYearPrefix } from '@helper/functions';
+import { convertToPrefixFormat, convertToYearlyPrefixFormat, getCurrentYearPrefix } from '@helper/functions';
 
 import { Storage }    from '@ionic/storage';
 import { Budget, BudgetService } from './budget.service';
@@ -38,7 +38,7 @@ export class ExpenseService {
     }
 
     if (budget.duration === 'monthly') {
-      const prefix = `m-${getCurrentMonthPrefix()}`
+      const prefix = `m-${convertToPrefixFormat(date)}`;
       if (!expenses[prefix]) {
         expenses[prefix] = {};
       }
@@ -49,9 +49,9 @@ export class ExpenseService {
 
       expenses[prefix][budget.id][expense.id] = expense;
 
-      this.deductFromBudget(convertToPrefixFormat(date), expense.value, budget);
+      this.deductFromBudget(expense.value, budget, date);
     } else if (budget.duration === 'annual') {
-      const prefix = `m-${getCurrentYearPrefix()}`;
+      const prefix = `m-${convertToYearlyPrefixFormat(date)}`;
       if (!expenses[prefix]) {
         expenses[prefix] = {};
       }
@@ -62,7 +62,7 @@ export class ExpenseService {
 
       expenses[prefix][budget.id][expense.id] = expense;
 
-      this.deductFromBudget(getCurrentYearPrefix().toString(), expense.value, budget);
+      this.deductFromBudget(expense.value, budget, date);
     }
 
     return this.storage.set(EXPENSE_PREFIX, expenses);
@@ -136,8 +136,15 @@ export class ExpenseService {
     }
   }
 
-  private async deductFromBudget(prefix: string, expenseVal: number, budget: Budget) {
-    budget.consumed += expenseVal;
-    this.budgetService.setBudget(budget.id, budget);
+  private async deductFromBudget(expenseVal: number, budget: Budget, date?: Date) {
+    date = date || new Date();
+    const specificBudget = await this.budgetService.getBudget(budget, date);
+    if (!specificBudget) {
+      console.log('budget does not exist.');
+      return;
+    }
+
+    specificBudget.consumed += expenseVal;
+    this.budgetService.setBudget(budget.id, specificBudget, date);
   }
 }

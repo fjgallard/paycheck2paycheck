@@ -13,3 +13,7 @@ export function getCurrentYearPrefix() {
   const date = new Date();
   return date.getFullYear();
 }
+
+export function convertToYearlyPrefixFormat(date: Date) {
+  return date.getFullYear();
+}

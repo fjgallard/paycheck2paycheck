@@ -25,14 +25,36 @@ export class BudgetService {
   constructor(private storage: Storage) {
   }
 
-  async setBudget(id: string, budget: Budget) {
+  async getBudget(budget: Budget, date?: Date) {
+    const budgets = await this.getBudgets();
+
+    if (!date) {
+      date = new Date();
+    }
+
+    if (budget.duration === 'monthly') {
+      const prefix = convertToPrefixFormat(date);
+
+      return budgets[`m-${prefix}`][budget.id];
+    } else if (budget.duration === 'annual') {
+      const prefix = 'y-' + new Date().getFullYear();
+      
+      return budgets[prefix][budget.id];
+    }
+  }
+
+  async setBudget(id: string, budget: Budget, date?: Date) {
+    if (!date) {
+      date = new Date();
+    }
+
     let budgets = await this.storage.get(this.BUDGET_STORAGE_ID);
     if (!budgets) {
       budgets = {};
     }
 
     if (budget.duration === 'monthly') {
-      const prefix = convertToPrefixFormat(new Date());
+      const prefix = convertToPrefixFormat(date);
       if (!budgets[`m-${prefix}`]) {
         budgets[`m-${prefix}`] = {};
       }
@@ -114,7 +136,7 @@ export class BudgetService {
             const budget = monthlyBudgets[monthlyKey];
             this.budgets.push({ id: monthlyKey, ...budget });
             this.monthlyBudgets.push({ id: monthlyKey, ...budget });
-          })
+          });
         } else if (key === `y-${getCurrentYearPrefix()}`) {
           const yearlyBudgets = budgetsObj[key];
           const yearlyBudgetKeys = Object.keys(yearlyBudgets);
@@ -123,7 +145,7 @@ export class BudgetService {
             const budget = yearlyBudgets[yearlyKey];
             this.budgets.push({ id: yearlyKey, ...budget });
             this.yearlyBudgets.push({ id: yearlyKey, ...budget });
-          })
+          });
         }
       });
     }
