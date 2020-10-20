@@ -8,7 +8,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class BudgetService {
 
   private $budgets: BehaviorSubject<Budget[]>;
+  private $monthlyBudgets: BehaviorSubject<Budget[]>;
+  private $annualBudgets: BehaviorSubject<Budget[]>;
+  private $weeklyBudgets: BehaviorSubject<Budget[]>;
+
   public budgets$: Observable<Budget[]>;
+  public monthlyBudgets$: Observable<Budget[]>;
+  public annualBudgets$: Observable<Budget[]>;
+  public weeklyyBudgets$: Observable<Budget[]>;
 
   constructor(private storage: Storage) {
     this.$budgets = new BehaviorSubject(null);
@@ -40,7 +47,14 @@ export class BudgetService {
   async reloadBudgets() {
     const budgets: string = await this.storage.get('budgets');
     const budgetsArr = convertObjectToArray(JSON.parse(budgets));
+    const monthlyArr = budgetsArr.filter((budget: Budget) => budget.duration === 'month');
+    const yearlyArr = budgetsArr.filter((budget: Budget) => budget.duration === 'year');
+    const weeklyArr = budgetsArr.filter((budget: Budget) => budget.duration === 'week');
+
     this.$budgets.next(budgetsArr);
+    this.$monthlyBudgets.next(monthlyArr);
+    this.$annualBudgets.next(yearlyArr);
+    this.$weeklyBudgets.next(weeklyArr);
   }
 
   async updateBudget(id: string, budget: Budget) {
