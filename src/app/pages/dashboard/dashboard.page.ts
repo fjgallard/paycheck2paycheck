@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router }            from '@angular/router';
-
-import { Budget, BudgetService } from '@services/storage/budget.service';
+import { Budget } from '@models/budget';
+import { BudgetService } from '@services/storage/budget/budget.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,29 +11,24 @@ import { Budget, BudgetService } from '@services/storage/budget.service';
 })
 export class DashboardPage implements OnInit {
 
-  constructor(
-    private router: Router,
-    public budgetService: BudgetService
-  ) { }
+  budgets$: Observable<Budget[]>;
 
-  async ngOnInit() {
-    this.budgetService.reloadBudgets();
+  constructor(
+    private router      : Router,
+    public budgetService: BudgetService
+  ) {
+    this.budgets$ = this.budgetService.budgets$;
   }
 
-  getDuration(budget: Budget) {
-    if (budget.duration === 'annual') {
-      return 'year';
-    } else if (budget.duration === 'weekly') {
-      return 'week';
-    } else if (budget.duration === 'monthly') {
-      return 'month';
-    } else {
-      return '';
-    }
+  async ngOnInit() {
   }
 
   newExpense(budget: Budget) {
     this.router.navigate(['/expense/new'], { queryParams: { data: JSON.stringify(budget) } });
+  }
+
+  getRemainingDays() {
+    return 30;
   }
 
 }

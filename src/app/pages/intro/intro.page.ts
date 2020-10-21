@@ -3,8 +3,7 @@ import { Router }                       from '@angular/router';
 
 import { IonSlides } from '@ionic/angular';
 import { Storage }   from '@ionic/storage';
-
-import { BudgetService } from '@services/storage/budget.service';
+import { BudgetService } from '@services/storage/budget/budget.service';
 
 @Component({
   selector: 'app-intro',
@@ -17,7 +16,7 @@ export class IntroPage implements OnInit {
 
   id: string;
   limit: number;
-  duration: string;
+  duration: 'month' | 'year' | 'week';
   icon: string;
 
   iconList = {
@@ -35,7 +34,7 @@ export class IntroPage implements OnInit {
 
   constructor(private storage: Storage, private router: Router, private budgetService: BudgetService) {
     this.iconListKeys = Object.keys(this.iconList);
-    this.duration = this.duration || 'monthly';
+    this.duration = this.duration || 'month';
     this.icon = this.icon || 'airplane';
     this.iconList[this.icon] = true;
   }
@@ -61,10 +60,12 @@ export class IntroPage implements OnInit {
 
   async finish() {
     await Promise.all([
-      this.budgetService.setBudget(this.id, {
+      this.budgetService.createBudget({
+        id: this.id,
         limit: this.limit,
         icon: this.icon,
-        duration: this.duration
+        duration: this.duration,
+        createdAt: new Date()
       }),
       this.storage.set('tutorialSeen', true)
     ]);

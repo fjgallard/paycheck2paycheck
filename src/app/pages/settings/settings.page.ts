@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BudgetService } from '@services/storage/budget.service';
 
 @Component({
   selector: 'app-settings',
@@ -12,7 +11,6 @@ export class SettingsPage implements OnInit {
   customBudget: number;
 
   constructor(
-    private budgetService: BudgetService
   ) { }
 
   async ngOnInit() {

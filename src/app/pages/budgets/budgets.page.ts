@@ -7,10 +7,11 @@ import {
   CdkDragDrop,
   transferArrayItem
 } from '@angular/cdk/drag-drop';
-import { BudgetService } from '@services/local/budget/budget.service';
+
 import { Budget } from '@models/budget';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { BudgetService } from '@services/storage/budget/budget.service';
 
 @Component({
   selector: 'app-budgets',
@@ -18,12 +19,6 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./budgets.page.scss'],
 })
 export class BudgetsPage implements OnInit {
-
-  budgets = [];
-  monthylBudgets = [];
-  weeklyBudgets = [];
-  annualBudgets = [];
-
   monthlyBudgets$: Observable<Budget[]>;
   annualBudgets$: Observable<Budget[]>;
 

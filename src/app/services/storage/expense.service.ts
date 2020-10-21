@@ -4,7 +4,8 @@ import { EXPENSE_PREFIX }        from '@helper/constants';
 import { convertToPrefixFormat, convertToYearlyPrefixFormat, getCurrentYearPrefix } from '@helper/functions';
 
 import { Storage }    from '@ionic/storage';
-import { Budget, BudgetService } from './budget.service';
+import { Budget } from '@models/budget';
+import { BudgetService } from './budget/budget.service';
 
 export interface Expense {
   id?      : string;
@@ -37,7 +38,7 @@ export class ExpenseService {
       expenses = {};
     }
 
-    if (budget.duration === 'monthly') {
+    if (budget.duration === 'month') {
       const prefix = `m-${convertToPrefixFormat(date)}`;
       if (!expenses[prefix]) {
         expenses[prefix] = {};
@@ -50,7 +51,7 @@ export class ExpenseService {
       expenses[prefix][budget.id][expense.id] = expense;
 
       this.deductFromBudget(expense.value, budget, date);
-    } else if (budget.duration === 'annual') {
+    } else if (budget.duration === 'year') {
       const prefix = `m-${convertToYearlyPrefixFormat(date)}`;
       if (!expenses[prefix]) {
         expenses[prefix] = {};
@@ -137,14 +138,6 @@ export class ExpenseService {
   }
 
   private async deductFromBudget(expenseVal: number, budget: Budget, date?: Date) {
-    date = date || new Date();
-    const specificBudget = await this.budgetService.getBudget(budget, date);
-    if (!specificBudget) {
-      console.log('budget does not exist.');
-      return;
-    }
-
-    specificBudget.consumed += expenseVal;
-    this.budgetService.setBudget(budget.id, specificBudget, date);
+    return;
   }
 }

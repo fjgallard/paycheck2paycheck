@@ -49,23 +49,6 @@ export class BudgetService {
     return budgets.filter(budget => budget.id === id)[0];
   }
 
-  async reloadBudgets() {
-    let budgets: Budget[] = await this.storage.get('budgets');
-    if (!budgets) {
-      budgets = [];
-      this.storage.set('budgets', budgets);
-    }
-
-    const monthlyArr = budgets.filter((budget: Budget) => budget.duration === 'month');
-    const yearlyArr = budgets.filter((budget: Budget) => budget.duration === 'year');
-    const weeklyArr = budgets.filter((budget: Budget) => budget.duration === 'week');
-
-    this.$budgets.next(budgets);
-    this.$monthlyBudgets.next(monthlyArr);
-    this.$annualBudgets.next(yearlyArr);
-    this.$weeklyBudgets.next(weeklyArr);
-  }
-
   async updateBudget(id: string, budget: Budget) {
     const budgets = await this.storage.get('budgets');
 
@@ -84,5 +67,37 @@ export class BudgetService {
 
     await this.storage.set('budgets', budgets);
     return this.reloadBudgets();
+  }
+
+  getCssClass(budget: Budget) {
+    const percentage = this.getPercentage(budget);
+    if (percentage <= 0.5) {
+      return 'success';
+    } else if (percentage <= 0.8) {
+      return 'warning';
+    } else {
+      return 'danger';
+    }
+  }
+
+  private getPercentage(budget: Budget) {
+    return 0;
+  }
+
+  private async reloadBudgets() {
+    let budgets: Budget[] = await this.storage.get('budgets');
+    if (!budgets) {
+      budgets = [];
+      this.storage.set('budgets', budgets);
+    }
+
+    const monthlyArr = budgets.filter((budget: Budget) => budget.duration === 'month');
+    const yearlyArr = budgets.filter((budget: Budget) => budget.duration === 'year');
+    const weeklyArr = budgets.filter((budget: Budget) => budget.duration === 'week');
+
+    this.$budgets.next(budgets);
+    this.$monthlyBudgets.next(monthlyArr);
+    this.$annualBudgets.next(yearlyArr);
+    this.$weeklyBudgets.next(weeklyArr);
   }
 }

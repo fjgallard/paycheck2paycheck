@@ -1,9 +1,6 @@
 <ion-content fullscreen scroll-y="false">
-  <div class="no-budgets" *ngIf="budgetService.budgets.length === 0">
-    No Budgets. Add one now!
-  </div>
-  <ion-slides *ngIf="budgetService.budgets" class="slides ion-no-padding ion-no-margin" color="success" pager>
-    <ion-slide *ngFor="let budget of budgetService.budgets">
+  <ion-slides *ngIf="budgets$ | async as budgets" class="slides ion-no-padding ion-no-margin" color="success" pager>
+    <ion-slide *ngFor="let budget of budgets">
       <div class="slide" [class]="budgetService.getCssClass(budget)">
         <div class="header flex justify-around align-center">
           <ion-icon name="settings-outline invisible"></ion-icon>
@@ -15,10 +12,10 @@
           {{ budget.limit - budget.consumed | currency }}
         </ion-text>
         <ion-text class="budget-limit-subtitle">
-          left this {{ getDuration(budget) }}
+          left this {{ budget.duration || '' }}
         </ion-text>
         <ion-text class="budget-days-left">
-          <span id="days">{{ budgetService.getRemainingDays(budget) }}</span> days left
+          <span id="days">{{ getRemainingDays(budget) }}</span> days left
         </ion-text>
 
         <div class="buttons flex full-width justify-around">
