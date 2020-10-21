@@ -17,7 +17,7 @@
         Monthly
       </ion-list-header>
 
-      <ion-item-sliding *ngFor="let budget of monthylBudgets" >
+      <ion-item-sliding *ngFor="let budget of (monthlyBudgets$ | async)" >
         
         <ion-item class="budget-item">
           <ion-avatar [class]="budget.cssClass" slot="start">
@@ -38,11 +38,11 @@
         </ion-item>
 
         <ion-item-options side="end">
-          <ion-item-option>
-            <ion-icon slot="icon-only" name="settings" (click)="openBudgetModal(budget)"></ion-icon>
+          <ion-item-option (click)="openBudgetModal(budget)">
+            <ion-icon slot="icon-only" name="settings"></ion-icon>
           </ion-item-option>
-          <ion-item-option color="danger">
-            <ion-icon slot="icon-only" name="trash" (click)="deleteBudget(budget.id)"></ion-icon>
+          <ion-item-option color="danger" (click)="deleteBudget(budget.id)">
+            <ion-icon slot="icon-only" name="trash" ></ion-icon>
           </ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
@@ -54,7 +54,7 @@
         Yearly
       </ion-list-header>
 
-      <ion-item-sliding *ngFor="let budget of annualBudgets" >
+      <ion-item-sliding *ngFor="let budget of annualBudgets$ | async" >
         
         <ion-item class="budget-item">
           <ion-avatar [class]="budget.cssClass" slot="start">
@@ -75,11 +75,11 @@
         </ion-item>
 
         <ion-item-options side="end">
-          <ion-item-option>
-            <ion-icon slot="icon-only" name="settings" (click)="openBudgetModal(budget)"></ion-icon>
+          <ion-item-option (click)="openBudgetModal(budget)">
+            <ion-icon slot="icon-only" name="settings"></ion-icon>
           </ion-item-option>
-          <ion-item-option color="danger">
-            <ion-icon slot="icon-only" name="trash" (click)="deleteBudget(budget.id)"></ion-icon>
+          <ion-item-option color="danger" (click)="deleteBudget(budget.id)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
           </ion-item-option>
         </ion-item-options>
       </ion-item-sliding>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Budget, BudgetService } from '@services/storage/budget.service';
 import { ModalController } from '@ionic/angular';
 import { BudgetComponent } from './budget/budget.component';
 
@@ -8,6 +7,10 @@ import {
   CdkDragDrop,
   transferArrayItem
 } from '@angular/cdk/drag-drop';
+import { BudgetService } from '@services/local/budget/budget.service';
+import { Budget } from '@models/budget';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-budgets',
@@ -21,14 +24,31 @@ export class BudgetsPage implements OnInit {
   weeklyBudgets = [];
   annualBudgets = [];
 
+  monthlyBudgets$: Observable<Budget[]>;
+  annualBudgets$: Observable<Budget[]>;
+
   constructor(
-    private budgetService    : BudgetService,
-    private modalCtrl        : ModalController
+    private budgetService: BudgetService,
+    private modalCtrl: ModalController
   ) {
+    this.monthlyBudgets$ = this.budgetService.monthlyBudgets$.pipe(
+      map(budgets => {
+        if (budgets) {
+          return budgets.map(budget => ({ ...budget, cssClass: this.getCssClass(budget), consumed: this.getConsumed(budget) }))
+        }
+      })
+    );
+
+    this.annualBudgets$ = this.budgetService.annualBudgets$.pipe(
+      map(budgets => {
+        if (budgets) {
+          return budgets.map(budget => ({ ...budget, cssClass: this.getCssClass(budget), consumed: this.getConsumed(budget) }))
+        }
+      })
+    );
   }
 
   async ngOnInit() {
-    await this.reloadBudgets();
   }
 
   async openBudgetModal(budget?: Budget) {
@@ -42,15 +62,16 @@ export class BudgetsPage implements OnInit {
     await modal.present();
     const { data } = await modal.onDidDismiss();
 
-    if (data?.id && data?.budget) {
-      await this.budgetService.setBudget(data.id, data.budget);
-      this.reloadBudgets();
+    if (data?.budget && budget) {
+      await this.budgetService.updateBudget(budget.id, data.budget);
+    } else if (data.budget) {
+      await this.budgetService.createBudget(data.budget);
     }
   }
 
   async deleteBudget(id: string) {
+    console.log(id);
     await this.budgetService.deleteBudget(id);
-    this.reloadBudgets();
   }
 
   // Drag n Drop
@@ -71,30 +92,6 @@ export class BudgetsPage implements OnInit {
     }
   }
 
-  private async reloadBudgets() {
-    await this.budgetService.reloadBudgets();
-    this.monthylBudgets = [];
-    this.annualBudgets = [];
-
-    this.budgetService.yearlyBudgets.forEach(budget => {
-      this.annualBudgets.push({
-        id: budget.id,
-        cssClass: this.getCssClass(budget),
-        percentage: this.getPercentage(budget),
-        ...budget
-      });
-    });
-
-    this.budgetService.monthlyBudgets.forEach(budget => {
-      this.monthylBudgets.push({
-        id: budget.id,
-        cssClass: this.getCssClass(budget),
-        percentage: this.getPercentage(budget),
-        ...budget
-      });
-    })
-  }
-
   private getCssClass(budget: Budget) {
     const percentage = this.getPercentage(budget);
     if (percentage <= 0.5) {
@@ -106,12 +103,12 @@ export class BudgetsPage implements OnInit {
     }
   }
 
-  private getPercentage(budget: Budget) {
-    if (!budget.limit) {
-      return 0;
-    }
+  private getConsumed(budget: Budget) {
+    return 0;
+  }
 
-    return budget.consumed / budget.limit;
+  private getPercentage(budget: Budget) {
+    return 0;
   }
 
 }

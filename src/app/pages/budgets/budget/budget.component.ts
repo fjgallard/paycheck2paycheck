@@ -28,7 +28,7 @@ export class BudgetComponent implements OnInit {
 
   constructor(private modalCtrl: ModalController) {
     this.iconListKeys = Object.keys(this.iconList);
-    this.duration = this.duration || 'monthly';
+    this.duration = this.duration || 'month';
     this.icon = this.icon || 'airplane';
     this.iconList[this.icon] = true;
   }
@@ -37,11 +37,12 @@ export class BudgetComponent implements OnInit {
 
   async save() {
     await this.modalCtrl.dismiss({
-      id: this.id,
       budget: {
+        id: this.id,
         limit: this.limit,
         icon: this.icon,
-        duration: this.duration
+        duration: this.duration,
+        createdAt: new Date()
       }
     });
   }

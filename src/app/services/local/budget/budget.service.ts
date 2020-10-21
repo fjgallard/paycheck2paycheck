@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Budget } from '@models/budget';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Storage }    from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -15,71 +16,73 @@ export class BudgetService {
   public budgets$: Observable<Budget[]>;
   public monthlyBudgets$: Observable<Budget[]>;
   public annualBudgets$: Observable<Budget[]>;
-  public weeklyyBudgets$: Observable<Budget[]>;
+  public weeklyBudgets$: Observable<Budget[]>;
 
   constructor(private storage: Storage) {
     this.$budgets = new BehaviorSubject(null);
     this.budgets$ = this.$budgets.asObservable();
 
+    this.$monthlyBudgets = new BehaviorSubject(null);
+    this.monthlyBudgets$ = this.$monthlyBudgets.asObservable();
+
+    this.$annualBudgets = new BehaviorSubject(null);
+    this.annualBudgets$ = this.$annualBudgets.asObservable();
+
+    this.$weeklyBudgets = new BehaviorSubject(null);
+    this.weeklyBudgets$ = this.$weeklyBudgets.asObservable();
+
     this.reloadBudgets();
   }
   
   async createBudget(budget: Budget): Promise<void> {
-    const budgetsStr = await this.storage.get('budgets');
-    const budgetsObj = convertStringToObject(budgetsStr);
-    const budgetsArr = convertObjectToArray(budgetsObj);
+    const budgets = await this.storage.get('budgets');
 
-    budgetsArr.push(budget);
-    const newBudgetsObj = convertArrayToObject(budgetsArr);
+    budgets.push(budget);
+    await this.storage.set('budgets', budgets);
     
-    this.storage.setItem('budgets', JSON.stringify(newBudgetsObj));
     return this.reloadBudgets();
   }
 
   async getBudget(id: string): Promise<Budget> {
-    const budgetsStr = await this.storage.get('budgets');
-    const budgetsObj = convertStringToObject(budgetsStr);
-    const budgetsArr = convertObjectToArray(budgetsObj);
+    const budgets: Budget[] = await this.storage.get('budgets');
 
-    return budgetsArr.filter(budget => budget.id === id)[0];
+    return budgets.filter(budget => budget.id === id)[0];
   }
 
   async reloadBudgets() {
-    const budgets: string = await this.storage.get('budgets');
-    const budgetsArr = convertObjectToArray(JSON.parse(budgets));
-    const monthlyArr = budgetsArr.filter((budget: Budget) => budget.duration === 'month');
-    const yearlyArr = budgetsArr.filter((budget: Budget) => budget.duration === 'year');
-    const weeklyArr = budgetsArr.filter((budget: Budget) => budget.duration === 'week');
+    let budgets: Budget[] = await this.storage.get('budgets');
+    if (!budgets) {
+      budgets = [];
+      this.storage.set('budgets', budgets);
+    }
 
-    this.$budgets.next(budgetsArr);
+    const monthlyArr = budgets.filter((budget: Budget) => budget.duration === 'month');
+    const yearlyArr = budgets.filter((budget: Budget) => budget.duration === 'year');
+    const weeklyArr = budgets.filter((budget: Budget) => budget.duration === 'week');
+
+    this.$budgets.next(budgets);
     this.$monthlyBudgets.next(monthlyArr);
     this.$annualBudgets.next(yearlyArr);
     this.$weeklyBudgets.next(weeklyArr);
   }
 
   async updateBudget(id: string, budget: Budget) {
-    const budgetsStr = await this.storage.get('budgets');
-    const budgetsObj = convertStringToObject(budgetsStr);
-    const budgetsArr = convertObjectToArray(budgetsObj);
+    const budgets = await this.storage.get('budgets');
 
-    const index = budgetsArr.findIndex(budget => budget.id === id);
-    budgetsArr[index] = budget;
+    const index = budgets.findIndex(budget => budget.id === id);
+    budgets[index] = budget;
 
-    const newBudgetsObj = convertArrayToObject(budgetsArr);
-    this.storage.setItem('budgets', JSON.stringify(newBudgetsObj));
+    await this.storage.set('budgets', budgets);
     return this.reloadBudgets();
   }
 
   async deleteBudget(id: string) {
-    const budgetsStr = await this.storage.get('budgets');
-    const budgetsObj = convertStringToObject(budgetsStr);
-    const budgetsArr = convertObjectToArray(budgetsObj);
+    const budgets: Budget[] = await this.storage.get('budgets');
+    console.log(budgets);
+    const index = budgets.findIndex(budget => budget.id === id);
+    budgets.splice(index, 1);
 
-    const index = budgetsArr.findIndex(budget => budget.id === id);
-    budgetsArr.splice(index, 1);
-
-    const newBudgetsObj = convertArrayToObject(budgetsArr);
-    this.storage.setItem('budgets', JSON.stringify(newBudgetsObj));
+    await this.storage.set('budgets', budgets);
     return this.reloadBudgets();
   }
 }
