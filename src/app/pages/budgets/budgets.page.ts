@@ -29,7 +29,7 @@ export class BudgetsPage implements OnInit {
     this.monthlyBudgets$ = this.budgetService.monthlyBudgets$.pipe(
       map(budgets => {
         if (budgets) {
-          return budgets.map(budget => ({ ...budget, cssClass: this.getCssClass(budget), consumed: this.getConsumed(budget) }))
+          return budgets.map(budget => ({ ...budget, cssClass: this.budgetService.getCssClass(budget), consumed: this.getConsumed(budget) }))
         }
       })
     );
@@ -37,7 +37,7 @@ export class BudgetsPage implements OnInit {
     this.annualBudgets$ = this.budgetService.annualBudgets$.pipe(
       map(budgets => {
         if (budgets) {
-          return budgets.map(budget => ({ ...budget, cssClass: this.getCssClass(budget), consumed: this.getConsumed(budget) }))
+          return budgets.map(budget => ({ ...budget, cssClass: this.budgetService.getCssClass(budget), consumed: this.getConsumed(budget) }))
         }
       })
     );
@@ -87,22 +87,8 @@ export class BudgetsPage implements OnInit {
     }
   }
 
-  private getCssClass(budget: Budget) {
-    const percentage = this.getPercentage(budget);
-    if (percentage <= 0.5) {
-      return 'success';
-    } else if (percentage <= 0.8) {
-      return 'warning';
-    } else {
-      return 'danger';
-    }
-  }
 
   private getConsumed(budget: Budget) {
-    return 0;
-  }
-
-  private getPercentage(budget: Budget) {
     return 0;
   }
 

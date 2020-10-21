@@ -9,7 +9,7 @@
         </div>
         
         <ion-text class="budget-limit">
-          {{ budget.limit - budget.consumed | currency }}
+          {{ budget.limit | currency }}
         </ion-text>
         <ion-text class="budget-limit-subtitle">
           left this {{ budget.duration || '' }}
