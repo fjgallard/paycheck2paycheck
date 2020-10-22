@@ -80,6 +80,26 @@ export class BudgetService {
     }
   }
 
+  getRemainingDays(budget: Budget) {
+    if (!budget) {
+      return;
+    }
+
+    if (budget.duration === 'month') {
+      const currentDate = new Date();
+      const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+      return lastDay.getDate() - currentDate.getDate();
+    } else if (budget.duration === 'year') {
+      const currentDate = new Date();
+      const lastDay = new Date(currentDate.getFullYear(), 12, 0);
+
+      return Math.floor((lastDay.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24));
+    } else if (budget.duration === 'week') {
+      return 7 - (new Date().getDay());
+    }
+  }
+
   private getPercentage(budget: Budget) {
     return 0;
   }

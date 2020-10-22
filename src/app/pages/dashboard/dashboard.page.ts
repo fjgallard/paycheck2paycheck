@@ -27,8 +27,12 @@ export class DashboardPage implements OnInit {
     this.router.navigate(['/expense/new'], { queryParams: { data: JSON.stringify(budget) } });
   }
 
-  getRemainingDays() {
-    return 30;
+  getCssClass(budget: Budget) {
+    return this.budgetService.getCssClass(budget);
+  }
+
+  getRemainingDays(budget: Budget) {
+    return this.budgetService.getRemainingDays(budget);
   }
 
 }

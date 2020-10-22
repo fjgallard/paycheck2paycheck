@@ -1,7 +1,7 @@
 <ion-content fullscreen scroll-y="false">
   <ion-slides *ngIf="budgets$ | async as budgets" class="slides ion-no-padding ion-no-margin" color="success" pager>
     <ion-slide *ngFor="let budget of budgets">
-      <div class="slide" [class]="budgetService.getCssClass(budget)">
+      <div class="slide" [class]="getCssClass(budget)">
         <div class="header flex justify-around align-center">
           <ion-icon name="settings-outline invisible"></ion-icon>
           <h3>{{ budget.id }}</h3>

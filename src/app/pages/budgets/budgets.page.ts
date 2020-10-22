@@ -37,7 +37,13 @@ export class BudgetsPage implements OnInit {
     this.annualBudgets$ = this.budgetService.annualBudgets$.pipe(
       map(budgets => {
         if (budgets) {
-          return budgets.map(budget => ({ ...budget, cssClass: this.budgetService.getCssClass(budget), consumed: this.getConsumed(budget) }))
+          return budgets.map(budget => (
+            { 
+              ...budget,
+              cssClass: this.budgetService.getCssClass(budget),
+              consumed: this.getConsumed(budget)
+            }
+          ))
         }
       })
     );
