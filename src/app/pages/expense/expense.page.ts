@@ -2,9 +2,9 @@ import { Component, OnInit }                  from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router }             from '@angular/router';
 import { Budget } from '@models/budget';
+import { Expense } from '@models/expense';
 import { BudgetService } from '@services/storage/budget/budget.service';
-
-import { Expense, ExpenseService } from '@services/storage/expense.service';
+import { ExpensesService } from '@services/storage/expenses/expenses.service';
 
 @Component({
   selector: 'app-expense',
@@ -15,19 +15,19 @@ export class ExpensePage implements OnInit {
 
   expenseIcon: string;
 
-  id         : string;
+  id         : string;  
   expense    : Expense;
   expenseForm: FormGroup
   budget     : Budget;
 
   constructor(
     public budgetService: BudgetService,
-    private expenseService: ExpenseService,
+    private expensesService: ExpensesService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.expense = { id: '', value: 0, createdAt: new Date() }
+    this.expense = { id: '', budgetId: '', value: 0, createdAt: new Date() }
     this.expenseIcon = 'wallet';
     this.expenseForm = this.fb.group({
       value    : [ '' , Validators.required ],
@@ -38,6 +38,7 @@ export class ExpensePage implements OnInit {
 
     this.route.queryParams.subscribe(params =>{
       this.budget = JSON.parse(params.data);
+      console.log(this.budget);
     });
   }
 
@@ -45,7 +46,7 @@ export class ExpensePage implements OnInit {
   }
 
 
-  onSubmit() {
+  async onSubmit() {
     const createdAt = new Date(this.expenseForm.get('createdAt').value);
     const expense: Expense = {
       id: this.expenseForm.get('name').value,
@@ -54,9 +55,8 @@ export class ExpensePage implements OnInit {
       createdAt
     }
 
-    this.expenseService.setExpense(expense, createdAt, this.budget).then(() => {
-      this.router.navigateByUrl('/dashboard');
-    });
+    await this.expensesService.createExpense(expense);
+    this.router.navigateByUrl('/dashboard');
   }
 
   onCancel() {

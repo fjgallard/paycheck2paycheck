@@ -28,21 +28,33 @@
       <ion-card class="expenses-card ion-no-padding">
         <ion-list>
 
-          <ion-item *ngFor="let expense of expenses">
-            <ion-label>
-              <h2 class="expense-category">{{ expense.value || 0 | currency }}</h2>
-              <ion-text color="medium">
-                <p class="expense-name">{{ expense.id }} </p>
-              </ion-text>
-              
-            </ion-label>
-            <div class="expense-details flex-col align-end">
-              <ion-note class="expense-date">
-                {{ expense.createdAt | date:'dd/MM/yyyy' }}
-              </ion-note>
-              <ion-note class="expense-value">{{ expense.budgetId}}</ion-note>
-            </div>
-          </ion-item>
+          <ion-item-sliding *ngFor="let expense of expenses">
+            <ion-item>
+              <ion-label>
+                <h2 class="expense-category">{{ expense.value || 0 | currency }}</h2>
+                <ion-text color="medium">
+                  <p class="expense-name">{{ expense.id }} </p>
+                </ion-text>
+                
+              </ion-label>
+              <div class="expense-details flex-col align-end">
+                <ion-note class="expense-date">
+                  {{ expense.createdAt | date:'dd/MM/yyyy' }}
+                </ion-note>
+                <ion-note class="expense-value">{{ expense.budgetId}}</ion-note>
+              </div>
+            </ion-item>
+
+            <ion-item-options side="end">
+              <ion-item-option>
+                <ion-icon slot="icon-only" name="settings"></ion-icon>
+              </ion-item-option>
+              <ion-item-option color="danger">
+                <ion-icon slot="icon-only" name="trash" ></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
         </ion-list>
       </ion-card>
       

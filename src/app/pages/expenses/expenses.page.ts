@@ -1,5 +1,7 @@
 import { Component, OnInit }       from '@angular/core';
-import { Expense, ExpenseService } from '@services/storage/expense.service';
+import { Expense } from '@models/expense';
+import { ExpensesService } from '@services/storage/expenses/expenses.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-expenses',
@@ -11,16 +13,17 @@ export class ExpensesPage implements OnInit {
   timePeriod = 'month';
   expenses: Expense[];
 
-  constructor(private expensesService: ExpenseService) {
+  expenses$: Observable<Expense[]>;
+
+  constructor(private expensesService: ExpensesService) {
     this.expenses = [];
+    this.expenses$ = this.expensesService.expenses$;
   }
 
   async ngOnInit() {
     const date = new Date();
     // const date = new Date(2020, 8, 24);
     this.setTimePeriod();
-
-    console.log(await this.expensesService.getExpenses());
   }
 
   private async showDayExpenses() {
@@ -31,11 +34,6 @@ export class ExpensesPage implements OnInit {
   private async showMonthExpenses() {
     this.expenses = await this.expensesService.getExpensesForTheMonth(new Date());
     this.expenses = this.expenses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-  }
-
-  private async showWeekExpenses() {
-    this.expenses = await this.expensesService.getExpensesForTheWeek(new Date());
-    this.expenses = this.expenses.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
   }
 
   setTimePeriod() {
