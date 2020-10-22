@@ -61,7 +61,6 @@ export class BudgetService {
 
   async deleteBudget(id: string) {
     const budgets: Budget[] = await this.storage.get('budgets');
-    console.log(budgets);
     const index = budgets.findIndex(budget => budget.id === id);
     budgets.splice(index, 1);
 
