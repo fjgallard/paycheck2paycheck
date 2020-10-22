@@ -12,14 +12,16 @@ export class ExpensesService {
 
   private $expenses: BehaviorSubject<Expense[]>;
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage) {
+    this.expenses$ = this.$expenses.asObservable();
+  }
 
   async createExpense(expense: Expense) {
     const expenses: Expense[] = await this.storage.get('expenses');
     expenses.push(expense);
 
-    return this.storage.set('expenses', expenses);
-
+    await this.storage.set('expenses', expenses);
+    return this.$expenses.next(expenses);
   }
 
   async getExpense(id: string) {
@@ -34,7 +36,8 @@ export class ExpensesService {
     const index = expenses.findIndex(expense => expense.id === id);
 
     expenses[index] = expense;
-    return this.storage.set('expenses', expenses);
+    await this.storage.set('expenses', expenses);
+    return this.$expenses.next(expenses);
   }
 
   async deleteExpense(id: string) {
@@ -42,6 +45,6 @@ export class ExpensesService {
     const index = expenses.findIndex(expense => expense.id === id);
 
     expenses.splice(index, 1);
-    return expenses;
+    return this.$expenses.next(expenses);
   }
 }
