@@ -4,6 +4,7 @@ import { Budget } from '@models/budget';
 import { Expense } from '@models/expense';
 import { ExpensesService } from '@services/storage/expenses/expenses.service';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-expenses',
@@ -12,14 +13,12 @@ import { Observable } from 'rxjs';
 })
 export class ExpensesPage implements OnInit {
 
-  timePeriod = 'month';
-  expenses: Expense[];
+  timePeriod = 'today';
   budget: Budget;
 
   expenses$: Observable<Expense[]>;
 
   constructor(private route: ActivatedRoute, private expensesService: ExpensesService) {
-    this.expenses = [];
     this.expenses$ = this.expensesService.expenses$;
 
     this.route.queryParams.subscribe(params =>{
@@ -32,7 +31,6 @@ export class ExpensesPage implements OnInit {
 
   async ngOnInit() {
     const date = new Date();
-    // const date = new Date(2020, 8, 24);
     this.setTimePeriod();
   }
 
@@ -41,13 +39,61 @@ export class ExpensesPage implements OnInit {
   }
 
   private async showDayExpenses() {
-    this.expenses = await this.expensesService.getExpensesForTheDay(new Date(), this.budget.id);
-    this.expenses = this.expenses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    this.expenses$ = this.expenses$.pipe(
+      map(expenses => this.getExpensesForTheDay(expenses, new Date(), this.budget.id))
+    );
   }
 
   private async showMonthExpenses() {
-    this.expenses = await this.expensesService.getExpensesForTheMonth(new Date(), this.budget.id);
-    this.expenses = this.expenses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    this.expenses$ = this.expenses$.pipe(
+      map(expenses => this.getExpensesForTheMonth(expenses, new Date(), this.budget.id))
+    );
+  }
+
+  private getExpensesForTheDay(allExpenses: Expense[], date: Date, budgetId?: string) {
+    if (!allExpenses) {
+      return [];
+    }
+    const filteredExpenses = allExpenses.filter(expense =>{
+      const day = expense.createdAt.getDate();
+      const year = expense.createdAt.getFullYear();
+      const month = expense.createdAt.getMonth();
+
+      if (day === date.getDate() && year === date.getFullYear() && month === date.getMonth()) {
+        return true;
+      }
+    });
+
+    if (budgetId) {
+      return filteredExpenses
+        .filter(expense => expense.budgetId === budgetId)
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } else {
+      return filteredExpenses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }
+  }
+
+  private getExpensesForTheMonth(allExpenses: Expense[], date: Date, budgetId?: string) {
+    if (!allExpenses) {
+      return [];
+    }
+
+    const filteredExpenses = allExpenses.filter(expense =>{
+      const year = expense.createdAt.getFullYear();
+      const month = expense.createdAt.getMonth();
+
+      if (year === date.getFullYear() && month === date.getMonth()) {
+        return true;
+      } 
+    })
+
+    if (budgetId) {
+      return filteredExpenses
+        .filter(expense => expense.budgetId === budgetId)
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } else {
+      return filteredExpenses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }
   }
 
   setTimePeriod() {

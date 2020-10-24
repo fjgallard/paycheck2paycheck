@@ -28,7 +28,7 @@
       <ion-card class="expenses-card ion-no-padding">
         <ion-list>
 
-          <ion-item-sliding *ngFor="let expense of expenses">
+          <ion-item-sliding *ngFor="let expense of expenses$ | async">
             <ion-item>
               <ion-label>
                 <h2 class="expense-category">{{ expense.value || 0 | currency }}</h2>

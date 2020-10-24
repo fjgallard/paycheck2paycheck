@@ -15,11 +15,11 @@ export class ExpensesService {
 
   constructor(private storage: Storage) {
     this.$expenses = new BehaviorSubject(null);
-    this.expenses$ = this.$expenses.asObservable().pipe(
-      tap(expenses=> {
-        console.log(expenses);
-      })
-    );
+    this.expenses$ = this.$expenses.asObservable();
+
+    this.getExpensesFromStorage().then(expenses => {
+      this.$expenses.next(expenses);
+    })
   }
 
   async createExpense(expense: Expense) {
@@ -64,45 +64,7 @@ export class ExpensesService {
 
     expenses.splice(index, 1);
     await this.storage.set('expenses', expenses);
-    console.log('deleted');
     return this.$expenses.next(expenses);
-  }
-
-  async getExpensesForTheDay(date: Date, budgetId?: string) {
-    const allExpenses: Expense[] = await this.getExpensesFromStorage();
-    const filteredExpenses = allExpenses.filter(expense =>{
-      const day = expense.createdAt.getDate();
-      const year = expense.createdAt.getFullYear();
-      const month = expense.createdAt.getMonth();
-
-      if (day === date.getDate() && year === date.getFullYear() && month === date.getMonth()) {
-        return true;
-      }
-    });
-
-    if (budgetId) {
-      return filteredExpenses.filter(expense => expense.budgetId === budgetId);
-    } else {
-      return filteredExpenses;
-    }
-  }
-
-  async getExpensesForTheMonth(date: Date, budgetId?: string) {
-    const allExpenses: Expense[] = await this.getExpensesFromStorage();
-    const filteredExpenses = allExpenses.filter(expense =>{
-      const year = expense.createdAt.getFullYear();
-      const month = expense.createdAt.getMonth();
-
-      if (year === date.getFullYear() && month === date.getMonth()) {
-        return true;
-      } 
-    })
-
-    if (budgetId) {
-      return filteredExpenses.filter(expense => expense.budgetId === budgetId);
-    } else {
-      return filteredExpenses;
-    }
   }
 
   private async getExpensesFromStorage() {
