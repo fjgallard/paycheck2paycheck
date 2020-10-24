@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router }            from '@angular/router';
 import { Budget } from '@models/budget';
+import { Expense } from '@models/expense';
 import { BudgetService } from '@services/storage/budget/budget.service';
 import { Observable } from 'rxjs';
 
@@ -24,11 +25,11 @@ export class DashboardPage implements OnInit {
   }
 
   newExpense(budget: Budget) {
-    this.router.navigate(['/expense/new'], { queryParams: { data: JSON.stringify(budget) } });
+    this.router.navigate(['/expense/new'], { queryParams: { budget: JSON.stringify(budget) } });
   }
 
   navigateToExpenses(budget: Budget) {
-    this.router.navigate(['/expenses'], { queryParams: { data: JSON.stringify(budget) } });
+    this.router.navigate([`expenses/${budget.id}`]);
   }
 
   getCssClass(budget: Budget) {

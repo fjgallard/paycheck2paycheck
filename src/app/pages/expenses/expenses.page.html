@@ -47,10 +47,10 @@
 
             <ion-item-options side="end">
               <ion-item-option>
-                <ion-icon slot="icon-only" name="settings"></ion-icon>
+                <ion-icon slot="icon-only" name="settings" (click)="navigateToExpense(expense)"></ion-icon>
               </ion-item-option>
               <ion-item-option color="danger" (click)="deleteExpense(expense)">
-                <ion-icon slot="icon-only"name="trash" ></ion-icon>
+                <ion-icon slot="icon-only"name="trash"></ion-icon>
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>

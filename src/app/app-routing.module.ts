@@ -47,6 +47,11 @@ const routes: Routes = [
     canActivate: [IntroGuard]
   },
   {
+    path: 'expenses/:id',
+    loadChildren: () => import('@pages/expenses/expenses.module').then( m => m.ExpensesPageModule),
+    canActivate: [IntroGuard]
+  },
+  {
     path: 'expense/new',
     loadChildren: () => import('@pages/expense/expense.module').then( m => m.ExpensePageModule),
     canActivate: [IntroGuard]

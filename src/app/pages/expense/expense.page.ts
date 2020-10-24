@@ -34,32 +34,48 @@ export class ExpensePage implements OnInit {
     this.expenseForm = this.fb.group({
       value    : [ '' , Validators.required ],
       createdAt: [ this.expense.createdAt.toISOString(), Validators.required ],
-      category : [ '' ],
       name: ['']
     });
 
     this.route.queryParams.subscribe(params =>{
-      this.budget = JSON.parse(params.data);
+      if (params?.budget) {
+        this.budget = JSON.parse(params.budget);
+      }
     });
   }
 
   async ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.expense = await this.expensesService.getExpense(id);
+      this.expenseForm.get('value').setValue(this.expense.value);
+      this.expenseForm.get('createdAt').setValue(this.expense.createdAt.toISOString());
+      this.expenseForm.get('name').setValue(this.expense.name);
+      if (this.expense) {
+        this.budget = await this.budgetService.getBudget(this.expense.budgetId);
+      }
+    }
   }
 
 
   async onSubmit() {
-    const createdAt = new Date(this.expenseForm.get('createdAt').value);
     const expense: Expense = {
       id: '',
       name: this.expenseForm.get('name').value,
       value: this.expenseForm.get('value').value,
       budgetId: this.budget.id,
-      createdAt
+      createdAt: new Date(this.expenseForm.get('createdAt').value)
     }
 
-    await this.expensesService.createExpense(expense);
-    // this.router.navigate(['/expenses'], { queryParams: { data: JSON.stringify(this.budget) } });
-    this.router.navigateByUrl('/dashboard');
+    if(this.expense.id) {
+      expense.id = this.expense.id;
+      await this.expensesService.updateExpense(expense.id, expense);
+      this.router.navigate([`expenses/${this.budget.id}`]);
+    } else {
+      await this.expensesService.createExpense(expense);
+      this.router.navigateByUrl('/dashboard');
+    }
+    
   }
 
   onCancel() {

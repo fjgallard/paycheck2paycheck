@@ -1,10 +1,11 @@
 import { Component, OnInit }       from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Budget } from '@models/budget';
 import { Expense } from '@models/expense';
+import { BudgetService } from '@services/storage/budget/budget.service';
 import { ExpensesService } from '@services/storage/expenses/expenses.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-expenses',
@@ -15,24 +16,31 @@ export class ExpensesPage implements OnInit {
 
   timePeriod = 'today';
   budget: Budget;
-
   expenses$: Observable<Expense[]>;
 
-  constructor(private route: ActivatedRoute, private expensesService: ExpensesService) {
-    this.expenses$ = this.expensesService.expenses$;
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private budgetService: BudgetService,
+    private expensesService: ExpensesService) {
+    this.expenses$ = this.expensesService.expenses$.pipe(
+      tap(expense => console.log(expense))
+    );
 
-    this.route.queryParams.subscribe(params =>{
-      if (params?.data) {
-        this.budget = JSON.parse(params.data);
-      }
-      
+    const id = this.route.snapshot.paramMap.get('id');
+    this.budgetService.getBudget(id).then(budget => {
+      this.budget = budget;
+      this.setTimePeriod();
     });
   }
 
   async ngOnInit() {
-    const date = new Date();
-    this.setTimePeriod();
   }
+
+  navigateToExpense(expense: Expense) {
+    this.router.navigate([`expense/${expense.id}`]);
+  }
+
 
   async deleteExpense(expense: Expense) {
     await this.expensesService.deleteExpense(expense.id);
