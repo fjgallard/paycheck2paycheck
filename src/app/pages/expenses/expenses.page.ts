@@ -1,4 +1,6 @@
 import { Component, OnInit }       from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Budget } from '@models/budget';
 import { Expense } from '@models/expense';
 import { ExpensesService } from '@services/storage/expenses/expenses.service';
 import { Observable } from 'rxjs';
@@ -12,12 +14,20 @@ export class ExpensesPage implements OnInit {
 
   timePeriod = 'month';
   expenses: Expense[];
+  budget: Budget;
 
   expenses$: Observable<Expense[]>;
 
-  constructor(private expensesService: ExpensesService) {
+  constructor(private route: ActivatedRoute, private expensesService: ExpensesService) {
     this.expenses = [];
     this.expenses$ = this.expensesService.expenses$;
+
+    this.route.queryParams.subscribe(params =>{
+      if (params?.data) {
+        this.budget = JSON.parse(params.data);
+      }
+      
+    });
   }
 
   async ngOnInit() {
@@ -26,13 +36,17 @@ export class ExpensesPage implements OnInit {
     this.setTimePeriod();
   }
 
+  async deleteExpense(expense: Expense) {
+    await this.expensesService.deleteExpense(expense.id);
+  }
+
   private async showDayExpenses() {
-    this.expenses = await this.expensesService.getExpensesForTheDay(new Date());
+    this.expenses = await this.expensesService.getExpensesForTheDay(new Date(), this.budget.id);
     this.expenses = this.expenses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   private async showMonthExpenses() {
-    this.expenses = await this.expensesService.getExpensesForTheMonth(new Date());
+    this.expenses = await this.expensesService.getExpensesForTheMonth(new Date(), this.budget.id);
     this.expenses = this.expenses.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 

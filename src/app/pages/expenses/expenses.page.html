@@ -33,7 +33,7 @@
               <ion-label>
                 <h2 class="expense-category">{{ expense.value || 0 | currency }}</h2>
                 <ion-text color="medium">
-                  <p class="expense-name">{{ expense.id }} </p>
+                  <p class="expense-name">{{ expense.name }} </p>
                 </ion-text>
                 
               </ion-label>
@@ -49,8 +49,8 @@
               <ion-item-option>
                 <ion-icon slot="icon-only" name="settings"></ion-icon>
               </ion-item-option>
-              <ion-item-option color="danger">
-                <ion-icon slot="icon-only" name="trash" ></ion-icon>
+              <ion-item-option color="danger" (click)="deleteExpense(expense)">
+                <ion-icon slot="icon-only"name="trash" ></ion-icon>
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>

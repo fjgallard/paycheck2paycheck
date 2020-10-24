@@ -27,6 +27,10 @@ export class DashboardPage implements OnInit {
     this.router.navigate(['/expense/new'], { queryParams: { data: JSON.stringify(budget) } });
   }
 
+  navigateToExpenses(budget: Budget) {
+    this.router.navigate(['/expenses'], { queryParams: { data: JSON.stringify(budget) } });
+  }
+
   getCssClass(budget: Budget) {
     return this.budgetService.getCssClass(budget);
   }

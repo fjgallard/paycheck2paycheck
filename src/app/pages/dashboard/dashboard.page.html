@@ -25,7 +25,7 @@
           <div class="add-expense no-outline" (click)="newExpense(budget)">
             <ion-icon name="add"></ion-icon>
           </div>
-          <div class="expenses no-outline" routerLink="/expenses">
+          <div class="expenses no-outline" (click)="navigateToExpenses(budget)">
             <ion-icon name="list"></ion-icon>
           </div>
         </div>
