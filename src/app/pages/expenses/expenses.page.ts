@@ -47,13 +47,13 @@ export class ExpensesPage implements OnInit {
   }
 
   private async showDayExpenses() {
-    this.expenses$ = this.expenses$.pipe(
+    this.expenses$ = this.expensesService.expenses$.pipe(
       map(expenses => this.getExpensesForTheDay(expenses, new Date(), this.budget.id))
     );
   }
 
   private async showMonthExpenses() {
-    this.expenses$ = this.expenses$.pipe(
+    this.expenses$ = this.expensesService.expenses$.pipe(
       map(expenses => this.getExpensesForTheMonth(expenses, new Date(), this.budget.id))
     );
   }
