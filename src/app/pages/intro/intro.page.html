@@ -1,4 +1,4 @@
-<ion-slides>
+<ion-slides #slides>
   <ion-slide class="slide slide-1 flex-col">
     <i class="slide__icon fas fa-money-bill-wave"></i> 
     <div class="bottom-box">
@@ -77,7 +77,7 @@
           
       </div>
 
-      <ion-button class="next-btn" (click)="next()">Next</ion-button>
+      <ion-button [disabled]="!(formPopulated())" class="next-btn" (click)="next()">Next</ion-button>
     </div>
   </ion-slide>
 

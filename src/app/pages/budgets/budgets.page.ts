@@ -65,7 +65,7 @@ export class BudgetsPage implements OnInit {
 
     if (data?.budget && budget) {
       await this.budgetService.updateBudget(budget.id, data.budget);
-    } else if (data.budget) {
+    } else if (data?.budget) {
       await this.budgetService.createBudget(data.budget);
     }
   }

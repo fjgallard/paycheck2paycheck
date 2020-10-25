@@ -33,4 +33,9 @@
 ion-slides {
   height: 100%;
   width: 100vw;
+  max-width: 700px;
+}
+
+ion-slide {
+  max-width: 700px;
 }

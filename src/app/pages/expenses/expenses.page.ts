@@ -51,7 +51,10 @@ export class ExpensesPage implements OnInit {
     this.expenses$ = this.expensesService.expenses$.pipe(
       map(expenses => {
         const res = this.getExpensesForTheDay(expenses, new Date(), this.budget.id);
-        this.total = res.map(expense => expense.value).reduce((a, b) => a + b);
+        if (res && !(res.length === 0)) {
+          this.total = res.map(expense => expense.value).reduce((a, b) => a + b);
+        }
+        
 
         return res;
       })

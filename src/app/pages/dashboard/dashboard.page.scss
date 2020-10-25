@@ -1,10 +1,13 @@
 ion-slides {
   --bullet-background: var(--ion-color-dark);
   --bullet-background-active: var(--ion-color-success-contrast);
+  max-width: 700px;
+  margin: auto;
 }
 
 ion-slide {
   height: 100vh;
+  max-width: 700px;
 }
 
 .slides {

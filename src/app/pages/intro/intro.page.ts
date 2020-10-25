@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router }                       from '@angular/router';
 
 import { IonSlides } from '@ionic/angular';
@@ -10,9 +10,9 @@ import { BudgetService } from '@services/storage/budget/budget.service';
   templateUrl: './intro.page.html',
   styleUrls: ['./intro.page.scss'],
 })
-export class IntroPage implements OnInit {
+export class IntroPage implements OnInit, AfterViewInit {
 
-  @ViewChild(IonSlides) slides: IonSlides;
+  @ViewChild('slides') slides: IonSlides;
 
   id: string;
   limit: number;
@@ -42,14 +42,24 @@ export class IntroPage implements OnInit {
   async ngOnInit() {
   }
 
+  async ngAfterViewInit() {
+    this.slides.lockSwipes(true);
+  }
+
   next() {
+    this.slides.lockSwipes(false);
     this.slides.slideNext();
+    this.slides.lockSwipes(true);
   }
 
   setIcon(icon: string) {
     this.icon = icon;
     this.deselectIcons();
     this.iconList[icon] = true;
+  }
+
+  formPopulated() {
+    return this.id && this.limit;
   }
 
   private deselectIcons() {
