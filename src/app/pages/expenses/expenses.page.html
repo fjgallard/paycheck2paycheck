@@ -1,6 +1,6 @@
 <ion-content color="light">
 
-  <div class="expenses full-height flex-col">
+  <div *ngIf="expenses$ | async as expenses" class="expenses full-height flex-col">
     <div class="expense-head">
       <div class="amount-section">
         <div class="balance-header flex align-center justify-between">
@@ -11,7 +11,7 @@
         </div>
         
         <ion-text class="balance-text">
-          {{ 5000 | currency: 'PHP' }}
+          {{ total || 0 | currency: 'PHP' }}
         </ion-text>
         <ion-select [(ngModel)]="timePeriod" (ionChange)="setTimePeriod()" >
           <ion-select-option value="today">Today</ion-select-option>
@@ -28,7 +28,7 @@
       <ion-card class="expenses-card ion-no-padding">
         <ion-list>
 
-          <ion-item-sliding *ngFor="let expense of expenses$ | async">
+          <ion-item-sliding *ngFor="let expense of expenses">
             <ion-item>
               <ion-label>
                 <h2 class="expense-category">{{ expense.value || 0 | currency }}</h2>

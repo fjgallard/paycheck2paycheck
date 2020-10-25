@@ -1,4 +1,4 @@
-import { Component, OnInit }       from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewInit, Component, OnInit }       from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Budget } from '@models/budget';
 import { Expense } from '@models/expense';
@@ -17,16 +17,17 @@ export class ExpensesPage implements OnInit {
   timePeriod = 'today';
   budget: Budget;
   expenses$: Observable<Expense[]>;
+  total: number;
 
   constructor(
     private route: ActivatedRoute, 
     private router: Router, 
     private budgetService: BudgetService,
     private expensesService: ExpensesService) {
-    this.expenses$ = this.expensesService.expenses$.pipe(
-      tap(expense => console.log(expense))
-    );
+    this.expenses$ = this.expensesService.expenses$;;
+  }
 
+  async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     this.budgetService.getBudget(id).then(budget => {
       this.budget = budget;
@@ -34,13 +35,13 @@ export class ExpensesPage implements OnInit {
     });
   }
 
-  async ngOnInit() {
-  }
-
   navigateToExpense(expense: Expense) {
     this.router.navigate([`expense/${expense.id}`]);
   }
 
+  getTotalExpenseAmount() {
+
+  }
 
   async deleteExpense(expense: Expense) {
     await this.expensesService.deleteExpense(expense.id);
@@ -48,13 +49,23 @@ export class ExpensesPage implements OnInit {
 
   private async showDayExpenses() {
     this.expenses$ = this.expensesService.expenses$.pipe(
-      map(expenses => this.getExpensesForTheDay(expenses, new Date(), this.budget.id))
+      map(expenses => {
+        const res = this.getExpensesForTheDay(expenses, new Date(), this.budget.id);
+        this.total = res.map(expense => expense.value).reduce((a, b) => a + b);
+
+        return res;
+      })
     );
   }
 
   private async showMonthExpenses() {
     this.expenses$ = this.expensesService.expenses$.pipe(
-      map(expenses => this.getExpensesForTheMonth(expenses, new Date(), this.budget.id))
+      map(expenses => {
+        const res = this.getExpensesForTheMonth(expenses, new Date(), this.budget.id);
+        this.total = res.map(expense => expense.value).reduce((a, b) => a + b);
+
+        return res;
+      })
     );
   }
 
