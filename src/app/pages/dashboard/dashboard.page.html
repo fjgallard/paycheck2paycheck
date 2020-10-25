@@ -1,5 +1,5 @@
 <ion-content fullscreen scroll-y="false">
-  <ion-slides *ngIf="budgets$ | async as budgets" class="slides ion-no-padding ion-no-margin" color="success" pager>
+  <ion-slides class="slides ion-no-padding ion-no-margin" color="success" pager>
     <ion-slide *ngFor="let budget of budgets">
       <div class="slide" [class]="getCssClass(budget)">
         <div class="header flex justify-around align-center">
@@ -9,7 +9,7 @@
         </div>
         
         <ion-text class="budget-limit">
-          {{ budget.limit | currency }}
+          {{ budget.limit - budget.consumed | currency }}
         </ion-text>
         <ion-text class="budget-limit-subtitle">
           left this {{ budget.duration || '' }}

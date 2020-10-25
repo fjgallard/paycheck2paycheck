@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Budget } from '@models/budget';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Storage }    from '@ionic/storage';
+import { ExpensesService } from '../expenses/expenses.service';
 
 @Injectable({
   providedIn: 'root'
@@ -99,8 +100,12 @@ export class BudgetService {
     }
   }
 
-  private getPercentage(budget: Budget) {
-    return 0;
+  private getPercentage(budget: Budget, total?: number) {
+    if (!budget.consumed) {
+      return 0;
+    }
+    
+    return budget.consumed / budget.limit;
   }
 
   private async reloadBudgets() {

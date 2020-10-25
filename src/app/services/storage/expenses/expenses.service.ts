@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage }    from '@ionic/storage';
+import { Budget } from '@models/budget';
 import { Expense }    from '@models/expense';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -38,6 +39,26 @@ export class ExpensesService {
     const expense = expenses.filter(exp => exp.id === id);
 
     return expense[0];
+  }
+
+  async getExpenses(budget: Budget, date?: Date) {
+    let expenses: Expense[] = await this.getExpensesFromStorage();
+    expenses = expenses.filter(expense => expense.budgetId === budget.id);
+
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+
+    if (budget.duration === 'month') {
+      return expenses.filter(expense => (expense.createdAt.getMonth() === currentMonth) && 
+                                 (expense.createdAt.getFullYear() === currentYear));
+    } else if (budget.duration === 'year') {
+      return expenses.filter(expense => expense.createdAt.getFullYear() === currentYear);
+    } else {
+      return expenses;
+    }
+
+    
   }
 
   async updateExpense(id: string, expense: Expense) {

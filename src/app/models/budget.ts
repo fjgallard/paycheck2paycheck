@@ -4,4 +4,5 @@ export interface Budget {
   icon?    : string
   duration : 'month' | 'week' | 'year' | 'other' 
   createdAt: Date
+  consumed?: number
 }
