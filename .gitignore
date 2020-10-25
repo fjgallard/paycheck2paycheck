@@ -31,3 +31,4 @@ npm-debug.log*
 /www
 /android
 release.jks
+.firebase/hosting.d3d3.cache
